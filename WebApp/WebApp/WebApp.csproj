@@ -263,12 +263,18 @@
     <Compile Include="Migrations\201905271839005_StanicaLinija.Designer.cs">
       <DependentUpon>201905271839005_StanicaLinija.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905271849230_AutobusIvremenskaKarta.cs" />
+    <Compile Include="Migrations\201905271849230_AutobusIvremenskaKarta.Designer.cs">
+      <DependentUpon>201905271849230_AutobusIvremenskaKarta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Autobus.cs" />
     <Compile Include="Models\Linija.cs" />
     <Compile Include="Models\Stanica.cs" />
+    <Compile Include="Models\VremenskaKarta.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
@@ -377,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905271839005_StanicaLinija.resx">
       <DependentUpon>201905271839005_StanicaLinija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905271849230_AutobusIvremenskaKarta.resx">
+      <DependentUpon>201905271849230_AutobusIvremenskaKarta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
