@@ -295,8 +295,6 @@ C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.cspro
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.pdb
-C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.StanicaLinija.resources
-C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.AutobusIvremenskaKarta.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Stanice.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Linije.resources
@@ -304,3 +302,14 @@ C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migra
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipKarte.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BezTipKarteId.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaTipKarteId.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Stanice.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Linije.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Autobus.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipKarte.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BezTipKarteId.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaTipKarteId.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Karte.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Cenovnici.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.CenaKarata.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipPutnika.resources
+C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.RedoviVoznje.resources

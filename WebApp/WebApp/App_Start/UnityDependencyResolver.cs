@@ -70,6 +70,16 @@ namespace WebApp.App_Start
            
             container.RegisterType<DbContext, ApplicationDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
+            container.RegisterType<IAutobusRepository, AutobusRepository>();
+            container.RegisterType<ICenaKarteRepository, CenaKarteRepository>();
+            container.RegisterType<ICenovnikRepository, CenovnikRepository>();
+            container.RegisterType<IKartaRepository, KartaRepository>();
+            container.RegisterType<ILinijaRepository, LinijaRepository>();
+            container.RegisterType<IRedVoznjeRepository, RedVoznjeRepository>();
+            container.RegisterType<IStanicaRepository, StanicaRepository>();
+            container.RegisterType<ITipKarteRepository, TipKarteRepository>();
+            container.RegisterType<ITipPutnikaRepository, TipPutnikaRepository>();
+            container.RegisterType<IVrstaKarteRepository, VrstaKarteRepository>();
         }
 
         public void Dispose()

@@ -18,9 +18,20 @@ namespace WebApp.Persistence
 
         public DbSet<Autobus> Autobusi { get; set; }
 
+        public DbSet<Karta> Karte { get; set; }
+
+        public DbSet<Cenovnik> Cenovnici { get; set; }
+
+        public DbSet<CenaKarte> CenaKarata { get; set; }
+
         // public DbSet<VremenskaKarta> VremenskeKarte { get; set; }
         public DbSet<TipKarte> TipKarte { get; set; }
         public DbSet<VrstaKarte> VrstaKarte  { get; set; }
+
+        public DbSet<TipPutnika> TipPutnika { get; set; }
+
+        public DbSet<RedVoznje> RedoviVoznje { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

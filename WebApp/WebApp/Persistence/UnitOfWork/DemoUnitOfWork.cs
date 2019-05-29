@@ -11,23 +11,25 @@ namespace WebApp.Persistence.UnitOfWork
     public class DemoUnitOfWork : IUnitOfWork
     {
         [Dependency]
-        public ILinijaRepository LinijaRepository { get; set; }
+        public ILinijaRepository linijaRepository { get ; set; }
         [Dependency]
-        public IStanicaRepository StanicaRepository { get; set; }
+        public IStanicaRepository stanicaRepository { get; set; }
         [Dependency]
-        public IAutobusRepository AutobusRepository { get; set; }
+        public IAutobusRepository autobusRepository  { get; set; } 
         [Dependency]
-        public ITipKarteRepository TipKarteRepository { get; set; }
+        public ITipKarteRepository tipKarteRepository { get; set; }
         [Dependency]
-        public IVrstaKarteRepository VrstaKarteRepository { get; set; }
+        public IVrstaKarteRepository vrstaKarteRepository { get; set; }
         [Dependency]
-        public IRedVoznjeRepository RedVoznjeRepository { get; set; }
-        public ILinijaRepository linijaRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IStanicaRepository stanicaRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IAutobusRepository autobusRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ITipKarteRepository tipKarteRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IVrstaKarteRepository vrstaKarteRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRedVoznjeRepository redVoznjeRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRedVoznjeRepository redVoznjeRepository { get; set; }
+        [Dependency]
+        public IKartaRepository kartaRepository { get; set; }
+        [Dependency]
+        public ICenovnikRepository cenovnikRepository { get; set; }
+        [Dependency]
+        public ICenaKarteRepository cenaKarteRepository { get; set; }
+        [Dependency]
+        public ITipPutnikaRepository tipPutnikaRepository { get; set; }
 
         private readonly DbContext _context;
 

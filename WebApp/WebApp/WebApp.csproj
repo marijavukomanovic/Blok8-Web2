@@ -283,30 +283,62 @@
     <Compile Include="Migrations\201905290909357_SaTipKarteId.Designer.cs">
       <DependentUpon>201905290909357_SaTipKarteId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905291036085_Karte.cs" />
+    <Compile Include="Migrations\201905291036085_Karte.Designer.cs">
+      <DependentUpon>201905291036085_Karte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291037521_Cenovnici.cs" />
+    <Compile Include="Migrations\201905291037521_Cenovnici.Designer.cs">
+      <DependentUpon>201905291037521_Cenovnici.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291038333_CenaKarata.cs" />
+    <Compile Include="Migrations\201905291038333_CenaKarata.Designer.cs">
+      <DependentUpon>201905291038333_CenaKarata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291040085_TipPutnika.cs" />
+    <Compile Include="Migrations\201905291040085_TipPutnika.Designer.cs">
+      <DependentUpon>201905291040085_TipPutnika.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291040594_RedoviVoznje.cs" />
+    <Compile Include="Migrations\201905291040594_RedoviVoznje.Designer.cs">
+      <DependentUpon>201905291040594_RedoviVoznje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entiteti\ApplicationUser.cs" />
     <Compile Include="Models\Entiteti\Autobus.cs" />
+    <Compile Include="Models\Entiteti\CenaKarte.cs" />
+    <Compile Include="Models\Entiteti\Cenovnik.cs" />
+    <Compile Include="Models\Entiteti\Karta.cs" />
     <Compile Include="Models\Entiteti\Linija.cs" />
     <Compile Include="Models\Entiteti\RedVoznje.cs" />
     <Compile Include="Models\Entiteti\Stanica.cs" />
     <Compile Include="Models\Entiteti\TipKarte.cs" />
+    <Compile Include="Models\Entiteti\TipPutnika.cs" />
     <Compile Include="Models\Entiteti\VrstaKarte.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\AutobusRepository.cs" />
+    <Compile Include="Persistence\Repository\CenaKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\CenovnikRepository.cs" />
     <Compile Include="Persistence\Repository\IAutobusRepository.cs" />
+    <Compile Include="Persistence\Repository\ICenaKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\ICenovnikRepository.cs" />
+    <Compile Include="Persistence\Repository\IKartaRepository.cs" />
     <Compile Include="Persistence\Repository\ILinijaRepository.cs" />
     <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
     <Compile Include="Persistence\Repository\ITipKlaseRepository.cs" />
+    <Compile Include="Persistence\Repository\ITipPutnikaRepository.cs" />
     <Compile Include="Persistence\Repository\IVrstaKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\KartaRepository.cs" />
     <Compile Include="Persistence\Repository\LinijaRepository.cs" />
     <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\Repository\StanicaRepository.cs" />
     <Compile Include="Persistence\Repository\TipKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\TipPutnikaRepository.cs" />
     <Compile Include="Persistence\Repository\VrstaKarteRepository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
@@ -428,6 +460,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905290909357_SaTipKarteId.resx">
       <DependentUpon>201905290909357_SaTipKarteId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291036085_Karte.resx">
+      <DependentUpon>201905291036085_Karte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291037521_Cenovnici.resx">
+      <DependentUpon>201905291037521_Cenovnici.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291038333_CenaKarata.resx">
+      <DependentUpon>201905291038333_CenaKarata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291040085_TipPutnika.resx">
+      <DependentUpon>201905291040085_TipPutnika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291040594_RedoviVoznje.resx">
+      <DependentUpon>201905291040594_RedoviVoznje.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
