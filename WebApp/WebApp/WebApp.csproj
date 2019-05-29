@@ -259,25 +259,55 @@
     <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905271839005_StanicaLinija.cs" />
-    <Compile Include="Migrations\201905271839005_StanicaLinija.Designer.cs">
-      <DependentUpon>201905271839005_StanicaLinija.cs</DependentUpon>
+    <Compile Include="Migrations\201905290819251_Stanice.cs" />
+    <Compile Include="Migrations\201905290819251_Stanice.Designer.cs">
+      <DependentUpon>201905290819251_Stanice.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905271849230_AutobusIvremenskaKarta.cs" />
-    <Compile Include="Migrations\201905271849230_AutobusIvremenskaKarta.Designer.cs">
-      <DependentUpon>201905271849230_AutobusIvremenskaKarta.cs</DependentUpon>
+    <Compile Include="Migrations\201905290820239_Linije.cs" />
+    <Compile Include="Migrations\201905290820239_Linije.Designer.cs">
+      <DependentUpon>201905290820239_Linije.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290821097_Autobus.cs" />
+    <Compile Include="Migrations\201905290821097_Autobus.Designer.cs">
+      <DependentUpon>201905290821097_Autobus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290823389_TipKarte.cs" />
+    <Compile Include="Migrations\201905290823389_TipKarte.Designer.cs">
+      <DependentUpon>201905290823389_TipKarte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290905527_BezTipKarteId.cs" />
+    <Compile Include="Migrations\201905290905527_BezTipKarteId.Designer.cs">
+      <DependentUpon>201905290905527_BezTipKarteId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290909357_SaTipKarteId.cs" />
+    <Compile Include="Migrations\201905290909357_SaTipKarteId.Designer.cs">
+      <DependentUpon>201905290909357_SaTipKarteId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\Autobus.cs" />
-    <Compile Include="Models\Linija.cs" />
-    <Compile Include="Models\Stanica.cs" />
-    <Compile Include="Models\VremenskaKarta.cs" />
+    <Compile Include="Models\Entiteti\ApplicationUser.cs" />
+    <Compile Include="Models\Entiteti\Autobus.cs" />
+    <Compile Include="Models\Entiteti\Linija.cs" />
+    <Compile Include="Models\Entiteti\RedVoznje.cs" />
+    <Compile Include="Models\Entiteti\Stanica.cs" />
+    <Compile Include="Models\Entiteti\TipKarte.cs" />
+    <Compile Include="Models\Entiteti\VrstaKarte.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Persistence\Repository\AutobusRepository.cs" />
+    <Compile Include="Persistence\Repository\IAutobusRepository.cs" />
+    <Compile Include="Persistence\Repository\ILinijaRepository.cs" />
+    <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
+    <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
+    <Compile Include="Persistence\Repository\ITipKlaseRepository.cs" />
+    <Compile Include="Persistence\Repository\IVrstaKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\LinijaRepository.cs" />
+    <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
+    <Compile Include="Persistence\Repository\StanicaRepository.cs" />
+    <Compile Include="Persistence\Repository\TipKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\VrstaKarteRepository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -381,11 +411,23 @@
     <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905271839005_StanicaLinija.resx">
-      <DependentUpon>201905271839005_StanicaLinija.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905290819251_Stanice.resx">
+      <DependentUpon>201905290819251_Stanice.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905271849230_AutobusIvremenskaKarta.resx">
-      <DependentUpon>201905271849230_AutobusIvremenskaKarta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905290820239_Linije.resx">
+      <DependentUpon>201905290820239_Linije.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290821097_Autobus.resx">
+      <DependentUpon>201905290821097_Autobus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290823389_TipKarte.resx">
+      <DependentUpon>201905290823389_TipKarte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290905527_BezTipKarteId.resx">
+      <DependentUpon>201905290905527_BezTipKarteId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290909357_SaTipKarteId.resx">
+      <DependentUpon>201905290909357_SaTipKarteId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
