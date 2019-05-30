@@ -313,3 +313,8 @@ C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Cenov
 C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.CenaKarata.resources
 C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipPutnika.resources
 C:\Users\Maki\Desktop\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.RedoviVoznje.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Karte.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.Cenovnici.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.CenaKarata.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipPutnika.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.RedoviVoznje.resources
