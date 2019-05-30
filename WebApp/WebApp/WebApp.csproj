@@ -326,7 +326,7 @@
     <Compile Include="Models\Entiteti\TipKarte.cs" />
     <Compile Include="Models\Entiteti\TipPutnika.cs" />
     <Compile Include="Models\Entiteti\VrstaKarte.cs" />
-    <Compile Include="Models\VrstaKartesController.cs" />
+    <Compile Include="Controllers\VrstaKartesController.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\AutobusRepository.cs" />
     <Compile Include="Persistence\Repository\CenaKarteRepository.cs" />
