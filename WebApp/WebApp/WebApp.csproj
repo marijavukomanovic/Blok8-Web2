@@ -258,6 +258,7 @@
     <Compile Include="Controllers\LinijasController.cs" />
     <Compile Include="Controllers\RedVoznjesController.cs" />
     <Compile Include="Controllers\StanicasController.cs" />
+    <Compile Include="Controllers\TipDanasController.cs" />
     <Compile Include="Controllers\TipKartesController.cs" />
     <Compile Include="Controllers\TipPutnikasController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
