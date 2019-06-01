@@ -15,7 +15,7 @@ namespace WebApp.Persistence.UnitOfWork
 
         ITipKarteRepository tipKarteRepository { get; set; }
 
-        IVrstaKarteRepository vrstaKarteRepository { get; set; }
+        ITipDanaRepository tipDanaRepository { get; set; }
 
         IRedVoznjeRepository redVoznjeRepository { get; set; }
 

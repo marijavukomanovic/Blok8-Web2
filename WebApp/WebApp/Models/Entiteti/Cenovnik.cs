@@ -8,9 +8,8 @@ namespace WebApp.Models
 {
     public class Cenovnik
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }//autinkrement
-        //[ForeignKey("")]
-        public int CenaKarteId { get; set; }//fk
         public DateTime VazenjeOd { get; set; }
         public DateTime VazenjeDo { get; set; }
     }

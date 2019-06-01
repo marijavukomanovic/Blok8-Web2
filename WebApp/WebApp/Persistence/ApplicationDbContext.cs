@@ -26,7 +26,7 @@ namespace WebApp.Persistence
 
         // public DbSet<VremenskaKarta> VremenskeKarte { get; set; }
         public DbSet<TipKarte> TipKarte { get; set; }
-        public DbSet<VrstaKarte> VrstaKarte  { get; set; }
+        public DbSet<TipDana> TipDana  { get; set; }
 
         public DbSet<TipPutnika> TipPutnika { get; set; }
 

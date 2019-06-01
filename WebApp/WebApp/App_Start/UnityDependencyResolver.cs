@@ -79,7 +79,7 @@ namespace WebApp.App_Start
             container.RegisterType<IStanicaRepository, StanicaRepository>();
             container.RegisterType<ITipKarteRepository, TipKarteRepository>();
             container.RegisterType<ITipPutnikaRepository, TipPutnikaRepository>();
-            container.RegisterType<IVrstaKarteRepository, VrstaKarteRepository>();
+            container.RegisterType<ITipDanaRepository, TipDanaRepository>();
         }
 
         public void Dispose()
