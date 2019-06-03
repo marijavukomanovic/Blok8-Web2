@@ -9,6 +9,7 @@ import { LogInComponent } from './log-in/log-in.component';
 
 const routes : Routes =[
   {path:'',component:HomeComponent},
+  {path: '/log-in',component:LogInComponent}
 ];
 
 @NgModule({

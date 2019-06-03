@@ -6193,17 +6193,17 @@
   .p-5 {
     padding: 4.5rem !important; }
   
-  .pt-5,
-  .py-5 {
-    padding-top: 4.5rem !important; }
-  
-  .pr-5,
-  .px-5 {
-    padding-right: 4.5rem !important; }
-  
-  .pb-5,
-  .py-5 {
-    padding-bottom: 4.5rem !important; }
+    .pt-5,
+    .py-5 {
+      padding-top: 4.5rem !important; }
+    
+    .pr-5,
+    .px-5 {
+      padding-right: 9rem !important; }
+    
+    .pb-5,
+    .py-5 {
+      padding-bottom: 9.1rem !important; }
   
   .pl-5,
   .px-5 {
