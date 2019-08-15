@@ -3168,6 +3168,7 @@
     display: block; }
   
   .navbar {
+    margin: 0;
     position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -3283,7 +3284,7 @@
     .navbar-expand-md > .container,
     .navbar-expand-md > .container-fluid {
       padding-right: 0;
-      padding-left: 0; } }
+      padding-left: 10; } }
   
   @media (min-width: 768px) {
     .navbar-expand-md {
@@ -6204,7 +6205,7 @@
   
   .pb-5,
   .py-5 {
-    padding-bottom: 9.1rem !important; }
+    padding-bottom: 10rem !important; }
   
   .pl-5,
   .px-5 {

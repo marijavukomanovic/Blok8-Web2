@@ -1543,7 +1543,9 @@
     height: auto; }
   
   .form-group {
-    margin-bottom: 1rem; }
+    margin-bottom: 1rem; 
+    background: gray;
+  }
   
   .form-text {
     display: block;
