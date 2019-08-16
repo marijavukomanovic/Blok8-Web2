@@ -1,6 +1,6 @@
 import { PassengerType } from 'src/app/model/enums';
 
-export class RegistrationModel{
+export class RegistracijaModel{
     Name : string;
     LastName : string;
     UserName : string;

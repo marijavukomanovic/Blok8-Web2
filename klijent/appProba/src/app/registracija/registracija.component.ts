@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 
 
 @Component({
@@ -20,7 +21,7 @@ registerForm = this.fb.group({
     Password : ['', Validators.required],
     ConfirmPassword : ['', Validators.required]
   });
-  constructor() { }
+  constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {
   }
