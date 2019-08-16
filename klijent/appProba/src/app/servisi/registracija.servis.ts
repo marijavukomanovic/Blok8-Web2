@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class RegistracijaServis extends HttpService{
 
-  specificUrl = this.url + "/api/Registration/PostRegistration";
+  specificUrl = this.url + "/api/Korisnik/Registracija";
   
     register(data: RegistracijaModel) : Observable<any>{
       let httpOptions = {

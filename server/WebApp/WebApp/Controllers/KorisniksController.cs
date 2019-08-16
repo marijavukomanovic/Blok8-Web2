@@ -51,9 +51,9 @@ namespace WebApp.Controllers
             }
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            DateTime datumRodjenja = DateTime.Parse(model.Birthday);
+            DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
             int ageGroup = 1;
-            switch (model.AgeGroup.ToUpper())
+            switch (model.PassengerType.ToUpper())
             {
                 
                 case "STUDENT":
@@ -70,7 +70,7 @@ namespace WebApp.Controllers
                     ageGroup = 3;
                     break;
             }
-            TipPutnika t = new TipPutnika() { Id = ageGroup, Naziv = model.AgeGroup };
+            TipPutnika t = new TipPutnika() { Id = ageGroup, Naziv = model.PassengerType };
 
             Korisnik noviKorisnik = new Korisnik()
             {
@@ -83,6 +83,8 @@ namespace WebApp.Controllers
                 Tip = t,
             };
             db.Korisnik.Add(noviKorisnik);
+            db.SaveChanges();
+
             var appUser = new ApplicationUser() { Id = noviKorisnik.Id.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra) };
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
             userManager.AddToRole(appUser.Id,"AppUser" );

@@ -101,7 +101,7 @@ namespace WebApp.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string LastName { get; set; }
@@ -111,15 +111,15 @@ namespace WebApp.Models
         public string Username { get; set; }
 
         //[Required]
-        public string Birthday { get; set; }
+        public string BirthdayDate { get; set; }
 
         //[Required]
         public string Address { get; set; }
 
-        [Required]
-        public string AgeGroup { get; set; }            // djak, penzioner, regularan
+        //[Required]
+        public string PassengerType { get; set; }            // djak, penzioner, regularan
 
-        public byte[] Document { get; set; }
+        //public byte[] Document { get; set; }
     }
 
 }
