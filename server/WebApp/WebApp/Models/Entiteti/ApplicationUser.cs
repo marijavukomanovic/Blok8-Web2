@@ -16,9 +16,12 @@ namespace WebApp.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        [ForeignKey("TipPutnika")]
-        public int TipPutnikaId { get; set; }
-        public TipPutnika TipPutnika { get; set; }
+        //[ForeignKey("TipPutnika")]
+        //public int TipPutnikaId { get; set; }
+        //public TipPutnika TipPutnika { get; set; }
+        [ForeignKey("Korisnik")]
+        public int? KorisnikId { get; set; }        // nullable int
+        public Korisnik Korisnik { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

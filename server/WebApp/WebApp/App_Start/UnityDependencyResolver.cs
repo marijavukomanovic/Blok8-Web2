@@ -80,6 +80,7 @@ namespace WebApp.App_Start
             container.RegisterType<ITipKarteRepository, TipKarteRepository>();
             container.RegisterType<ITipPutnikaRepository, TipPutnikaRepository>();
             container.RegisterType<ITipDanaRepository, TipDanaRepository>();
+            container.RegisterType<IKorisnikRepository, KorisnikRepository>();
         }
 
         public void Dispose()

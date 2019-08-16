@@ -49,67 +49,89 @@ namespace WebApp.Migrations
                 manager.Create(role);
             }
 
-            Models.Entiteti.TipPutnika tp1 = new Models.Entiteti.TipPutnika();
-            tp1.Id = 1;
-            tp1.Naziv = "Student";
-            tp1.Koeficijent = 0.8;
-            context.TipPutnika.Add(tp1);
-            context.SaveChanges();
-
-            Models.Entiteti.TipPutnika tp2 = new Models.Entiteti.TipPutnika();
-            tp2.Id = 2;
-            tp2.Naziv = "Penziner";
-            tp2.Koeficijent = 0.65;
-            context.TipPutnika.Add(tp2);
-            context.SaveChanges();
-
-            Models.Entiteti.TipPutnika tp3 = new Models.Entiteti.TipPutnika();
-            tp3.Id = 3;
-            tp3.Naziv = "Regularan";
-            tp3.Koeficijent = 1.0;
-            context.TipPutnika.Add(tp3);
-            context.SaveChanges();
-
-            Models.Entiteti.TipKarte tk1 = new Models.Entiteti.TipKarte();
-            tk1.Id = 1;
-            tk1.Naziv = "Vremenska";
-            context.TipKarte.Add(tk1);
-            context.SaveChanges();
-
-            Models.Entiteti.TipKarte tk2 = new Models.Entiteti.TipKarte();
-            tk2.Id = 2;
-            tk2.Naziv = "Dnevna";
-            context.TipKarte.Add(tk2);
-            context.SaveChanges();
-
-            Models.Entiteti.TipKarte tk3 = new Models.Entiteti.TipKarte();
-            tk3.Id = 3;
-            tk3.Naziv = "Mesecna";
-            context.TipKarte.Add(tk3);
-            context.SaveChanges();
-            Models.Entiteti.TipKarte tk4 = new Models.Entiteti.TipKarte();
-            tk4.Id = 4;
-            tk4.Naziv = "Godisnja";
-            context.TipKarte.Add(tk4);
-            context.SaveChanges();
-
-            Models.Entiteti.TipDana td1 = new Models.Entiteti.TipDana();
-            td1.Id = 1;
-            td1.Tip = "Radni";
-            context.TipDana.Add(td1);
-            context.SaveChanges();
-
-            Models.Entiteti.TipDana td2 = new Models.Entiteti.TipDana();
-            td2.Id = 2;
-            td2.Tip = "Subota";
-            context.TipDana.Add(td2);
-            context.SaveChanges();
-
-            Models.Entiteti.TipDana td3 = new Models.Entiteti.TipDana();
-            td3.Id = 3;
-            td3.Tip = "Nedelja";
-            context.TipDana.Add(td3);
-            context.SaveChanges();
+            if (!context.TipPutnika.Any(t => t.Naziv == "Student"))
+            {
+                Models.Entiteti.TipPutnika tp1 = new Models.Entiteti.TipPutnika();
+                tp1.Id = 1;
+                tp1.Naziv = "Student";
+                tp1.Koeficijent = 0.8;
+                context.TipPutnika.Add(tp1);
+                context.SaveChanges();
+            }
+            if (!context.TipPutnika.Any(t => t.Naziv == "Penziner"))
+            {
+                Models.Entiteti.TipPutnika tp2 = new Models.Entiteti.TipPutnika();
+                tp2.Id = 2;
+                tp2.Naziv = "Penziner";
+                tp2.Koeficijent = 0.65;
+                context.TipPutnika.Add(tp2);
+                context.SaveChanges();
+            }
+            if (!context.TipPutnika.Any(t => t.Naziv == "Regularan"))
+            {
+                Models.Entiteti.TipPutnika tp3 = new Models.Entiteti.TipPutnika();
+                tp3.Id = 3;
+                tp3.Naziv = "Regularan";
+                tp3.Koeficijent = 1.0;
+                context.TipPutnika.Add(tp3);
+                context.SaveChanges();
+            }
+            if (!context.TipKarte.Any(t => t.Naziv == "Vremenska"))
+            {
+                Models.Entiteti.TipKarte tk1 = new Models.Entiteti.TipKarte();
+                tk1.Id = 1;
+                tk1.Naziv = "Vremenska";
+                context.TipKarte.Add(tk1);
+                context.SaveChanges();
+            }
+            if (!context.TipKarte.Any(t => t.Naziv == "Dnevna"))
+            {
+                Models.Entiteti.TipKarte tk2 = new Models.Entiteti.TipKarte();
+                tk2.Id = 2;
+                tk2.Naziv = "Dnevna";
+                context.TipKarte.Add(tk2);
+                context.SaveChanges();
+            }
+            if (!context.TipKarte.Any(t => t.Naziv == "Mesecna"))
+            {
+                Models.Entiteti.TipKarte tk3 = new Models.Entiteti.TipKarte();
+                tk3.Id = 3;
+                tk3.Naziv = "Mesecna";
+                context.TipKarte.Add(tk3);
+                context.SaveChanges();
+            }
+            if (!context.TipKarte.Any(t => t.Naziv == "Godisnja"))
+            {
+                Models.Entiteti.TipKarte tk4 = new Models.Entiteti.TipKarte();
+                tk4.Id = 4;
+                tk4.Naziv = "Godisnja";
+                context.TipKarte.Add(tk4);
+                context.SaveChanges();
+            }
+            if (!context.TipDana.Any(t => t.Tip == "Radni"))
+            {
+                Models.Entiteti.TipDana td1 = new Models.Entiteti.TipDana();
+                td1.Id = 1;
+                td1.Tip = "Radni";
+                context.TipDana.Add(td1);
+                context.SaveChanges();
+            }
+            if (!context.TipDana.Any(t => t.Tip == "Subota"))
+            {
+                Models.Entiteti.TipDana td2 = new Models.Entiteti.TipDana();
+                td2.Id = 2;
+                td2.Tip = "Subota";
+                context.TipDana.Add(td2);
+                context.SaveChanges();
+            }
+            if (!context.TipDana.Any(t => t.Tip == "Nedelja"))
+            {
+                Models.Entiteti.TipDana td3 = new Models.Entiteti.TipDana();
+                td3.Id = 3;
+                td3.Tip = "Nedelja";
+                context.TipDana.Add(td3);
+                context.SaveChanges();
+            }
 
 
             var userStore = new UserStore<ApplicationUser>(context);
@@ -117,14 +139,14 @@ namespace WebApp.Migrations
 
             if (!context.Users.Any(u => u.UserName == "admin@yahoo.com"))
             {
-                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo.com", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!"),TipPutnikaId = 1 };
+                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo.com", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1*/,/*KorisnikId=1*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
 
             if (!context.Users.Any(u => u.UserName == "appu@yahoo.com"))
             { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo.com", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") , TipPutnikaId = 1 };
+                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo.com", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1*/,/*KorisnikId=2*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }

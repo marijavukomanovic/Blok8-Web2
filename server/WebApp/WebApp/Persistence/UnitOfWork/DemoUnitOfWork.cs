@@ -30,6 +30,9 @@ namespace WebApp.Persistence.UnitOfWork
         public ICenaKarteRepository cenaKarteRepository { get; set; }
         [Dependency]
         public ITipPutnikaRepository tipPutnikaRepository { get; set; }
+        [Dependency]
+        public IKorisnikRepository korisnikRepository { get; set; }
+
 
         private readonly DbContext _context;
 

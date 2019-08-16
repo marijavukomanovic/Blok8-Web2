@@ -52,6 +52,12 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.4.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
     </Reference>
@@ -91,6 +97,9 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -107,6 +116,9 @@
     </Reference>
     <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -250,17 +262,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AutobusController.cs" />
-    <Compile Include="Controllers\CenaKartesController.cs" />
-    <Compile Include="Controllers\CenovniksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KartasController.cs" />
-    <Compile Include="Controllers\LinijasController.cs" />
-    <Compile Include="Controllers\RedVoznjesController.cs" />
-    <Compile Include="Controllers\StanicasController.cs" />
-    <Compile Include="Controllers\TipDanasController.cs" />
-    <Compile Include="Controllers\TipKartesController.cs" />
-    <Compile Include="Controllers\TipPutnikasController.cs" />
+    <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -273,6 +276,10 @@
     <Compile Include="Migrations\201906011351070_NewMigration.Designer.cs">
       <DependentUpon>201906011351070_NewMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.cs" />
+    <Compile Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.Designer.cs">
+      <DependentUpon>201908161359344_DodatnaPoljaUApplicationUseru3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -281,6 +288,7 @@
     <Compile Include="Models\Entiteti\CenaKarte.cs" />
     <Compile Include="Models\Entiteti\Cenovnik.cs" />
     <Compile Include="Models\Entiteti\Karta.cs" />
+    <Compile Include="Models\Entiteti\Korisnik.cs" />
     <Compile Include="Models\Entiteti\Linija.cs" />
     <Compile Include="Models\Entiteti\RedVoznje.cs" />
     <Compile Include="Models\Entiteti\Stanica.cs" />
@@ -295,6 +303,7 @@
     <Compile Include="Persistence\Repository\ICenaKarteRepository.cs" />
     <Compile Include="Persistence\Repository\ICenovnikRepository.cs" />
     <Compile Include="Persistence\Repository\IKartaRepository.cs" />
+    <Compile Include="Persistence\Repository\IKorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\ILinijaRepository.cs" />
     <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
@@ -303,6 +312,7 @@
     <Compile Include="Persistence\Repository\ITipKlaseRepository.cs" />
     <Compile Include="Persistence\Repository\ITipPutnikaRepository.cs" />
     <Compile Include="Persistence\Repository\KartaRepository.cs" />
+    <Compile Include="Persistence\Repository\KorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\LinijaRepository.cs" />
     <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
@@ -376,6 +386,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Korisniks\Create.cshtml" />
+    <Content Include="Views\Korisniks\Delete.cshtml" />
+    <Content Include="Views\Korisniks\Details.cshtml" />
+    <Content Include="Views\Korisniks\Edit.cshtml" />
+    <Content Include="Views\Korisniks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906011351070_NewMigration.resx">
       <DependentUpon>201906011351070_NewMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.resx">
+      <DependentUpon>201908161359344_DodatnaPoljaUApplicationUseru3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

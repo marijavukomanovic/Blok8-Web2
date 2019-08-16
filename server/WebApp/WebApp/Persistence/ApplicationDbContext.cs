@@ -31,7 +31,7 @@ namespace WebApp.Persistence
         public DbSet<TipPutnika> TipPutnika { get; set; }
 
         public DbSet<RedVoznje> RedoviVoznje { get; set; }
-
+        public DbSet<Korisnik> Korisnik { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
