@@ -41,5 +41,7 @@ namespace WebApp.Persistence
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<WebApp.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

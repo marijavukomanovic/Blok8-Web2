@@ -121,5 +121,15 @@ namespace WebApp.Models
 
         //public byte[] Document { get; set; }
     }
+    public class LoginBindingModel
+    {
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+        [Required]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+    }
 
 }

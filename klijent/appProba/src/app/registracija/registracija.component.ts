@@ -30,7 +30,7 @@ registerForm = this.fb.group({
     console.log(this.registerForm.value);
     this.registracijaServis.register(this.registerForm.value).subscribe(data => {
       console.log('Registration successfully done.');
-      this.router.navigate(['/log-in']);
+      this.router.navigate(['/LogIn']);
     });
   }
 }

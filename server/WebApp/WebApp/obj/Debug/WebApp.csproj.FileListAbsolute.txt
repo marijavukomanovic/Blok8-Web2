@@ -493,3 +493,4 @@ C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\ko\System.Spa
 C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\ru\System.Spatial.resources.dll
 C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache

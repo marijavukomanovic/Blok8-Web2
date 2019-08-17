@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginService extends HttpService{
 
-  specificUrl = this.url + "/api/Login/PostLogin";
+  specificUrl = this.url + "/api/LogIn/LogInUsern";
 
   login(data: LoginModel) : Observable<any>{
     let httpOptions = {
