@@ -1,7 +1,7 @@
 export enum PassengerType {
-    Student = 1,
-    Pensioner = 2,
-    Regular = 3
+    Student = 'Student',
+    Penzioner = 'Penzioner',
+    Regularan = 'Regularan'
 }
 
 export enum TicketType{

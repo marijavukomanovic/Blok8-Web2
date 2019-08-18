@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
-
+import {RegistracijaModel} from 'src/app/model/registracijaModel';
+import {PassengerType} from 'src/app/model/enums';
 
 @Component({
   selector: 'app-registracija',
@@ -10,6 +11,19 @@ import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
   styleUrls: ['./registracija.component.css']
 })
 export class RegistracijaComponent implements OnInit {
+
+user : RegistracijaModel = {
+  Name : '',
+  LastName : '',
+  UserName : '',
+  Email : '',
+  Address : '',
+  BirthdayDate : '',
+  PassengerType : PassengerType.Regularan,
+  Password : '',
+  ConfirmPassword : '',
+};
+
 registerForm = this.fb.group({
     Name : [''],
     LastName : [''],
@@ -24,7 +38,13 @@ registerForm = this.fb.group({
   constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {
+    this.user.PassengerType = PassengerType.Regularan;
   }
+  onchange()
+  {
+    
+  }
+
   onSubmit()
   {
     console.log(this.registerForm.value);

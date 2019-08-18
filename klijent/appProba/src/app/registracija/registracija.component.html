@@ -66,10 +66,10 @@
         </label>
         <label>
           <p class="label-txt"> Tip putnika: </p>
-          <select>
-            <option name="PassengerType" formContorlName="PassengerType" value="3">Regularan</option>
-            <option name="PassengerType" formContorlName="PassengerType" value="1">Student</option>
-            <option name="PassengerType" formContorlName="PassengerType" value="2">Penzioner</option>
+          <select formControlName="PassengerType" id="lab" required (change)="onchange()">
+            <option name="PassengerType"  value="Regularan">Regularan</option>
+            <option name="PassengerType"  value="Student">Student</option>
+            <option name="PassengerType"  value="Penzioner">Penzioner</option>
         </select>
         </label>
         <label>

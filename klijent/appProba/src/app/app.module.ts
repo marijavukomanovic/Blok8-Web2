@@ -13,14 +13,15 @@ import {Routes} from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component';
 import { from } from 'rxjs';
 import { RegistracijaComponent } from './registracija/registracija.component';
+import { LoginComponent } from './auth/login/login.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
-const routes : Routes =[
-  {path:'',component:HomeComponent},
-  {path: '/log-in',component:LogInComponent},
-  {path: '/registracija',component:RegistracijaComponent},
-];
+//const routes : Routes =[
+  //{path:'',component:HomeComponent},
+  //{path: '/log-in',component:LogInComponent},
+ // {path: '/registracija',component:RegistracijaComponent},
+//];
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ const routes : Routes =[
     HomeComponent,
     LogInComponent,
     RegistracijaComponent,
+    LoginComponent,
     //RegistracijaServis,
   ],
   imports: [
