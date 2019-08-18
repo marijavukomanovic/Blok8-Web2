@@ -12,7 +12,7 @@ export class LogInComponent implements OnInit {
 
   loginForm=this.fb.group({
     UserName : ['', Validators.required],
-    Password : ['', Validators.required]
+    password : ['', Validators.required]
   });
 
   

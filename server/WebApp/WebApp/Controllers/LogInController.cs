@@ -20,6 +20,7 @@ namespace WebApp.Controllers
     public class LogInController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationUser appUser = new ApplicationUser();
         private IKorisnikRepository korisnikRepository;
 
         public LogInController(IKorisnikRepository korisnikRepository)
@@ -36,14 +37,19 @@ namespace WebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (korisnikRepository.Find(x => x.KorisnickoIme == model.Username).Count() != 0)
+            if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName /*&& appUser.KorisnikId==x.Id && appUser.PasswordHash(model.password))*/).Count() != 0)
             {
                 return BadRequest("Nepostoji zadato korisnicko ime");
             }
-            if (korisnikRepository.Find(x => x.Sifra == model.Password).Count() != 0)
-            {
-                return BadRequest("Pogresna sifra");
-            }
+
+            //if (korisnikRepository.Find(x => (x.KorisnickoIme == model.UserName && x.Sifra==model.password)).Count() != 0 )
+            //{
+            //    return BadRequest("Nepostoji zadato korisnicko ime");
+            //}
+            //if (korisnikRepository.Find(x => x.Sifra == model.Password).Count() != 0)
+            //{
+            //    return BadRequest("Pogresna sifra");
+            //}
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
 

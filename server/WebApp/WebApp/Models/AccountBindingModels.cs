@@ -124,11 +124,11 @@ namespace WebApp.Models
     public class LoginBindingModel
     {
         [Required]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
         [Required]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        [Display(Name = "password")]
+        public string password { get; set; }
 
     }
 
