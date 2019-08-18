@@ -1,4 +1,15 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">!-->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">!-->
+  <!--<link rel="stylesheet" href="theme.css" type="text/css">!-->
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container"> 
       <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
         <span class="navbar-toggler-icon"></span>
@@ -9,90 +20,71 @@
           <b> JGSP</b>
         </a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link" ></a> </li>
-          <li class="nav-item"> <a class="nav-link" ></a> </li>
+          <li class="nav-item">Logovanje</li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link" routerLink="/log-in">Uloguj se</a> </li>
           <li class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <h1 style="text-align:center">Registracija</h1>
-        <label>
-          <p class="label-txt">Ime:  </p>
-          <input type="text" formControlName="Name" class="input" required />
-            <div class="line-box">
-             <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Prezime:</p>
-          <input type="text" formControlName="LastName" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Korisnicko ime:</p>
-          <input type="text" formControlName="UserName" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Email:</p>
-          <input type="text" formControlName="Email" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Adresa:</p>
-          <input type="text" formControlName="Address" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Datum rodjenja:</p>
-          <input type="text" formControlName="BirthdayDate" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt"> Tip putnika: </p>
-          <select formControlName="PassengerType" id="lab" required (change)="onchange()">
-            <option name="PassengerType"  value="Regularan">Regularan</option>
-            <option name="PassengerType"  value="Student">Student</option>
-            <option name="PassengerType"  value="Penzioner">Penzioner</option>
-        </select>
-        </label>
-        <label>
-          <p class="label-txt">Lozinka:</p>
-          <input type="password" formControlName="Password" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-        <label>
-          <p class="label-txt">Potvrdi lozniku:</p>
-          <input type="password" formControlName="ConfirmPassword" class="input" required />
-            <div class="line-box">
-              <div class="line"></div>
-            </div>
-        </label>
-          <button class="btn btn-success pull-right" type="submit">Registruj se</button>
-    </form>
-      
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="">
-            <b contenteditable="true"> GSP</b>
-          </a> </div>
-      </nav>
+  <div class="py-5" style=" height: 593px;	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size:90%;	background-repeat: repeat;">
 
-
+    <div class="login">
+      <h2 class="login-header">Registracija</h2>
+      <form [formGroup]="loginForm" class="login-container" (ngSubmit)="onSubmit()">
+    
+        <div class="row">
+            <div class="col-md-6">
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <input type="text" placeholder="Ime" formControlName="Name"required>
+              </p>
+    
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <input type="text" placeholder="Prezime" formControlName="LastName" required>
+              </p>
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+                  <input type="text" placeholder="Korisnicko ime" formControlName="UserName" required>
+              </p>
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                  <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"required>
+                  </p>
+              
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                  <input type="text" placeholder="Adresa" formControlName="Adress"required>
+              </p>
+          </div>
+        <div class="col-md-6">
+            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <input type="email" placeholder="email" formControlName="Email"required>
+            </p>
+    
+            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <input type="password" placeholder="Sifra" formControlName="Password"required>
+                </p>
+                <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                    <input type="password" placeholder="Potvrdite sifru" formControlName="ConfirmPassword"required>
+                    </p>
+                    
+                    
+            <p class="label-txt"> Tip putnika: </p>
+            <select>
+              <option name="PassengerType" formContorlName="PassengerType" value="3">Regularan</option>
+              <option name="PassengerType" formContorlName="PassengerType" value="1">Student</option>
+              <option name="PassengerType" formContorlName="PassengerType" value="2">Penzioner</option>
+          </select>  
+             
+          </div>
+        </div>
+        <p>
+          <input type="submit" value="Uloguj se">
+        </p>
+      </form>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" >
+        <i class="fa d-inline fa-lg fa-bus"></i>
+        <b contenteditable="true"></b>
+      </a> </div>
+  </nav>

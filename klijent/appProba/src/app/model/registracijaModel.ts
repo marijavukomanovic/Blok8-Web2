@@ -10,4 +10,5 @@ export class RegistracijaModel{
     PassengerType : PassengerType;
     Password : string;
     ConfirmPassword : string;
+    Document : string;
 }

@@ -22,6 +22,7 @@ user : RegistracijaModel = {
   PassengerType : PassengerType.Regularan,
   Password : '',
   ConfirmPassword : '',
+  Document : '',
 };
 
 registerForm = this.fb.group({
@@ -33,17 +34,15 @@ registerForm = this.fb.group({
     BirthdayDate : [''],
     PassengerType : [''],
     Password : ['', Validators.required],
-    ConfirmPassword : ['', Validators.required]
+    ConfirmPassword : ['', Validators.required],
+    Document : [''],
   });
   constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {
     this.user.PassengerType = PassengerType.Regularan;
   }
-  onchange()
-  {
-    
-  }
+
 
   onSubmit()
   {
@@ -52,5 +51,10 @@ registerForm = this.fb.group({
       console.log('Registration successfully done.');
       this.router.navigate(['/log-in']);
     });
+  }
+
+  onFileChange(event)
+  {
+    
   }
 }

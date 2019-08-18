@@ -25,9 +25,12 @@ export class LoginComponent {
   }
 
   login() {
-    this.authService.login(this.loginForm.value).subscribe((data) => {
-      console.log(data);
-    });
+    this.authService.login(this.loginForm.value,this.fja );
+ 
+  }
+
+  fja(){
+    alert('uspesan login');
   }
 
   logout() {

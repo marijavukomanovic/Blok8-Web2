@@ -15,30 +15,34 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: User): Observable<any> {
-    return this.http.post<any>(this.loginUrl, `username=`+ user.username +`&password=`+ user.password + `&grant_type=password`, { 'headers': { 'Content-type': 'x-www-form-urlencoded' } }).pipe(
-      map(res => {
-        console.log(res.access_token);
+  login(user: User, callback: any) {
+    const data = `username=${user.username}&password=${user.password}&grant_type=password`;
+    alert(data);
+    // tslint:disable-next-line: no-shadowed-variable
+      const httpOptions = {
+          headers: {
+              'Content-type': 'application/x-www-form-urlencoded'
+          }
+      };
+      this.http.post<any>(this.loginUrl, data, httpOptions).subscribe (data => {
 
-        let jwt = res.access_token;
-
-        let jwtData = jwt.split('.')[1]
-        let decodedJwtJsonData = window.atob(jwtData)
-        let decodedJwtData = JSON.parse(decodedJwtJsonData)
-
-        let role = decodedJwtData.role
-
-        console.log('jwtData: ' + jwtData)
-        console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
-        console.log('decodedJwtData: ' + decodedJwtData)
-        console.log('Role ' + role)
-
-        localStorage.setItem('jwt', jwt)
-        localStorage.setItem('role', role);
-      }),
-
-      catchError(this.handleError<any>('login'))
-    );
+        const jwt = data.access_token;
+    
+        const jwtData = jwt.split('.')[1];
+        const decodedJwtJsonData = window.atob(jwtData);
+        const decodedJwtData = JSON.parse(decodedJwtJsonData);
+    
+        const role = decodedJwtData.role;
+    
+        if (localStorage.length === 0) {
+          localStorage.setItem('jwt', jwt);
+          localStorage.setItem('role', role);
+          localStorage.setItem('username',  decodedJwtData.unique_name);
+        }
+        callback();
+      }, erro=>
+      alert('blaaa'));
+    
   }
 
   logout(): void {
