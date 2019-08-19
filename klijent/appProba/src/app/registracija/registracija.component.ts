@@ -3,7 +3,7 @@ import { FormBuilder, Validators ,FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 import {RegistracijaModel} from 'src/app/model/registracijaModel';
-import {PassengerType} from 'src/app/model/enums';
+import {PassengerTypeEnum} from 'src/app/model/enums';
 
 @Component({
   selector: 'app-registracija',
@@ -19,7 +19,7 @@ user : RegistracijaModel = {
   Email : '',
   Address : '',
   BirthdayDate : '',
-  PassengerType : PassengerType.Regularan,
+  PassengerType : 1,
   Password : '',
   ConfirmPassword : '',
   Document : '',
@@ -40,7 +40,7 @@ registerForm = this.fb.group({
   constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {
-    this.user.PassengerType = PassengerType.Regularan;
+    //this.user.PassengerType = PassengerType.Regularan;
   }
 
   onchange()
@@ -60,4 +60,17 @@ registerForm = this.fb.group({
   {
     
   }
+
+  ownerLevels = [
+    { id: 1, name: 'Student' },
+    { id: 2, name: 'Penzioner' },
+    { id: 3, name: 'Regularan' }
+ ];
+ 
+ selectedOwnerLevel: number = 0;
+ 
+ onChangeOwnerLevel(ownerLevelId: number) {
+    this.selectedOwnerLevel = ownerLevelId;
+    this.user.PassengerType = ownerLevelId;
+ }
 }

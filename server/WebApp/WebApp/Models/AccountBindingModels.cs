@@ -118,7 +118,7 @@ namespace WebApp.Models
         public string Address { get; set; }
 
         //[Required]
-        public string PassengerType { get; set; }            // djak, penzioner, regularan
+        public int PassengerType { get; set; }            // djak, penzioner, regularan
 
         //public byte[] Document { get; set; }
     }

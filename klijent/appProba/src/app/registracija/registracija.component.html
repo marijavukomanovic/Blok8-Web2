@@ -68,11 +68,15 @@
                     
                     
             <p class="label-txt"> Tip putnika: </p>
-            <select formContorlName="PassengerType" (change)="onchange()">
+            <!--<select formContorlName="PassengerType" (change)="onchange()">
               <option  value="Regularan">Regularan</option>
               <option  value="Student">Student</option>
               <option  value="Penzioner">Penzioner</option>
-          </select>  
+          </select>  -->
+          <select *ngIf="ownerLevels" [value]="selectedOwnerLevel" (change)="onChangeOwnerLevel($event.target.value)" formControlName="PassengerType" id="ddOwnerLevel">
+            <option [value]="0" disabled>Select Owner Level</option>
+            <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id">{{ownerLevel.name}}</option>
+         </select>
              
           </div>
         </div>

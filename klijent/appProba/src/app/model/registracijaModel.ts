@@ -1,4 +1,4 @@
-import { PassengerType } from 'src/app/model/enums';
+import { PassengerTypeEnum } from 'src/app/model/enums';
 
 export class RegistracijaModel{
     Name : string;
@@ -7,7 +7,7 @@ export class RegistracijaModel{
     Email : string;
     Address : string;
     BirthdayDate : string;
-    PassengerType : PassengerType;
+    PassengerType : number;
     Password : string;
     ConfirmPassword : string;
     Document : string;

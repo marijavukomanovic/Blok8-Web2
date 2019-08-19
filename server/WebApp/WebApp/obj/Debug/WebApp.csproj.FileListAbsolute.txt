@@ -679,3 +679,4 @@ C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\ru\System.Spatial.reso
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.New.resources

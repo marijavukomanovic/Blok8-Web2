@@ -53,7 +53,7 @@ namespace WebApp.Controllers
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new UserManager<ApplicationUser>(userStore);
             DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
-            int ageGroup = 1;
+            /*int ageGroup = 1;
             switch (model.PassengerType.ToString())
             {
                 
@@ -70,9 +70,10 @@ namespace WebApp.Controllers
                 default:
                     ageGroup = 3;
                     break;
-            }
-            
+            }*/
 
+            //int br = 0;
+            //Int32.TryParse(model.PassengerType,out br);
             Korisnik noviKorisnik = new Korisnik()
             {
                 KorisnickoIme = model.UserName,
@@ -81,14 +82,14 @@ namespace WebApp.Controllers
                 Email = model.Email,
                 Adresa = model.Address,
                 DatumRodjenja = datumRodjenja,
-                Tip = tipPutnikaRepository.Get(ageGroup),
+                Tip = tipPutnikaRepository.Get(Convert.ToInt32(model.PassengerType)),
             };
             
             db.Korisnik.Add(noviKorisnik);
             db.SaveChanges();
            // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-            var appUser = new ApplicationUser() { Id = noviKorisnik.Id.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra) };
+            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra) };
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
             userManager.AddToRole(appUser.Id,"AppUser" );
             noviKorisnik.Sifra = appUser.PasswordHash;
