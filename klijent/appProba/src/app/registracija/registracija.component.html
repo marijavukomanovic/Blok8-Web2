@@ -32,7 +32,7 @@
 
     <div class="login">
       <h2 class="login-header">Registracija</h2>
-      <form [formGroup]="loginForm" class="login-container" (ngSubmit)="onSubmit()">
+      <form [formGroup]="registerForm" class="login-container" (ngSubmit)="onSubmit()">
     
         <div class="row">
             <div class="col-md-6">
@@ -51,7 +51,7 @@
                   </p>
               
               <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
-                  <input type="text" placeholder="Adresa" formControlName="Adress"required>
+                  <input type="text" placeholder="Adresa" formControlName="Address"required>
               </p>
           </div>
         <div class="col-md-6">
@@ -68,10 +68,10 @@
                     
                     
             <p class="label-txt"> Tip putnika: </p>
-            <select>
-              <option name="PassengerType" formContorlName="PassengerType" value="3">Regularan</option>
-              <option name="PassengerType" formContorlName="PassengerType" value="1">Student</option>
-              <option name="PassengerType" formContorlName="PassengerType" value="2">Penzioner</option>
+            <select formContorlName="PassengerType" (change)="onchange()">
+              <option  value="Regularan">Regularan</option>
+              <option  value="Student">Student</option>
+              <option  value="Penzioner">Penzioner</option>
           </select>  
              
           </div>

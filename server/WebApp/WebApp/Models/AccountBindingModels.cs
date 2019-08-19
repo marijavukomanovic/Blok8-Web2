@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using WebApp.Models.Entiteti;
 
 namespace WebApp.Models
 {
@@ -108,7 +109,7 @@ namespace WebApp.Models
 
         [Required]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         //[Required]
         public string BirthdayDate { get; set; }

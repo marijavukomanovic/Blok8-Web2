@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Router} from '@angular/router';
 
 import { Observable, pipe, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from './user';
+import { LoginModel } from '../model/login-model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: User, callback: any) {
+  login(user: LoginModel, callback: any) {
     const data = `username=${user.username}&password=${user.password}&grant_type=password`;
     alert(data);
     // tslint:disable-next-line: no-shadowed-variable
@@ -24,6 +25,7 @@ export class AuthService {
               'Content-type': 'application/x-www-form-urlencoded'
           }
       };
+      const retVal = 'Korisnicko ime ili sifra je pogresno.'
       this.http.post<any>(this.loginUrl, data, httpOptions).subscribe (data => {
 
         const jwt = data.access_token;
@@ -39,10 +41,11 @@ export class AuthService {
           localStorage.setItem('role', role);
           localStorage.setItem('username',  decodedJwtData.unique_name);
         }
+        
+        
         callback();
-      }, erro=>
-      alert('blaaa'));
-    
+      }, error=>
+      alert('desila se greska'));
   }
 
   logout(): void {

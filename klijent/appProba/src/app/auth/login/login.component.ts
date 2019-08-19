@@ -26,7 +26,9 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.loginForm.value,this.fja );
- 
+    this.router.navigate(['/']);
+  
+  
   }
 
   fja(){

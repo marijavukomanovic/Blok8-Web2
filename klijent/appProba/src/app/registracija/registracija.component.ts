@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators ,FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 import {RegistracijaModel} from 'src/app/model/registracijaModel';
@@ -43,13 +43,16 @@ registerForm = this.fb.group({
     this.user.PassengerType = PassengerType.Regularan;
   }
 
-
+  onchange()
+  {
+  
+  }
   onSubmit()
   {
     console.log(this.registerForm.value);
     this.registracijaServis.register(this.registerForm.value).subscribe(data => {
       console.log('Registration successfully done.');
-      this.router.navigate(['/log-in']);
+      this.router.navigate(['/']);
     });
   }
 

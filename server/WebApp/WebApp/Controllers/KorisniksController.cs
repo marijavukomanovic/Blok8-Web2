@@ -41,11 +41,12 @@ namespace WebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             if (korisnikRepository.Find(x => x.Email == model.Email).Count() != 0)
             {
                 return BadRequest("Vec ste registrovani sa datim meilom");
             }
-            if (korisnikRepository.Find(x => x.KorisnickoIme == model.Username).Count() != 0)
+            if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName).Count() != 0)
             {
                 return BadRequest("Korisnicko ime se vec koristi");
             }
@@ -53,16 +54,16 @@ namespace WebApp.Controllers
             var userManager = new UserManager<ApplicationUser>(userStore);
             DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
             int ageGroup = 1;
-            switch (model.PassengerType.ToUpper())
+            switch (model.PassengerType.ToString())
             {
                 
-                case "STUDENT":
+                case "Student":
                     ageGroup = 1;
                     break;
-                case "PENZIONER":
+                case "Penzioner":
                     ageGroup = 2;
                     break;
-                case "REGULARAN":
+                case "Regularan":
                     ageGroup = 3;
                     break;
                     
@@ -70,20 +71,22 @@ namespace WebApp.Controllers
                     ageGroup = 3;
                     break;
             }
-            TipPutnika t = new TipPutnika() { Id = ageGroup, Naziv = model.PassengerType };
+            
 
             Korisnik noviKorisnik = new Korisnik()
             {
-                KorisnickoIme = model.Username,
+                KorisnickoIme = model.UserName,
                 Prezime = model.LastName,
                 Sifra = model.Password,
                 Email = model.Email,
                 Adresa = model.Address,
                 DatumRodjenja = datumRodjenja,
-                Tip = t,
+                Tip = tipPutnikaRepository.Get(ageGroup),
             };
+            
             db.Korisnik.Add(noviKorisnik);
             db.SaveChanges();
+           // noviKorisnik.Id = noviKorisnik.Id + 2;
 
             var appUser = new ApplicationUser() { Id = noviKorisnik.Id.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra) };
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
