@@ -111,16 +111,16 @@ namespace WebApp.Models
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
         public string UserName { get; set; }
 
-        //[Required]
+       [Required]
         public string BirthdayDate { get; set; }
 
-        //[Required]
+        [Required]
         public string Address { get; set; }
 
-        //[Required]
+        [Required]
         public int PassengerType { get; set; }            // djak, penzioner, regularan
 
-        //public byte[] Document { get; set; }
+        public byte[] Document { get; set; }
     }
     public class LoginBindingModel
     {

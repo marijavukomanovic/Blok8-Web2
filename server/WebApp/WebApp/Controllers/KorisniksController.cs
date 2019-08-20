@@ -77,19 +77,22 @@ namespace WebApp.Controllers
             Korisnik noviKorisnik = new Korisnik()
             {
                 KorisnickoIme = model.UserName,
+                Ime = model.Name,
                 Prezime = model.LastName,
                 Sifra = model.Password,
                 Email = model.Email,
                 Adresa = model.Address,
                 DatumRodjenja = datumRodjenja,
-                Tip = tipPutnikaRepository.Get(Convert.ToInt32(model.PassengerType)),
+                
+                TipId= Convert.ToInt32(model.PassengerType),
             };
             
             db.Korisnik.Add(noviKorisnik);
             db.SaveChanges();
            // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra) };
+            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra),KorisnikId=noviKorisnik.Id };
+            appUser.Id = noviKorisnik.Id.ToString();
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
             userManager.AddToRole(appUser.Id,"AppUser" );
             noviKorisnik.Sifra = appUser.PasswordHash;

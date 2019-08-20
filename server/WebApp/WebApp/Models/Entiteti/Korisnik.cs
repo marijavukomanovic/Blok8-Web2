@@ -20,6 +20,7 @@ namespace WebApp.Models.Entiteti
         public int TipId { get; set; }
         //public TipPutnika TipPutnika { get; set; }
         public TipPutnika Tip { get; set; }
+        public byte[] Document { get; set; }
 
         public Korisnik() { }
     }
