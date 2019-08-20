@@ -85,6 +85,7 @@ namespace WebApp.Controllers
                 DatumRodjenja = datumRodjenja,
                 
                 TipId= Convert.ToInt32(model.PassengerType),
+                Document=model.Document,
             };
             
             db.Korisnik.Add(noviKorisnik);
