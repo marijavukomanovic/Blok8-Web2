@@ -26,8 +26,10 @@ namespace WebApp.Persistence.UnitOfWork
         ICenaKarteRepository cenaKarteRepository { get; set; }
 
         ITipPutnikaRepository tipPutnikaRepository { get; set; }
+
         IKorisnikRepository korisnikRepository { get; set; }
 
+        ITipLinijeRepository tipLinijeRepository { get; set; }
 
         int Complete();
     }

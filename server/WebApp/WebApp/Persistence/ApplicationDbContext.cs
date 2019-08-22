@@ -26,12 +26,17 @@ namespace WebApp.Persistence
 
         // public DbSet<VremenskaKarta> VremenskeKarte { get; set; }
         public DbSet<TipKarte> TipKarte { get; set; }
+
         public DbSet<TipDana> TipDana  { get; set; }
 
         public DbSet<TipPutnika> TipPutnika { get; set; }
 
         public DbSet<RedVoznje> RedoviVoznje { get; set; }
+
         public DbSet<Korisnik> Korisnik { get; set; }
+
+        public DbSet<TipLinije> TipLinija { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

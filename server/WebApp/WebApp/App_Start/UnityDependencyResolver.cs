@@ -81,6 +81,7 @@ namespace WebApp.App_Start
             container.RegisterType<ITipPutnikaRepository, TipPutnikaRepository>();
             container.RegisterType<ITipDanaRepository, TipDanaRepository>();
             container.RegisterType<IKorisnikRepository, KorisnikRepository>();
+            container.RegisterType<ITipLinijeRepository, TipLinijeRepository>();
         }
 
         public void Dispose()

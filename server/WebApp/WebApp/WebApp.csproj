@@ -289,6 +289,10 @@
     <Compile Include="Migrations\201908201033359_SaDokumentomKorisnik.Designer.cs">
       <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908221649334_saTipLinije.cs" />
+    <Compile Include="Migrations\201908221649334_saTipLinije.Designer.cs">
+      <DependentUpon>201908221649334_saTipLinije.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -303,6 +307,7 @@
     <Compile Include="Models\Entiteti\Stanica.cs" />
     <Compile Include="Models\Entiteti\TipDana.cs" />
     <Compile Include="Models\Entiteti\TipKarte.cs" />
+    <Compile Include="Models\Entiteti\TipLinije.cs" />
     <Compile Include="Models\Entiteti\TipPutnika.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\AutobusRepository.cs" />
@@ -319,6 +324,7 @@
     <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
     <Compile Include="Persistence\Repository\ITipDanaRepository.cs" />
     <Compile Include="Persistence\Repository\ITipKlaseRepository.cs" />
+    <Compile Include="Persistence\Repository\ITipLinijeRepository.cs" />
     <Compile Include="Persistence\Repository\ITipPutnikaRepository.cs" />
     <Compile Include="Persistence\Repository\KartaRepository.cs" />
     <Compile Include="Persistence\Repository\KorisnikRepository.cs" />
@@ -328,6 +334,7 @@
     <Compile Include="Persistence\Repository\StanicaRepository.cs" />
     <Compile Include="Persistence\Repository\TipDanaRepository.cs" />
     <Compile Include="Persistence\Repository\TipKarteRepository.cs" />
+    <Compile Include="Persistence\Repository\TipLinijeRepository.cs" />
     <Compile Include="Persistence\Repository\TipPutnikaRepository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
@@ -449,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908201033359_SaDokumentomKorisnik.resx">
       <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908221649334_saTipLinije.resx">
+      <DependentUpon>201908221649334_saTipLinije.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

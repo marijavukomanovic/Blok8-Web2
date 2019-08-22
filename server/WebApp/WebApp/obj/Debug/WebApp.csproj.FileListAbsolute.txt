@@ -868,3 +868,5 @@ C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.cspro
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaDokumentomKorisnik.resources
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaDokumentomKorisnik.resources
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.saTipLinije.resources
