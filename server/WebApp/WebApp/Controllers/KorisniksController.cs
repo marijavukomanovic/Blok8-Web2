@@ -107,6 +107,188 @@ namespace WebApp.Controllers
             return Ok();
 
         }
+        // GET: api/User/GetInfo
+        //[Authorize(Roles = "AppUser")] nek bude zakomentarisano da nam ne bi pravilo problem
+        [Route("GetInfo")]
+        [ResponseType(typeof(UserRegistrationBindingModel))]
+        public IHttpActionResult GetUserInfo(string username)
+        {
+            Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == username).ToList().First();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            string ageGroup="";
+            switch (user.TipId)
+            {
+                case 1:
+                    ageGroup = "Regular";
+                    break;
+                case 2:
+                    ageGroup = "Student";
+                    break;
+                case 3:
+                    ageGroup = "Pensioner";
+                    break;
+                default:
+                    ageGroup = "None";
+                    break;
+            }
+
+            UserRegistrationBindingModel userRetval = new UserRegistrationBindingModel()
+            {
+                Email = user.Email,
+                Password = user.Sifra,
+                ConfirmPassword = user.Sifra,
+                Name = user.Ime,
+                LastName = user.Prezime,
+                UserName = user.KorisnickoIme,
+                BirthdayDate = user.DatumRodjenja.ToString(),
+                PassengerType = user.TipId,//ovo cemo verovatno morati da prepravimo
+                Document = user.Document,
+                Address = user.Adresa
+            };
+
+            return Ok(userRetval);
+        }
+        // POST api/User/ChangeInfo
+        [Authorize(Roles = "AppUser")]
+        [ResponseType(typeof(UserRegistrationBindingModel))]
+        [Route("ChangeInfo")]
+        public IHttpActionResult Edit(UserRegistrationBindingModel model)
+        {
+            // validacija
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // username i email se sigurno ne menjaju
+            // nalazenje podataka o User-u preko username-a
+            Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == model.UserName).ToList().First();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // parsiranje ageGroup-a
+            //int ageGroup = 1;
+            //switch (model.PassengerType)
+            //{
+            //    case "Regular":
+            //        ageGroup = 1;
+            //        break;
+            //    case "Student":
+            //        ageGroup = 2;
+            //        break;
+            //    case "Pensioner":
+            //        ageGroup = 3;
+            //        break;
+            //    default:
+            //        ageGroup = 1;
+            //        break;
+            //}
+
+            // parsiranje datuma
+            DateTime birthday = DateTime.Parse(model.BirthdayDate);
+
+            // ako se promenila vrednost ageGroup-e
+            if (user.TipId != model.PassengerType)
+            {
+                // i ta nova vrednost nije Regular => treba vratiti status na pending, i obrisati sliku (ako nije promenjena)
+                if (model.PassengerType != 1)
+                {
+                   // user.VerificationStatus = VerificationStatus.Pending;
+                }
+                // i ta nova vrednost je Regular => treba postaviti status na succecssfull, i obrisati sliku (ako nije promenjena)
+                else
+                {
+                    //user.VerificationStatus = VerificationStatus.Successful;
+                }
+
+                // brisanje slike, ako nije promenjena (i ako je uopste pre toga imao sliku)
+                // ako je promenio grupu, a nije promenio sliku, treba obrisati njegovu sliku (obrisati i ne postaviti opet istu sliku)
+                if (user.Document != null)
+                {
+                    if (user.Document.SequenceEqual(model.Document))
+                    {
+                        user.Document = null;
+                    }
+                    else
+                    {
+                        // promenio je starosnu grupu, i postavio novi dokument => novi dokument se smesta u bazu i ceka se kontroler da potvrdi/odbije
+                        user.Document = model.Document;
+                    }
+                }
+                else
+                {
+                    user.Document = model.Document;
+                   // user.VerificationStatus = VerificationStatus.Pending;
+                }
+            }
+            // ako nije promenio grupu, a promenio je sliku, treba sacuvati novu sliku i promeniti status na Pending
+            else
+            {
+                if (user.Document != null)
+                {
+                    if (!user.Document.SequenceEqual(model.Document))
+                    {
+                        user.Document = model.Document;
+                       // user.VerificationStatus = VerificationStatus.Pending;
+                    }
+                }
+                else
+                {
+                    user.Document = model.Document;
+                   // user.VerificationStatus = VerificationStatus.Pending;
+                }
+            }
+
+            // izmena zeljenih propertija
+            user.Ime = model.Name;
+            user.Prezime = model.LastName;
+            user.Adresa = model.Address;
+            user.TipId = model.PassengerType;
+            user.DatumRodjenja = birthday;
+            user.Sifra = model.Password;
+
+            // izmena u bazi
+        //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            string ageGroupString;
+            switch (user.TipId)
+            {
+                case 1:
+                    ageGroupString = "Regular";
+                    break;
+                case 2:
+                    ageGroupString = "Student";
+                    break;
+                case 3:
+                    ageGroupString = "Pensioner";
+                    break;
+                default:
+                    ageGroupString = "None";
+                    break;
+            }
+            UserRegistrationBindingModel userRetVal = new UserRegistrationBindingModel()
+            {
+                Email = user.Email,
+                Password = user.Sifra,
+                ConfirmPassword = user.Sifra,
+                Name = user.Ime,
+                LastName = user.Prezime,
+                UserName = user.KorisnickoIme,
+                BirthdayDate = user.DatumRodjenja.ToString(),
+                PassengerType = user.TipId,///vereovatnoi treba promeniti
+                Document = user.Document,
+                Address = user.Adresa
+            };
+            return Ok(userRetVal);
+        }
+
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)

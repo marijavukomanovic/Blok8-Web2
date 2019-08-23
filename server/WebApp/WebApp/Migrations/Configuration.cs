@@ -167,7 +167,7 @@ namespace WebApp.Migrations
                 l1.Aktivna = true;
                 l1.RedBroj = 1;
                 l1.TipId = 1;
-                l1.Stanice.Add(s1);
+               // l1.Stanice.Add(s1);
                 context.Linije.Add(l1);
                 context.SaveChanges();
             }
