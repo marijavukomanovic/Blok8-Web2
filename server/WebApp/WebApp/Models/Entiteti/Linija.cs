@@ -12,7 +12,7 @@ namespace WebApp.Models
     {
         [Key]
         public int RedBroj { get; set; }
-        public List<Stanica> Stanice { get; set; }
+        public ICollection<Stanica> Stanice { get; set; }
 
         [ForeignKey("Tip")]
         public int TipId { get; set; }

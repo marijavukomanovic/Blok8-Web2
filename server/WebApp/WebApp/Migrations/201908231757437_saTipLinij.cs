@@ -3,7 +3,7 @@ namespace WebApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class saTipLinije : DbMigration
+    public partial class saTipLinij : DbMigration
     {
         public override void Up()
         {

@@ -7,13 +7,13 @@ namespace WebApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class saTipLinije : IMigrationMetadata
+    public sealed partial class saTipLinij : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(saTipLinije));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(saTipLinij));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908221649334_saTipLinije"; }
+            get { return "201908231757437_saTipLinij"; }
         }
         
         string IMigrationMetadata.Source

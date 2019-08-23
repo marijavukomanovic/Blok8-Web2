@@ -151,7 +151,7 @@ namespace WebApp.Migrations
                 context.SaveChanges();
             }
 
-            /*if (!context.Stanice.Any(t => t.Naziv == "1A"))
+            if (!context.Stanice.Any(t => t.Naziv == "1A"))
             {
                 //Models.Entiteti.Stanica tl2 = new Models.Entiteti.Stanica();
                 Stanica s1 = new Stanica();
@@ -170,7 +170,7 @@ namespace WebApp.Migrations
                 l1.Stanice.Add(s1);
                 context.Linije.Add(l1);
                 context.SaveChanges();
-            }*/
+            }
 
 
             var userStore = new UserStore<ApplicationUser>(context);

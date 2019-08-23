@@ -289,9 +289,9 @@
     <Compile Include="Migrations\201908201033359_SaDokumentomKorisnik.Designer.cs">
       <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908221649334_saTipLinije.cs" />
-    <Compile Include="Migrations\201908221649334_saTipLinije.Designer.cs">
-      <DependentUpon>201908221649334_saTipLinije.cs</DependentUpon>
+    <Compile Include="Migrations\201908231757437_saTipLinij.cs" />
+    <Compile Include="Migrations\201908231757437_saTipLinij.Designer.cs">
+      <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -457,8 +457,8 @@
     <EmbeddedResource Include="Migrations\201908201033359_SaDokumentomKorisnik.resx">
       <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908221649334_saTipLinije.resx">
-      <DependentUpon>201908221649334_saTipLinije.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908231757437_saTipLinij.resx">
+      <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
