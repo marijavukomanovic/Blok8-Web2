@@ -133,6 +133,45 @@ namespace WebApp.Migrations
                 context.SaveChanges();
             }
 
+            if (!context.TipLinija.Any(t => t.Naziv == "Gradski"))
+            {
+                Models.Entiteti.TipLinije tl1 = new Models.Entiteti.TipLinije();
+                tl1.Id = 1;
+                tl1.Naziv = "Gradski";
+                context.TipLinija.Add(tl1);
+                context.SaveChanges();
+            }
+
+            if (!context.TipLinija.Any(t => t.Naziv == "Prigradski"))
+            {
+                Models.Entiteti.TipLinije tl2 = new Models.Entiteti.TipLinije();
+                tl2.Id = 2;
+                tl2.Naziv = "Prigradski";
+                context.TipLinija.Add(tl2);
+                context.SaveChanges();
+            }
+
+            /*if (!context.Stanice.Any(t => t.Naziv == "1A"))
+            {
+                //Models.Entiteti.Stanica tl2 = new Models.Entiteti.Stanica();
+                Stanica s1 = new Stanica();
+                s1.Naziv = "1A";
+                s1.Adresa = "Selj buna 55";
+                s1.GeografskeKoordinataX = 1.0;
+                s1.GeografskeKoordinataY = 2.0;
+                s1.Aktivna = true;
+                context.Stanice.Add(s1);
+                context.SaveChanges();
+
+                Linija l1 = new Linija();
+                l1.Aktivna = true;
+                l1.RedBroj = 1;
+                l1.TipId = 1;
+                l1.Stanice.Add(s1);
+                context.Linije.Add(l1);
+                context.SaveChanges();
+            }*/
+
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
