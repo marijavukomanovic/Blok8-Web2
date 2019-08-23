@@ -264,6 +264,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisniksController.cs" />
+    <Compile Include="Controllers\LinijasController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -410,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Linije\" />
     <Folder Include="Views\LogIn\" />
   </ItemGroup>
   <ItemGroup>

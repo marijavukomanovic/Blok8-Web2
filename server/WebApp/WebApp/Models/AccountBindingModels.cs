@@ -133,4 +133,20 @@ namespace WebApp.Models
 
     }
 
+    public class LineBindingModel
+    {
+        [Required]
+        [Display(Name = "Id")]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "RouteNumber")]
+        public int RouteNumber { get; set; }
+
+        [Required]
+        [Display(Name = "RouteType")]
+        public TipLinije RouteType { get; set; }
+
+    }
+
 }
