@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import {RegistracijaComponent} from './registracija/registracija.component';
 import {LinijeComponent} from './linije/linije.component';
 import {RedVoznjeComponent} from './red-voznje/red-voznje.component';
+import {CenovnikComponent} from './cenovnik/cenovnik.component';
 //
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {path: 'linije',component:LinijeComponent},
   {path: 'red-voznje',component: RedVoznjeComponent},
+  {path: 'cenovnik',component:CenovnikComponent},
 ];
 
 @NgModule({

@@ -14,3 +14,10 @@ export enum DayType{
     Subota = 2,
     Nedelja = 3
 }
+
+export enum vrstaKarte{
+    Vremenska = 1,
+    Dnevna = 2,
+    Mesecna = 3,
+    Godisnja = 4
+}

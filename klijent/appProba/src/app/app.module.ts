@@ -16,6 +16,7 @@ import { RegistracijaComponent } from './registracija/registracija.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LinijeComponent } from './linije/linije.component';
 import { RedVoznjeComponent } from './red-voznje/red-voznje.component';
+import { CenovnikComponent } from './cenovnik/cenovnik.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -34,6 +35,7 @@ import { RedVoznjeComponent } from './red-voznje/red-voznje.component';
     LoginComponent,
     LinijeComponent,
     RedVoznjeComponent,
+    CenovnikComponent,
     //RegistracijaServis,
   ],
   imports: [

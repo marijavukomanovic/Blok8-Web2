@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container"> 
+    <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar12"> 
+      <a class="navbar-brand d-none d-md-block">
+        <i class="fa d-inline fa-lg fa-bus" routerLink='/'></i>
+        <b> JGSP</b>
+      </a>
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"> <a class="nav-link" ></a> </li>
+        <li class="nav-item"> <a class="nav-link" ></a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+  <div class="container">
+<form>
+<h3 style="text-align:center">Cenovnik</h3>
+<label>
+      <select #vrstaKarte>
+            <option value="0" disabled>Odaberite tip karte</option>
+            <option value="1">Vremenska</option>
+            <option value="2">Dnevna</option>
+            <option value="3">Mesecna</option>
+            <option value="4">Godisnja</option>              
+      </select>    
+  </label>
+    <div>
+      <button type="submit" (click)="ShowCena(vrstaKarte.value)">Prikazi</button>
+    </div>
+  <br/>
+  <label>
+        <ng-template [ngIf]="vrstaKarte.value== 1"><div><u> Cena vremenske karte: </u></div></ng-template>
+        <ng-template [ngIf]="vrstaKarte.value== 2"><div><u> Cena dnevne karte: </u></div></ng-template>
+        <ng-template [ngIf]="vrstaKarte.value== 3"><div><u> Cena mesecne karte: </u></div></ng-template>
+        <ng-template [ngIf]="vrstaKarte.value== 4"><div><u> Cena godisnje karte: </u></div></ng-template>
+  </label>
+  <label>
+          {{info}}rsd
+  </label>
+</form>
+</div>
+</div>
+
