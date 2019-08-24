@@ -266,6 +266,7 @@
     <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\LinijasController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
+    <Compile Include="Controllers\RedVoznjesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
