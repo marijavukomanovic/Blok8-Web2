@@ -7,6 +7,7 @@ namespace WebApp.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using WebApp.Models;
+    using WebApp.Models.Entiteti;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebApp.Persistence.ApplicationDbContext>
     {
@@ -170,6 +171,17 @@ namespace WebApp.Migrations
                // l1.Stanice.Add(s1);
                 context.Linije.Add(l1);
                 context.SaveChanges();
+            }
+            if (!context.RedoviVoznje.Any(t => t.Id == 1))
+            {
+                RedVoznje redVoznje = new RedVoznje();
+                redVoznje.Id = 1;
+                redVoznje.LinijaId = 1;
+                redVoznje.RasporedVoznje = "10:15-10:20-11:00-11:30-12:00";
+                redVoznje.TipDanaId = 1;
+                context.RedoviVoznje.Add(redVoznje);
+                context.SaveChanges();
+
             }
 
 

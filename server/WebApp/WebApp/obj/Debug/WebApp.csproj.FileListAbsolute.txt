@@ -1047,7 +1047,6 @@ C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\ko\Sy
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\ru\System.Spatial.resources.dll
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.NewMigration.resources
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.DodatnaPoljaUApplicationUseru3.resources
