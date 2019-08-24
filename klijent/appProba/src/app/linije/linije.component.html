@@ -1,16 +1,34 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container"> 
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"> 
+          <a class="navbar-brand d-none d-md-block">
+            <i class="fa d-inline fa-lg fa-bus" routerLink='/'></i>
+            <b> JGSP</b>
+          </a>
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"> <a class="nav-link" ></a> </li>
+            <li class="nav-item"> <a class="nav-link" ></a> </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+      <div class="container">
 <form>
-  <h2 style="text-align:center">Autobuske linije</h2>
+  <h3 style="text-align:center">Autobuske linije</h3>
     <label>
-        <p class="label-txt">Odaberite linije:   </p>
           <select #routeType>
-                <option value="0"></option>
+                <option value="0" disabled>Odaberite liniju</option>
                 <option value="1">Gradske linije</option>
                 <option value="2">Prigradske linije</option>              
-          </select>
+          </select>    
       </label>
-        <label>
+        <div>
           <button type="submit" (click)="ShowLines(routeType.value)">Prikazi</button>
-      </label>
+        </div>
       <br/>
       <label>
             <ng-template [ngIf]="routeType.value== 2"><div><u> Prigradske linije: </u></div></ng-template>
@@ -18,5 +36,7 @@
       </label>
       <label>
               {{info}}
-        </label>
+      </label>
   </form>
+</div>
+</div>
