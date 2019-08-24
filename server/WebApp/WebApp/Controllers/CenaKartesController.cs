@@ -43,7 +43,7 @@ namespace WebApp.Controllers
             int idCenovnika=-1;//cenovnika koji jos uvek vazi
             foreach (var c in cenovnikRepository.GetAll())
             {
-                if (c.VazenjeDo < DateTime.Now)
+                if (DateTime.Compare(c.VazenjeDo, DateTime.Now)<0)
                 {
                     idCenovnika = c.Id;
                 }
