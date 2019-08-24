@@ -24,7 +24,7 @@
       <label>
             <p class="label-txt">Odaberite tip linije:</p>
             <select #routeType (change)="ShowLines(routeType.value)">
-              <option value="0">Prigradski</option>
+              <option value="2">Prigradski</option>
              <option value="1">Gradski</option>  
            </select>
           </label>
@@ -52,10 +52,14 @@
           </label>
           </div>
           </div>
+          <button  type="submit" (click)="ShowSchedules(dayType.value, lineName.value)">Prikazi</button>
+          <div class="row">
+            <div class="col">
           <label>
               {{time}}
           </label>
-              <button  type="submit" (click)="ShowSchedules(dayType.value, lineName.value)">Prikazi</button>
+          </div>
+        </div>  
     </form>
 </div>
 </div>

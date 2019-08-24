@@ -15,8 +15,9 @@ body {
     position: relative;
     margin: 40px 0px;
   }
+  
   .label-txt {
-    position: relative;
+    position: centar;
     top: -1.6em;
     padding: 10px;
     font-family: sans-serif;
