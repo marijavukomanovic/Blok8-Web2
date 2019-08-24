@@ -1,0 +1,28 @@
+<form>
+  <h3 style="text-align:center">Red voznje</h3>
+      <label>
+        <p class="label-txt">Odaberite tip linije:</p>
+        <select #routeType (change)="ShowLines(routeType.value)">
+          <option value="0">Prigradski</option>
+         <option value="1">Gradski</option>  
+       </select>
+      </label>    
+      <label>
+        <p class="label-txt">Odaberite dan:</p>
+        <select #dayType>
+          <option value="0">Radni dan</option>
+            <option value="1">Subota</option>  
+            <option value="2">Nedelja</option>                          
+        </select>
+      </label>
+      <label>
+        <p class="label-txt">Odaberite  liniju:</p>
+          <select #lineName>
+            <option *ngFor="let line of lines" [value]="line">{{line}}</option>
+          </select>
+      </label>
+      <label>
+          {{time}}
+      </label>
+          <button  type="submit" (click)="ShowSchedules(dayType.value, lineName.value)">Prikazi</button>
+</form>
