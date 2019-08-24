@@ -296,6 +296,10 @@
     <Compile Include="Migrations\201908231757437_saTipLinij.Designer.cs">
       <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908241846320_cenovnikIds.cs" />
+    <Compile Include="Migrations\201908241846320_cenovnikIds.Designer.cs">
+      <DependentUpon>201908241846320_cenovnikIds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -463,6 +467,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908231757437_saTipLinij.resx">
       <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908241846320_cenovnikIds.resx">
+      <DependentUpon>201908241846320_cenovnikIds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

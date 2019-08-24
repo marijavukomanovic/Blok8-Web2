@@ -50,6 +50,7 @@ namespace WebApp.Migrations
                 manager.Create(role);
             }
 
+            #region VrstaPutnika(Student,Penzioner,Regularan)
             if (!context.TipPutnika.Any(t => t.Naziv == "Student"))
             {
                 Models.Entiteti.TipPutnika tp1 = new Models.Entiteti.TipPutnika();
@@ -77,6 +78,10 @@ namespace WebApp.Migrations
                 context.TipPutnika.Add(tp3);
                 context.SaveChanges();
             }
+            #endregion
+
+
+            #region VrstaKarte(Vremenska,Dnevna,Mesecna,Godisnja)
             if (!context.TipKarte.Any(t => t.Naziv == "Vremenska"))
             {
                 Models.Entiteti.TipKarte tk1 = new Models.Entiteti.TipKarte();
@@ -109,6 +114,10 @@ namespace WebApp.Migrations
                 context.TipKarte.Add(tk4);
                 context.SaveChanges();
             }
+            #endregion
+
+
+            #region TipDana(Radni,Subota,Nedelja)
             if (!context.TipDana.Any(t => t.Tip == "Radni"))
             {
                 Models.Entiteti.TipDana td1 = new Models.Entiteti.TipDana();
@@ -133,7 +142,10 @@ namespace WebApp.Migrations
                 context.TipDana.Add(td3);
                 context.SaveChanges();
             }
+            #endregion
 
+
+            #region TipLinije(Gradska,Prigradska)
             if (!context.TipLinija.Any(t => t.Naziv == "Gradski"))
             {
                 Models.Entiteti.TipLinije tl1 = new Models.Entiteti.TipLinije();
@@ -151,6 +163,8 @@ namespace WebApp.Migrations
                 context.TipLinija.Add(tl2);
                 context.SaveChanges();
             }
+            #endregion
+
 
             if (!context.Stanice.Any(t => t.Naziv == "1A"))
             {
@@ -177,12 +191,58 @@ namespace WebApp.Migrations
                 RedVoznje redVoznje = new RedVoznje();
                 redVoznje.Id = 1;
                 redVoznje.LinijaId = 1;
-                redVoznje.RasporedVoznje = "10:15-10:20-11:00-11:30-12:00";
+                redVoznje.RasporedVoznje = "04:30-04:50\n05:20-05:40\n06:00-06:20-06:40\n07:00-07:20-07:40\n08:00-08:20-08:40\n09:00-09:20-09:40\n10:15-10:20\n11:00-11:30\n12:00";
                 redVoznje.TipDanaId = 1;
                 context.RedoviVoznje.Add(redVoznje);
                 context.SaveChanges();
 
             }
+
+            if (!context.Cenovnici.Any(t => t.Id == 1))
+            {
+                Cenovnik cenovnik = new Cenovnik();
+                cenovnik.Id = 1;
+                cenovnik.VazenjeDo = new DateTime(2019, 8, 26);
+                cenovnik.VazenjeOd = new DateTime(2019, 8, 20);
+                context.Cenovnici.Add(cenovnik);
+                context.SaveChanges();
+            }
+            if (!context.CenaKarata.Any(t => t.Id == 1))
+            {
+                CenaKarte cenaKarte1 = new CenaKarte();
+                cenaKarte1.Id = 1;
+                cenaKarte1.Cena = 65;
+                cenaKarte1.CenovnikId = 1;
+                cenaKarte1.TipKarteId = 1;
+                context.CenaKarata.Add(cenaKarte1);
+                context.SaveChanges();
+
+                CenaKarte cenaKarte2 = new CenaKarte();
+                cenaKarte2.Id = 2;
+                cenaKarte2.Cena = 250;
+                cenaKarte2.CenovnikId = 1;
+                cenaKarte2.TipKarteId = 2;
+                context.CenaKarata.Add(cenaKarte2);
+                context.SaveChanges();
+
+                CenaKarte cenaKarte3 = new CenaKarte();
+                cenaKarte3.Id = 3;
+                cenaKarte3.Cena = 1560;
+                cenaKarte3.CenovnikId = 1;
+                cenaKarte3.TipKarteId = 3;
+                context.CenaKarata.Add(cenaKarte3);
+                context.SaveChanges();
+
+                CenaKarte cenaKarte4 = new CenaKarte();
+                cenaKarte4.Id = 4;
+                cenaKarte4.Cena = 12560;
+                cenaKarte4.CenovnikId = 1;
+                cenaKarte4.TipKarteId = 4;
+                context.CenaKarata.Add(cenaKarte4);
+
+                context.SaveChanges();
+            }
+
 
 
             var userStore = new UserStore<ApplicationUser>(context);

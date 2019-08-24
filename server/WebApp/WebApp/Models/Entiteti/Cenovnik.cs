@@ -8,8 +8,8 @@ namespace WebApp.Models
 {
     public class Cenovnik
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }//autinkrement
+        
+        public int Id { get; set; }
         public DateTime VazenjeOd { get; set; }
         public DateTime VazenjeDo { get; set; }
     }
