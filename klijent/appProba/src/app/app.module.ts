@@ -14,6 +14,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { from } from 'rxjs';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { LoginComponent } from './auth/login/login.component';
+import { LinijeComponent } from './linije/linije.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -30,6 +31,7 @@ import { LoginComponent } from './auth/login/login.component';
     LogInComponent,
     RegistracijaComponent,
     LoginComponent,
+    LinijeComponent,
     //RegistracijaServis,
   ],
   imports: [
