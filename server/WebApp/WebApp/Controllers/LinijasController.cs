@@ -30,20 +30,29 @@ namespace WebApp.Controllers
         // GET: api/StationLine/GetLines
         [AllowAnonymous]
         [System.Web.Http.HttpGet]
-        [Route("GetLines")]
+        [Route("GetLines/{type}")]
         [ResponseType(typeof(List<string>))]
-        public IHttpActionResult GetLines()
+        public IHttpActionResult GetLines(int type)
         {
-            List<string> lineIds = lineRepo.GetAll().Where(x => x.Aktivna == true).Select(x => x.RedBroj.ToString()).ToList();
+            List<string> retVal = new List<string>();
+            string s = " ";
 
-            if (lineIds.Count == 0)
+            foreach (var i in lineRepo.GetAll())
             {
-                return BadRequest("There are no lines...");
+                if (i.Aktivna == true)
+                {
+                    if (i.TipId == type)
+                    {
+
+                        s += i.RedBroj.ToString();
+                        // s += i.Stanice; ne odajemo u liniji koje ima stanice za sad
+                        retVal.Add(s);
+                        s = "";
+                    }
+                }
             }
-
-            return Ok(lineIds);
+            return Ok(retVal);
         }
-
         // GET: api/Linijas
         public IQueryable<Linija> GetLinije()
         {
