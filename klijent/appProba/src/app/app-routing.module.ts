@@ -10,6 +10,7 @@ import {InfoKorisnikComponent} from './info-korisnik/info-korisnik.component';
 //
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
+import {DodavanjeCenovnikaComponent} from './dodavanje-cenovnika/dodavanje-cenovnika.component';
 
 const routes: Routes = [
   {path: '',component: HomeComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'red-voznje',component: RedVoznjeComponent},
   {path: 'cenovnik',component:CenovnikComponent},
   {path: 'info',component: InfoKorisnikComponent},
+  {path:'dodavanjeCenovnika',component:DodavanjeCenovnikaComponent}
 ];
 
 @NgModule({

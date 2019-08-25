@@ -18,6 +18,7 @@ import { LinijeComponent } from './linije/linije.component';
 import { RedVoznjeComponent } from './red-voznje/red-voznje.component';
 import { CenovnikComponent } from './cenovnik/cenovnik.component';
 import { InfoKorisnikComponent } from './info-korisnik/info-korisnik.component';
+import { DodavanjeCenovnikaComponent } from './dodavanje-cenovnika/dodavanje-cenovnika.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -38,6 +39,7 @@ import { InfoKorisnikComponent } from './info-korisnik/info-korisnik.component';
     RedVoznjeComponent,
     CenovnikComponent,
     InfoKorisnikComponent,
+    DodavanjeCenovnikaComponent,
     //RegistracijaServis,
   ],
   imports: [

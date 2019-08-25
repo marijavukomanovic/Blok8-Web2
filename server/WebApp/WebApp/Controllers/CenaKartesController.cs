@@ -38,7 +38,7 @@ namespace WebApp.Controllers
         [System.Web.Http.HttpGet]
         [Route("GetPoslednjiDatum")]
         [ResponseType(typeof(string))]
-        public IHttpActionResult GetPoslednjiDatum(int type)
+        public IHttpActionResult GetPoslednjiDatum()
         {
             string retVal = "";
             DateTime date;
