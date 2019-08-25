@@ -148,5 +148,25 @@ namespace WebApp.Models
         public TipLinije RouteType { get; set; }
 
     }
+    public class CenovnikBindingModel
+    {
+        [Required]
+        public string VazenjeOd { get; set; }
+
+        [Required]
+        public string VazenjeDo { get; set; }
+
+        [Required]
+        public double CenaVremenska { get; set; }
+
+        [Required]
+        public double CenaDnevna { get; set; }
+
+        [Required]
+        public double CenaMesecna{ get; set; }
+
+        [Required]
+        public double CenaGodisnja{ get; set; }
+    }
 
 }

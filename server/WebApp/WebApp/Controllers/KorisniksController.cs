@@ -119,22 +119,22 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            string ageGroup="";
-            switch (user.TipId)
-            {
-                case 1:
-                    ageGroup = "Regular";
-                    break;
-                case 2:
-                    ageGroup = "Student";
-                    break;
-                case 3:
-                    ageGroup = "Pensioner";
-                    break;
-                default:
-                    ageGroup = "None";
-                    break;
-            }
+            //string ageGroup="";
+            //switch (user.TipId)
+            //{
+            //    case 1:
+            //        ageGroup = "Student";
+            //        break;
+            //    case 2:
+            //        ageGroup = "Penzioner";
+            //        break;
+            //    case 3:
+            //        ageGroup = "Regularan";
+            //        break;
+            //    default:
+            //        ageGroup = "None";
+            //        break;
+            //}
 
             UserRegistrationBindingModel userRetval = new UserRegistrationBindingModel()
             {
@@ -257,22 +257,22 @@ namespace WebApp.Controllers
         //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
-            string ageGroupString;
-            switch (user.TipId)
-            {
-                case 1:
-                    ageGroupString = "Regular";
-                    break;
-                case 2:
-                    ageGroupString = "Student";
-                    break;
-                case 3:
-                    ageGroupString = "Pensioner";
-                    break;
-                default:
-                    ageGroupString = "None";
-                    break;
-            }
+            //string ageGroupString;
+            //switch (user.TipId)
+            //{
+            //    case 1:
+            //        ageGroupString = "Regular";
+            //        break;
+            //    case 2:
+            //        ageGroupString = "Student";
+            //        break;
+            //    case 3:
+            //        ageGroupString = "Pensioner";
+            //        break;
+            //    default:
+            //        ageGroupString = "None";
+            //        break;
+            //}
             UserRegistrationBindingModel userRetVal = new UserRegistrationBindingModel()
             {
                 Email = user.Email,
