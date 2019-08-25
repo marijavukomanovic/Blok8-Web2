@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
@@ -31,6 +32,55 @@ namespace WebApp.Controllers
         {
             return db.CenaKarata;
         }
+        //kontroler za slanje poslednjeg datuma
+        // GET: api/StationLine/GetLines
+        [AllowAnonymous]
+        [System.Web.Http.HttpGet]
+        [Route("GetPoslednjiDatum")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult GetPoslednjiDatum(int type)
+        {
+            string retVal = "";
+            DateTime date;
+            int id = cenovnikRepository.GetAll().Count();
+            date = cenovnikRepository.Get(id).VazenjeDo;
+            date = date.AddDays(1);
+            retVal = date.ToShortDateString().ToString();
+           
+            return Ok(retVal);
+        }
+
+        //kontroler za pravljenje novog cenovnika iz angulara mi saljes sve podatke
+        [AllowAnonymous]
+        [Route("Cenovnik")]
+        public  async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // var userStore = new UserStore<ApplicationUser>(db);
+            //var userManager = new UserManager<ApplicationUser>(userStore);
+            int idc = cenovnikRepository.GetAll().Count();
+            double[] cene = new double[]{model.CenaVremenska,model.CenaDnevna,model.CenaMesecna,model.CenaGodisnja };
+            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.VazenjeOd), VazenjeDo = DateTime.Parse(model.VazenjeDo), Id = ++idc, };
+            db.Cenovnici.Add(noviCenovnik);
+            db.SaveChanges();
+            int idck =CenaKarteRepository.GetAll().Count();
+
+          //  idck++;
+            for (int i = 1; i <= 4; i++)
+            {
+                CenaKarte cenaKarte = new CenaKarte() {Id=++idck, Cena=cene[i-1],CenovnikId=idc,TipKarteId=i };
+                db.CenaKarata.Add(cenaKarte);
+                db.SaveChanges();
+            }
+
+
+            return Ok();
+        }
+
 
         // GET: api/CenaKarte/GetCena
         [AllowAnonymous]
@@ -58,6 +108,8 @@ namespace WebApp.Controllers
 
             return Ok(retCena);
         }
+
+
 
         // GET: api/CenaKartes/5
         [ResponseType(typeof(CenaKarte))]
