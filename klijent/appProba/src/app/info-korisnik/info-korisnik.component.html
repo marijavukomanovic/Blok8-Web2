@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">!-->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">!-->
+  <!--<link rel="stylesheet" href="theme.css" type="text/css">!-->
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container"> 
+      <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar12"> 
+        <a class="navbar-brand d-none d-md-block">
+          <i class="fa d-inline fa-lg fa-bus"></i>
+          <b> JGSP</b>
+        </a>
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">Logovanje</li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="py-5" style=" height: 593px;	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size:90%;	background-repeat: repeat;">
+
+    <div class="login">
+      <h2 class="login-header">Informacije o korisniku</h2>
+      <form [formGroup]="registerForm" class="login-container" (ngSubmit)="onSubmit()">
+    
+        <div class="row">
+            <div class="col-md-6">
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <input type="text" placeholder="Ime" formControlName="Name"required>
+              </p>
+    
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <input type="text" placeholder="Prezime" formControlName="LastName" required>
+              </p>
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+                  <input type="text" placeholder="Korisnicko ime" formControlName="UserName" required>
+              </p>
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                  <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"required>
+                  </p>
+              
+              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                  <input type="text" placeholder="Adresa" formControlName="Address"required>
+              </p>
+          </div>
+        <div class="col-md-6">
+            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <input type="email" placeholder="email" formControlName="Email"required>
+            </p>
+    
+            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <input type="password" placeholder="Sifra" formControlName="Password"required>
+                </p>
+                <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                    <input type="password" placeholder="Potvrdite sifru" formControlName="ConfirmPassword"required>
+                    </p>
+                    
+                    
+            <p class="label-txt"> Tip putnika: </p>
+            <!--<select formContorlName="PassengerType" (change)="onchange()">
+              <option  value="Regularan">Regularan</option>
+              <option  value="Student">Student</option>
+              <option  value="Penzioner">Penzioner</option>
+          </select>  -->
+          <select *ngIf="ownerLevels" [value]="selectedOwnerLevel" (change)="onChangeOwnerLevel($event.target.value)" formControlName="PassengerType" id="ddOwnerLevel">
+            <option [value]="0" disabled>Select Owner Level</option>
+            <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id">{{ownerLevel.name}}</option>
+         </select>
+             
+          </div>
+        </div>
+        <p>
+          <input type="submit" value="Sacuvaj promene">
+        </p>
+      </form>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" >
+        <i class="fa d-inline fa-lg fa-bus"></i>
+        <b contenteditable="true"></b>
+      </a> </div>
+  </nav>

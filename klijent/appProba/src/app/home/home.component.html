@@ -26,6 +26,7 @@
         <ul class="navbar-nav">
           <li  *ngIf="!username"class="nav-item"> <a class="nav-link" routerLink="/login">Uloguj se</a> </li>
           <li *ngIf="!username" class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
+          <li *ngIf="username && role=='AppUser'" class="nav-item"> <a class="nav-link text-primary" routerLink="/info">Informacije</a> </li>
         <li class="nav-item">
           <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
       </li>
