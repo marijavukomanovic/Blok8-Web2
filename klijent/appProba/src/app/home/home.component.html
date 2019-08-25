@@ -24,8 +24,12 @@
           <li class="nav-item"> <a class="nav-link" ></a> </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link" routerLink="/login">Uloguj se</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
+          <li  *ngIf="!username"class="nav-item"> <a class="nav-link" routerLink="/login">Uloguj se</a> </li>
+          <li *ngIf="!username" class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
+        <li class="nav-item">
+          <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
+      </li>
+        
         </ul>
       </div>
     </div>

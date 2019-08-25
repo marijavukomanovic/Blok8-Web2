@@ -14,7 +14,7 @@ export class AuthService {
 
   loginUrl: string = 'http://localhost:52295/oauth/token';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router:Router ) { }
 
   login(user: LoginModel, callback: any) {
     const data = `username=${user.username}&password=${user.password}&grant_type=password`;
@@ -49,8 +49,10 @@ export class AuthService {
   }
 
   logout(): void {
-    this.isLoggedIn = false;
+   // this.isLoggedIn = false;
     localStorage.removeItem('jwt');
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
