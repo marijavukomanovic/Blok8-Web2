@@ -39,7 +39,16 @@ export class RedVoznjeComponent implements OnInit {
       this.time=data;
       this.prikazi=true;
     });
-    
-
     }
+
+    ChangeSchedules(day : number, lines : string,times:string)
+    {
+      this.redVoznjService.ChangeSchedules(day,lines,times).subscribe(data1=>{
+        console.log(data1);
+        //this.time=data;
+        this.prikazi=true;
+      });
+    }
+
+    
   }
