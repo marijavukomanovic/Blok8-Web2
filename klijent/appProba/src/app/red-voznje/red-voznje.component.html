@@ -55,8 +55,13 @@
           <button  type="submit" (click)="ShowSchedules(dayType.value, lineName.value)">Prikazi</button>
           <div class="row">
             <div class="col">
-          <label>
-              {{time}}
+
+          <label id="comment">
+              <div class="form-group col-md-12">
+                  <textarea style="text-align:center" id="comment" name="comment" cols="40" rows="9" disabled>{{time}}</textarea>
+              </div>
+              <input  *ngIf="username && prikazi && role=='Admin'" type="text" name="OD" value="{{time}}">
+              <input  *ngIf="username && prikazi && role=='AppUser'" type="text" name="OD" value="{{time}}" disabled>
           </label>
           </div>
         </div>  

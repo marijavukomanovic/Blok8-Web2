@@ -7581,7 +7581,7 @@ a.text-dark:hover, a.text-dark:focus {
   text-decoration: none !important; }
 
 .text-break {
-  word-break: break-word !important;
+  word-break: break-all !important;
   overflow-wrap: break-word !important; }
 
 .text-reset {

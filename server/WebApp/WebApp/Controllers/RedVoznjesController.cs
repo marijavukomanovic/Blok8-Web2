@@ -56,22 +56,21 @@ namespace WebApp.Controllers
         public IHttpActionResult GetSchedule( int tipDana, string linija)
         {
             string redVoznje = "";
-            int lineI = -1;
-            char[] str = new char[] { '-' };
-            string[] lineName = linija.Split(str);
+            int lineId = -1;
+            
 
             foreach (var l in linijaRepository.GetAll())
             {
-                if (l.Id == int.Parse(lineName[0]))
+                if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')))
                 {
-                    lineI = l.Id;
+                    lineId = l.Id;
                 }
             }
             foreach (var s in redVoznjeRepository.GetAll())
             {
-                if (s.LinijaId == lineI && s.TipDanaId == tipDana )//proverava da li je trazena linija, da li je odgovaradjuci dan
+                if (s.LinijaId == lineId && s.TipDanaId == tipDana )//proverava da li je trazena linija, da li je odgovaradjuci dan
                 {
-                    redVoznje += " " + s.RasporedVoznje;
+                    redVoznje += s.RasporedVoznje;
                 }
             }
 

@@ -12,10 +12,16 @@ export class RedVoznjeComponent implements OnInit {
 
   lines : string[];
   time : string;
+  username:string;
+  role:string;
+  prikazi:boolean;
 
   constructor(private redVoznjService : RedVoznjeService) { }
 
   ngOnInit() {
+    this.username = localStorage.getItem('username');
+    this.role = localStorage.getItem('role');
+    this.prikazi=false;
   }
 
   ShowLines(routeType : number){
@@ -28,6 +34,7 @@ export class RedVoznjeComponent implements OnInit {
     this.redVoznjService.getSchedule( dayType, line).subscribe(data=>{
       console.log(data);
       this.time=data;
+      this.prikazi=true;
     });
 
     }

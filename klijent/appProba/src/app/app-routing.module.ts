@@ -11,6 +11,7 @@ import {InfoKorisnikComponent} from './info-korisnik/info-korisnik.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import {DodavanjeCenovnikaComponent} from './dodavanje-cenovnika/dodavanje-cenovnika.component';
+import {LokacijaComponent} from './lokacija/lokacija.component';
 
 const routes: Routes = [
   {path: '',component: HomeComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'red-voznje',component: RedVoznjeComponent},
   {path: 'cenovnik',component:CenovnikComponent},
   {path: 'info',component: InfoKorisnikComponent},
-  {path:'dodavanjeCenovnika',component:DodavanjeCenovnikaComponent}
+  {path:'dodavanjeCenovnika',component:DodavanjeCenovnikaComponent},
+  {path:'lokacija',component : LokacijaComponent},
 ];
 
 @NgModule({
