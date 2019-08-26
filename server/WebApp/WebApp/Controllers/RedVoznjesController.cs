@@ -91,6 +91,8 @@ namespace WebApp.Controllers
                     {
                         redV.RasporedVoznje = stringInfo.ToString();
                         proveraDaliPostojiZaDatiDan = true;
+                        db.Entry(redV).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                     proveraDaliPostojiZaDatuLiniju = true;
                     // redVoznje.Linija.RedBroj = linija;
@@ -120,6 +122,8 @@ namespace WebApp.Controllers
                     redVoznje.Linija = linijaRepository.Get(linijaId);
                     redVoznje.TipDana.Id = tipDana;
                     redVoznje.TipDana.Tip = ttipDanaId;
+                    db.Entry(redVoznje).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 if (proveraDaliPostojiZaDatuLiniju == false && proveraDaliPostojiZaDatiDan == false)
                 {
@@ -141,6 +145,8 @@ namespace WebApp.Controllers
                     redVoznje.TipDana = tipDanaRepository.Get(tipDana);
                     redVoznje.LinijaId = linijaId;
                     redVoznje.Linija = linijaRepository.Get(linijaId);
+                    db.Entry(redVoznje).State = EntityState.Modified;
+                    db.SaveChanges();
 
                 }
 

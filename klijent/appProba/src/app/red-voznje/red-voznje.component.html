@@ -17,7 +17,7 @@
 </nav>
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
   <div class="container">
-    <form>
+    <form name="forma">
       <h3 style="text-align:center">Red voznje</h3>
       <div class="row">
       <div class="col" >    
@@ -56,15 +56,17 @@
           <div class="row">
             <div class="col">
 
-          <label id="comment">
+          <label >
               <div class="form-group col-md-12">
-                  <textarea style="text-align:center" id="comment" name="comment" cols="40" rows="9" disabled>{{time}}</textarea>
+                  <textarea *ngIf="username && prikazi && role=='Admin'" style="text-align:center" value="{{time}}" id="comment" name="comment" cols="40" rows="9"></textarea>
               </div>
-              <input  *ngIf="username && prikazi && role=='Admin'" type="text" name="OD" value="{{time}}">
-              <input  *ngIf="username && prikazi && role=='AppUser'" type="text" name="OD" value="{{time}}" disabled>
+              <div class="form-group col-md-12">
+                <textarea *ngIf="username && prikazi && role=='AppUser'" style="text-align:center" value="{{time}}" id="comment1" name="comment1" cols="40" rows="9" disabled></textarea>
+              </div>
           </label>
           </div>
-        </div>  
+        </div> 
+        <button *ngIf="username && prikazi && role=='Admin'" type="submit" (click)="ChangeSchedules(dayType.value, lineName.value,time.value)">Sacuvaj izmene</button>
     </form>
 </div>
 </div>

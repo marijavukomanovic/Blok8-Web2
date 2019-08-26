@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RedVoznjeService } from 'src/app/servisi/red-voznje.service';
 import { RouteType } from '../model/enums';
 import { LinijaService } from 'src/app/servisi/linija.service';
+import { strictEqual } from 'assert';
+import { NgModel } from '@angular/forms';
+import {FormBuilder,FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-red-voznje',
@@ -36,6 +39,7 @@ export class RedVoznjeComponent implements OnInit {
       this.time=data;
       this.prikazi=true;
     });
+    
 
     }
   }
