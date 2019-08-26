@@ -1427,3 +1427,4 @@ C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.d
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Sveee.resources
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Sveee.resources
+C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
