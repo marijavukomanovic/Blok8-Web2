@@ -77,7 +77,79 @@ namespace WebApp.Controllers
             return Ok(redVoznje);
         }
 
+        [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
+        public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
+        {
+            RedVoznje redVoznje = new RedVoznje();
+            bool proveraDaliPostojiZaDatiDan = false;
+            bool proveraDaliPostojiZaDatuLiniju = false;
+            foreach (var redV in redVoznjeRepository.GetAll())
+            {
+                if (redV.Linija.RedBroj.Equals(linija))
+                {
+                    if (redV.TipDanaId == tipDana)
+                    {
+                        redV.RasporedVoznje = stringInfo.ToString();
+                        proveraDaliPostojiZaDatiDan = true;
+                    }
+                    proveraDaliPostojiZaDatuLiniju = true;
+                    // redVoznje.Linija.RedBroj = linija;
+                    redVoznje.TipDanaId = tipDana;
+                    //proveri ti da li treba prolaziti kroz forech za se nadju id ovi za ova prethodna dva
+                    int linijaId = -1;
+                    foreach (var idlinije in linijaRepository.GetAll())
+                    {
+                        if (idlinije.RedBroj.Equals(linija))
+                        {
+                            linijaId = idlinije.Id;
+                            break;
+                        }
 
+                    }
+                    string ttipDanaId = tipDanaRepository.Get(tipDana).Tip;
+                    //foreach (var idTipaDana in tipDanaRepository.GetAll())
+                    //{
+                    //    if (idTipaDana.Id == tipDana)
+                    //    {
+                    //        ttipDanaId = idTipaDana.Tip.ToString();
+                    //        break;
+                    //    }
+
+                    //}
+                    // redVoznje.Linija.Id = linijaId;
+                    redVoznje.Linija = linijaRepository.Get(linijaId);
+                    redVoznje.TipDana.Id = tipDana;
+                    redVoznje.TipDana.Tip = ttipDanaId;
+                }
+                if (proveraDaliPostojiZaDatuLiniju == false && proveraDaliPostojiZaDatiDan == false)
+                {
+                    redVoznje.Id = redVoznjeRepository.GetAll().Count() + 1;
+                    redVoznje.Linija.RedBroj = linija;
+                    int linijaId = -1;
+                    foreach (var idlinije in linijaRepository.GetAll())
+                    {
+                        if (idlinije.RedBroj.Equals(linija))
+                        {
+                            linijaId = idlinije.Id;
+                            break;
+                        }
+
+                    }
+                    int id = redVoznjeRepository.GetAll().Count();
+                    redVoznje.Id = ++id;
+                    redVoznje.TipDanaId = tipDana;
+                    redVoznje.TipDana = tipDanaRepository.Get(tipDana);
+                    redVoznje.LinijaId = linijaId;
+                    redVoznje.Linija = linijaRepository.Get(linijaId);
+
+                }
+
+
+
+            }
+
+            return Ok();
+        }
 
 
 
