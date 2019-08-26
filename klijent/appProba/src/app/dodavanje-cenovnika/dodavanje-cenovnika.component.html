@@ -17,30 +17,32 @@
 </nav>
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
   <div class="container">
-<form >
+<form [formGroup]="cenovnikForma" (ngSubmit)="onSubmit()">
 <h3 style="text-align:center">Dodavanje cenovnika</h3>
-<label>
-      <p>Datum pocetka vazenja : </p><input type="text" name="OD" value="{{info}}" disabled> 
-  </label>
-  <label>
-    <p>Datum zavrsetka vazenja : </p><input type="text" name="DO" >
+<label >
+  <p>Datum pocetka vazenja : </p><input type="text" formControlName="OD" value={{info}} disabled> 
 </label>
-<label>
-  <p>Cena vremenske karte : </p><input type="text" > rsd
+  <label >
+    <p>Datum zavrsetka vazenja : </p><input type="text" formControlName="DO" required>
 </label>
-<label>
-  <p>Cena dnevne karte : </p><input type="text" > rsd
+<label >
+  <p>Cena vremenske karte : </p><input type="text" formControlName="cenaVremenska" required> rsd
 </label>
-<label>
-  <p>Cena mesecne karte : </p><input type="text"  > rsd
+<label >
+  <p>Cena dnevne karte : </p><input type="text" formControlName="cenaDnevna" required> rsd
 </label>
-<label>
-  <p>Cena godisnje karte : </p><input type="text"   > rsd
+<label >
+  <p>Cena mesecne karte : </p><input type="text" formControlName="cenaMesecna" required> rsd
+</label>
+<label >
+  <p>Cena godisnje karte : </p><input type="text"  formControlName="cenaGodisnja" required> rsd
 </label>
 
+<label>
     <div>
-      <button type="submit" (click)="ShowCenovnik(OD.value,DO.value)">Napravi</button>
+      <input type="submit" value="Napravi">
     </div>
+  </label>
   <br/>
   
 </form>

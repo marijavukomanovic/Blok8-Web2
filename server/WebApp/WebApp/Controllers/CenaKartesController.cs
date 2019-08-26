@@ -52,7 +52,8 @@ namespace WebApp.Controllers
 
         //kontroler za pravljenje novog cenovnika iz angulara mi saljes sve podatke
         [AllowAnonymous]
-        [Route("Cenovnik")]
+        [System.Web.Http.HttpGet]
+        [Route("Cenovnik/{model}")]
         public  async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -63,8 +64,8 @@ namespace WebApp.Controllers
             // var userStore = new UserStore<ApplicationUser>(db);
             //var userManager = new UserManager<ApplicationUser>(userStore);
             int idc = cenovnikRepository.GetAll().Count();
-            double[] cene = new double[]{model.CenaVremenska,model.CenaDnevna,model.CenaMesecna,model.CenaGodisnja };
-            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.VazenjeOd), VazenjeDo = DateTime.Parse(model.VazenjeDo), Id = ++idc, };
+            double[] cene = new double[]{model.cenaVremenska,model.cenaDnevna,model.cenaMesecna,model.cenaGodisnja };
+            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, };
             db.Cenovnici.Add(noviCenovnik);
             db.SaveChanges();
             int idck =CenaKarteRepository.GetAll().Count();

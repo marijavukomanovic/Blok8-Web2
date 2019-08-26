@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from './http.servis';
 import {Observable} from 'rxjs';
+import {CenovnikModel} from 'src/app/model/cenovnikModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AdminService extends HttpService{
     return this.http.get<any>(this.url + "/api/CenaKarte/GetPoslednjiDatum");
   }
 
-  ShowCenovnik(od : string,dO:string) : Observable<any>{
-    return this.http.get<any>(this.url + "/api/CenaKarte/Cenovnik/" + od);
+  ShowCenovnik(cenovnik : CenovnikModel) : Observable<any>{
+    return this.http.get<any>(this.url + "/api/CenaKarte/Cenovnik/" + cenovnik );
   }
 }

@@ -18,7 +18,8 @@
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
   <div class="container">
     <form name="forma">
-      <h3 style="text-align:center">Red voznje</h3>
+      <h3 style="text-align:center">Izmena/dodavanje reda voznje</h3>
+      <h6>(ukoliko postoji red voznje za datu liniju,mozete ga samo izmeniti)</h6>
       <div class="row">
       <div class="col" >    
       <label>
@@ -58,15 +59,16 @@
 
           <label >
               <div class="form-group col-md-12">
-                  <textarea *ngIf="username && prikazi && role=='Admin'" style="text-align:center" value="{{time}}" id="comment" name="comment" cols="40" rows="9"></textarea>
+                  <textarea *ngIf="username && prikazi && role=='Admin'" style="text-align:center" cols="40" rows="9" >{{time}}</textarea>
               </div>
               <div class="form-group col-md-12">
-                <textarea *ngIf="username && prikazi && role=='AppUser'" style="text-align:center" value="{{time}}" id="comment1" name="comment1" cols="40" rows="9" disabled></textarea>
+                <textarea *ngIf="username && prikazi && role=='AppUser'" style="text-align:center" value="{{time}}" cols="40" rows="9" disabled>{{time}}</textarea>
               </div>
           </label>
           </div>
-        </div> 
-        <button *ngIf="username && prikazi && role=='Admin'" type="submit" (click)="ChangeSchedules(dayType.value, lineName.value,time.value)">Sacuvaj izmene</button>
+        </div>
+        
+        <button *ngIf="username && prikazi && role=='Admin'" type="submit" (click)="ChangeSchedules(dayType.value, lineName.value,time)">Sacuvaj izmene</button>
     </form>
 </div>
 </div>

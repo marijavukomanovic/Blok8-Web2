@@ -151,22 +151,22 @@ namespace WebApp.Models
     public class CenovnikBindingModel
     {
         [Required]
-        public string VazenjeOd { get; set; }
+        public string OD { get; set; }
 
         [Required]
-        public string VazenjeDo { get; set; }
+        public string DO { get; set; }
 
         [Required]
-        public double CenaVremenska { get; set; }
+        public double cenaVremenska { get; set; }
 
         [Required]
-        public double CenaDnevna { get; set; }
+        public double cenaDnevna { get; set; }
 
         [Required]
-        public double CenaMesecna{ get; set; }
+        public double cenaMesecna{ get; set; }
 
         [Required]
-        public double CenaGodisnja{ get; set; }
+        public double cenaGodisnja{ get; set; }
     }
 
 }

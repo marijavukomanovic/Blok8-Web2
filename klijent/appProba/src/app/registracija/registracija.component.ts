@@ -43,10 +43,6 @@ registerForm = this.fb.group({
     //this.user.PassengerType = PassengerType.Regularan;
   }
 
-  onchange()
-  {
-  
-  }
   onSubmit()
   {
     console.log(this.registerForm.value);
@@ -56,10 +52,6 @@ registerForm = this.fb.group({
     });
   }
 
-  onFileChange(event)
-  {
-    
-  }
 
   ownerLevels = [
     { id: 1, name: 'Student' },
