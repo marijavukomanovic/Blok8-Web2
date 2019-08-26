@@ -47,6 +47,7 @@ cenovnikForma = this.fb.group(
       this.cenovnik = this.cenovnikForma.value;
       this.cenovnik.OD = this.info;
       console.log(this.cenovnik);
+      console.log(this.cenovnikForma.value);
       this.adminServis.ShowCenovnik(this.cenovnik).subscribe(data => {
         console.log('Registration successfully done.');
         

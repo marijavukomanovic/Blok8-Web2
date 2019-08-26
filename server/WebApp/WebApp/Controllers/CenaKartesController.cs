@@ -52,7 +52,7 @@ namespace WebApp.Controllers
 
         //kontroler za pravljenje novog cenovnika iz angulara mi saljes sve podatke
         [AllowAnonymous]
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         [Route("Cenovnik/{model}")]
         public  async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)
         {

@@ -151,22 +151,28 @@ namespace WebApp.Models
     public class CenovnikBindingModel
     {
         [Required]
+        [Display(Name = "OD")]
         public string OD { get; set; }
 
         [Required]
+        [Display(Name = "DO")]
         public string DO { get; set; }
 
         [Required]
+        [Display(Name = "cenaVremenska")]
         public double cenaVremenska { get; set; }
 
         [Required]
+        [Display(Name = "cenaDnevna")]
         public double cenaDnevna { get; set; }
 
         [Required]
-        public double cenaMesecna{ get; set; }
+        [Display(Name = "cenaMesecna")]
+        public double cenaMesecna { get; set; }
 
         [Required]
-        public double cenaGodisnja{ get; set; }
+        [Display(Name = "cenaGodisnja")]
+        public double cenaGodisnja { get; set; }
     }
 
 }
