@@ -34,6 +34,8 @@ namespace WebApp.Persistence.UnitOfWork
         public IKorisnikRepository korisnikRepository { get; set; }
         [Dependency]
         public ITipLinijeRepository tipLinijeRepository { get; set; }
+        [Dependency]
+        public ILinijeStaniceRepository linijeStaniceRepository { get; set; }
 
 
         private readonly DbContext _context;

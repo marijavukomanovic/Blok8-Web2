@@ -11,6 +11,11 @@ export class RegistracijaServis extends HttpService{
   specificUrl = this.url + "/api/Korisnik/Registracija";
   
     register(data: RegistracijaModel) : Observable<any>{
+
+      let data1 = new FormData()
+      data1.append('file', data.Document)
+      //data1.append('data', )//multiform web api
+
       let httpOptions = {
         headers:{
           "Content-type":"application/json"

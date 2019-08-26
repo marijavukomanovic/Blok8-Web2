@@ -9,11 +9,13 @@ namespace WebApp.Models
     public class Stanica
     {
         [Key]
+        public int Id  { get; set; }
         public String Naziv { get; set; }
         public String Adresa { get; set; }
         public double GeografskeKoordinataX { get; set; }
         public double GeografskeKoordinataY { get; set; }
-        //public List<Linija> Linije { get; set; }
+        
+      //  public List<Linija> Linije { get; set; }
         public bool Aktivna { get; set; } // za logicko brisanje
 
     }

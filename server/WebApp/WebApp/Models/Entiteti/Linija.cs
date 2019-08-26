@@ -9,10 +9,10 @@ using WebApp.Models.Entiteti;
 namespace WebApp.Models
 {
     public class Linija
-    {
-        [Key]
-        public int RedBroj { get; set; }
-        public ICollection<Stanica> Stanice { get; set; }
+    {  [Key]
+        public int Id { get; set; }
+        public string RedBroj { get; set; }
+     //   public List<Stanica> Stanice { get; set; }
 
         [ForeignKey("Tip")]
         public int TipId { get; set; }

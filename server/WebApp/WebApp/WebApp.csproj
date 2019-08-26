@@ -276,29 +276,9 @@
     <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906011351070_NewMigration.cs" />
-    <Compile Include="Migrations\201906011351070_NewMigration.Designer.cs">
-      <DependentUpon>201906011351070_NewMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.cs" />
-    <Compile Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.Designer.cs">
-      <DependentUpon>201908161359344_DodatnaPoljaUApplicationUseru3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908191647213_New.cs" />
-    <Compile Include="Migrations\201908191647213_New.Designer.cs">
-      <DependentUpon>201908191647213_New.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908201033359_SaDokumentomKorisnik.cs" />
-    <Compile Include="Migrations\201908201033359_SaDokumentomKorisnik.Designer.cs">
-      <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908231757437_saTipLinij.cs" />
-    <Compile Include="Migrations\201908231757437_saTipLinij.Designer.cs">
-      <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908241846320_cenovnikIds.cs" />
-    <Compile Include="Migrations\201908241846320_cenovnikIds.Designer.cs">
-      <DependentUpon>201908241846320_cenovnikIds.cs</DependentUpon>
+    <Compile Include="Migrations\201908260920074_Sveee.cs" />
+    <Compile Include="Migrations\201908260920074_Sveee.Designer.cs">
+      <DependentUpon>201908260920074_Sveee.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -310,6 +290,7 @@
     <Compile Include="Models\Entiteti\Karta.cs" />
     <Compile Include="Models\Entiteti\Korisnik.cs" />
     <Compile Include="Models\Entiteti\Linija.cs" />
+    <Compile Include="Models\Entiteti\LinijeStanice.cs" />
     <Compile Include="Models\Entiteti\RedVoznje.cs" />
     <Compile Include="Models\Entiteti\Stanica.cs" />
     <Compile Include="Models\Entiteti\TipDana.cs" />
@@ -326,6 +307,7 @@
     <Compile Include="Persistence\Repository\IKartaRepository.cs" />
     <Compile Include="Persistence\Repository\IKorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\ILinijaRepository.cs" />
+    <Compile Include="Persistence\Repository\ILinijeStaniceRepository.cs" />
     <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
@@ -336,6 +318,7 @@
     <Compile Include="Persistence\Repository\KartaRepository.cs" />
     <Compile Include="Persistence\Repository\KorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\LinijaRepository.cs" />
+    <Compile Include="Persistence\Repository\LinijeStaniceRepository.cs" />
     <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\Repository\StanicaRepository.cs" />
@@ -453,23 +436,8 @@
     <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906011351070_NewMigration.resx">
-      <DependentUpon>201906011351070_NewMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908161359344_DodatnaPoljaUApplicationUseru3.resx">
-      <DependentUpon>201908161359344_DodatnaPoljaUApplicationUseru3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908191647213_New.resx">
-      <DependentUpon>201908191647213_New.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908201033359_SaDokumentomKorisnik.resx">
-      <DependentUpon>201908201033359_SaDokumentomKorisnik.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908231757437_saTipLinij.resx">
-      <DependentUpon>201908231757437_saTipLinij.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908241846320_cenovnikIds.resx">
-      <DependentUpon>201908241846320_cenovnikIds.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908260920074_Sveee.resx">
+      <DependentUpon>201908260920074_Sveee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

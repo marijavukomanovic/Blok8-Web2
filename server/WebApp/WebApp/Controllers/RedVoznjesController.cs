@@ -62,9 +62,9 @@ namespace WebApp.Controllers
 
             foreach (var l in linijaRepository.GetAll())
             {
-                if (l.RedBroj == int.Parse(lineName[0]))
+                if (l.Id == int.Parse(lineName[0]))
                 {
-                    lineI = l.RedBroj;
+                    lineI = l.Id;
                 }
             }
             foreach (var s in redVoznjeRepository.GetAll())

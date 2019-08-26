@@ -82,7 +82,7 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != linija.RedBroj)
+            if (id != linija.Id)
             {
                 return BadRequest();
             }
@@ -120,7 +120,7 @@ namespace WebApp.Controllers
             db.Linije.Add(linija);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = linija.RedBroj }, linija);
+            return CreatedAtRoute("DefaultApi", new { id = linija.Id }, linija);
         }
 
         // DELETE: api/Linijas/5
@@ -150,7 +150,7 @@ namespace WebApp.Controllers
 
         private bool LinijaExists(int id)
         {
-            return db.Linije.Count(e => e.RedBroj == id) > 0;
+            return db.Linije.Count(e => e.Id == id) > 0;
         }
     }
 }

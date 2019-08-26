@@ -30,6 +30,7 @@ namespace WebApp.Persistence.UnitOfWork
         IKorisnikRepository korisnikRepository { get; set; }
 
         ITipLinijeRepository tipLinijeRepository { get; set; }
+        ILinijeStaniceRepository linijeStaniceRepository { get; set; }
 
         int Complete();
     }

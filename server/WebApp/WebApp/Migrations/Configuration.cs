@@ -170,6 +170,7 @@ namespace WebApp.Migrations
             {
                 //Models.Entiteti.Stanica tl2 = new Models.Entiteti.Stanica();
                 Stanica s1 = new Stanica();
+                
                 s1.Naziv = "1A";
                 s1.Adresa = "Selj buna 55";
                 s1.GeografskeKoordinataX = 1.0;
@@ -180,11 +181,22 @@ namespace WebApp.Migrations
 
                 Linija l1 = new Linija();
                 l1.Aktivna = true;
-                l1.RedBroj = 1;
+                l1.RedBroj = "12A";
                 l1.TipId = 1;
-               // l1.Stanice.Add(s1);
+                /* l1.Stanice.Add(s1);
+                 s1.Linije.Add(l1);*/
                 context.Linije.Add(l1);
                 context.SaveChanges();
+                LinijeStanice linijeStanice=new LinijeStanice();
+                linijeStanice.LinijeId = l1.Id;
+                linijeStanice.StaniceId = s1.Id;
+                context.LinijeStanices.Add(linijeStanice);
+                context.SaveChanges();
+
+
+
+
+
             }
             if (!context.RedoviVoznje.Any(t => t.Id == 1))
             {
