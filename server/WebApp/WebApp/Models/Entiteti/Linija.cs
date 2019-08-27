@@ -17,6 +17,8 @@ namespace WebApp.Models
         [ForeignKey("Tip")]
         public int TipId { get; set; }
         public TipLinije Tip { get; set; }
+        public string Opis { get; set; }
+        public string Boja { get; set; }
 
         public bool Aktivna { get; set; } // za logicko brisanje 
     }

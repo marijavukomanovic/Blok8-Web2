@@ -268,7 +268,6 @@
     <Compile Include="Controllers\LinijasController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\RedVoznjesController.cs" />
-    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,6 +279,14 @@
     <Compile Include="Migrations\201908260920074_Sveee.cs" />
     <Compile Include="Migrations\201908260920074_Sveee.Designer.cs">
       <DependentUpon>201908260920074_Sveee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908271919557_LinijaPolje.cs" />
+    <Compile Include="Migrations\201908271919557_LinijaPolje.Designer.cs">
+      <DependentUpon>201908271919557_LinijaPolje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908271920587_LinijaPolje1.cs" />
+    <Compile Include="Migrations\201908271920587_LinijaPolje1.Designer.cs">
+      <DependentUpon>201908271920587_LinijaPolje1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -439,6 +446,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908260920074_Sveee.resx">
       <DependentUpon>201908260920074_Sveee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271919557_LinijaPolje.resx">
+      <DependentUpon>201908271919557_LinijaPolje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271920587_LinijaPolje1.resx">
+      <DependentUpon>201908271920587_LinijaPolje1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

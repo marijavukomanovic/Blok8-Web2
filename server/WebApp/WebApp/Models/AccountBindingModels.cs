@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using WebApp.Models.Entiteti;
@@ -133,7 +134,7 @@ namespace WebApp.Models
 
     }
 
-    public class LineBindingModel
+    public class LineBindingModell
     {
         [Required]
         [Display(Name = "Id")]
@@ -174,6 +175,30 @@ namespace WebApp.Models
         [Display(Name = "cenaGodisnja")]
         public double cenaGodisnja { get; set; }
     }
- 
+        public class StationBindingModel
+            {
+                public string Name { get; set; }         // za stanicu
+                public string Address { get; set; }
+                public double XCoordinate { get; set; }
+                public double YCoordinate { get; set; }
+                public string IsStation { get; set; }
+            }
+    public class LineStBindingModel
+    {
+        public string LineId { get; set; }              // za liniju
+        public string LineType { get; set; }
+        public string Description { get; set; }
+        public string Color { get; set; }
 
+        public List<StationBindingModel> Stations { get; set; }
     }
+    public class LineBindingModel
+    {
+        public string Lineid { get; set; }
+        public string Description { get; set; }
+    }
+
+    
+
+
+}

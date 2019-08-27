@@ -15,10 +15,14 @@
         </div>
       </div>
     </nav>
+    
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
       <div class="container">
 <form>
   <h3 style="text-align:center">Autobuske linije</h3>
+     <!-- Kreiramo mapu -->
+    
+    <div>
     <label>
           <select #routeType>
                 <option value="0" disabled>Odaberite liniju</option>
@@ -30,13 +34,56 @@
           <button type="submit" (click)="ShowLines(routeType.value)">Prikazi</button>
         </div>
       <br/>
-      <label>
-            <ng-template [ngIf]="routeType.value== 2"><div><u> Prigradske linije: </u></div></ng-template>
-            <ng-template [ngIf]="routeType.value== 1"><div><u> Gradske linije: </u></div></ng-template>
-      </label>
-      <label>
-              {{info}}
-      </label>
+       
+      </div>
+
+      <div class="container" >
+      
+        <agm-map [latitude]="45.25167" [longitude]="19.83694" [zoom]="14">  
+       <div *ngFor="let line of getLines()">
+         <agm-polyline [strokeColor]="line.Color">
+           <agm-polyline-point *ngFor="let station of line.Station " [latitude]="station.XCoordinate" [longitude]="station.YCoordinate">
+             </agm-polyline-point>
+             </agm-polyline>
+             <div *ngFor="let station of line.Stations">
+               
+         <agm-marker [latitude]="station.XCoordinate" [longitude]="station.YCoordinate" [iconUrl]="iconUrl" >
+
+       <span style="font-size: 16px;font-family: 'Times New Roman'" >{{station.name}}</span>
+       <br/>
+       <span style="font-family: 'Times New Roman';color: gray;">{{station.Address}}</span>
+
+     
+           <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
+           <agm-info-window [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" >
+     
+             <!-- U info-window stavljamo html -->
+           <!--  <span style="font-size: 16px;font-family:'Times New Roman'">Fakultet tehničkih nauka</span>
+             <br/>
+             <span style="font-family:'Times New Roman'; color:gray;"><strong>Jugodrvo</strong></span>
+             <span style="font-family:'Times New Roman'; color:gray;">Bulevar oslobođenja 131</span>
+             <a [href]="markerInfo.link">See the site.</a>-->
+           </agm-info-window>
+     
+         </agm-marker>
+     
+      <!--   <agm-polyline [strokeColor]="polyline.color">
+              <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude">
+              </agm-polyline-point>
+         </agm-polyline>-->
+     
+      <!--  <agm-marker *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude" [iconUrl]="polyline.icon">
+         </agm-marker>--> 
+     </div>
+       </div>
+       </agm-map>
+      
+      </div>
+      
+      
+      
   </form>
 </div>
-</div>
+
+
+

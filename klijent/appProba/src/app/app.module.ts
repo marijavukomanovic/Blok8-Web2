@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +46,8 @@ import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.co
     DodavanjeCenovnikaComponent,
     LokacijaComponent,
     IzmenaCenovnikaComponent,
+ 
+    
     //RegistracijaServis,
   ],
   imports: [
@@ -52,6 +56,8 @@ import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
+
   ],
   providers: [],
   bootstrap: [AppComponent]
