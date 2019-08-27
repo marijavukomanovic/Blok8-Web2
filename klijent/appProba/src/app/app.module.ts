@@ -20,6 +20,7 @@ import { CenovnikComponent } from './cenovnik/cenovnik.component';
 import { InfoKorisnikComponent } from './info-korisnik/info-korisnik.component';
 import { DodavanjeCenovnikaComponent } from './dodavanje-cenovnika/dodavanje-cenovnika.component';
 import { LokacijaComponent } from './lokacija/lokacija.component';
+import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -42,6 +43,7 @@ import { LokacijaComponent } from './lokacija/lokacija.component';
     InfoKorisnikComponent,
     DodavanjeCenovnikaComponent,
     LokacijaComponent,
+    IzmenaCenovnikaComponent,
     //RegistracijaServis,
   ],
   imports: [

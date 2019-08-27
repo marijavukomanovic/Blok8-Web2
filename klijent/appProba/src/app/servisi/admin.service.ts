@@ -11,7 +11,6 @@ export class AdminService extends HttpService{
   ShowDatum() : Observable<any>{
     return this.http.get<any>(this.url + "/api/CenaKarte/GetPoslednjiDatum");
   }
-specificUrl = this.url + "/api/CenaKarte/Cenovnik";
 
   ShowCenovnik(cenovnik : CenovnikModel) : Observable<any>{
   
@@ -23,5 +22,10 @@ specificUrl = this.url + "/api/CenaKarte/Cenovnik";
         }
       }
       return this.http.post<any>(this.url + "/api/CenaKarte/Cenovnik/" + cenovnik,cenovnik,httpOptions);
-    }  
+    }
+
+    getCenovnik()
+    {
+      
+    }
   }
