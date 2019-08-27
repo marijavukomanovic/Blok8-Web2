@@ -174,5 +174,6 @@ namespace WebApp.Models
         [Display(Name = "cenaGodisnja")]
         public double cenaGodisnja { get; set; }
     }
+ 
 
-}
+    }
