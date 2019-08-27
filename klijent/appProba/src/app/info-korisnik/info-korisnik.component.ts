@@ -40,11 +40,11 @@ registerForm = this.fb.group({
   constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router) { }
 
   ngOnInit() {  
-    this.registracijaServis.getInfo(localStorage.getItem('username')).subscribe(data => {
+    /*this.registracijaServis.getInfo(localStorage.getItem('username')).subscribe(data => {
       console.log(data);
       this.user = data;
       this.registerForm.patchValue(data);
-    });
+    });*/
  
   }
   onchange()
@@ -52,12 +52,17 @@ registerForm = this.fb.group({
   
   }
   onSubmit()
-  {
-    this.user = this.registerForm.value;
-    console.log(this.user);
+  {this.registracijaServis.getInfo().subscribe(data => {
+    /*console.log(data);
+    this.user = data;
+    this.registerForm.patchValue(data);
+ 
+    this.user = this.registerForm.value;*/
+  });
+    /*console.log(this.user);
     this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
       console.log('Uspesno izmenje informacije o korisniku!');
-    });
+    });*/
   }
 
   onFileChange(event)

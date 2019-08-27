@@ -33,7 +33,7 @@ namespace WebApp.Controllers
 
         }
 
-        [Authorize(Roles ="AppUser")]
+        [AllowAnonymous]
         [Route("Registracija")]
         public async Task<IHttpActionResult> Registracija(UserRegistrationBindingModel model)
         {
@@ -83,19 +83,19 @@ namespace WebApp.Controllers
                 Email = model.Email,
                 Adresa = model.Address,
                 DatumRodjenja = datumRodjenja,
-                
-                TipId= Convert.ToInt32(model.PassengerType),
-                Document=model.Document,
+
+                TipId = Convert.ToInt32(model.PassengerType),
+                Document = model.Document,
             };
-            
+
             db.Korisnik.Add(noviKorisnik);
             db.SaveChanges();
-           // noviKorisnik.Id = noviKorisnik.Id + 2;
+            // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra),KorisnikId=noviKorisnik.Id };
+            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
             appUser.Id = noviKorisnik.Id.ToString();
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
-            userManager.AddToRole(appUser.Id,"AppUser" );
+            userManager.AddToRole(appUser.Id, "AppUser");
             noviKorisnik.Sifra = appUser.PasswordHash;
             db.Entry(noviKorisnik).State = EntityState.Modified;
             db.SaveChanges();
@@ -108,12 +108,12 @@ namespace WebApp.Controllers
 
         }
         // GET: api/Korisnik/GetInfo
-       // [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
-       [AllowAnonymous]
-        [Route("GetInfo/{username}")]
+        // [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
+        [AllowAnonymous]
         [System.Web.Http.HttpGet]
-        [ResponseType(typeof(RegisterBindingModel))]
-        public IHttpActionResult GetUserInfo(string username)//saljes mi localStorage.username
+        [Route("GetInf{username}")]
+        [ResponseType(typeof(UserRegistrationBindingModel))]
+        public IHttpActionResult GetInfo(string username)//saljes mi localStorage.username
         {
             Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == username).ToList().First();
             if (user == null)
@@ -155,12 +155,12 @@ namespace WebApp.Controllers
             return Ok(userRetval);
         }
         // POST api/Korisnik/ChangeInfo
-      //  [Authorize(Roles = "AppUser")]
-        
+        //  [Authorize(Roles = "AppUser")]
+
         [System.Web.Http.HttpPost]
         [Route("ChangeInfo")]
-        [ResponseType(typeof(UserRegistrationBindingModel))]
-        public IHttpActionResult Edit(UserRegistrationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
+       // [ResponseType(typeof(UserRegistrationBindingModel))]
+        public IHttpActionResult ChangeInfo(UserRegistrationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
         {
             // validacija
             if (!ModelState.IsValid)
@@ -258,10 +258,10 @@ namespace WebApp.Controllers
             if (!model.Password.Equals(model.ConfirmPassword))//za slucaj da se sifre ne poklapaju
             { return BadRequest("Sifre se moraju poklapati"); }
             user.Sifra = model.Password;
-            
+
 
             // izmena u bazi
-        //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
+            //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             //string ageGroupString;
@@ -280,20 +280,20 @@ namespace WebApp.Controllers
             //        ageGroupString = "None";
             //        break;
             //}
-            UserRegistrationBindingModel userRetVal = new UserRegistrationBindingModel()
-            {
-                Email = user.Email,
-                Password = user.Sifra,
-                ConfirmPassword = user.Sifra,
-                Name = user.Ime,
-                LastName = user.Prezime,
-                UserName = user.KorisnickoIme,
-                BirthdayDate = user.DatumRodjenja.ToString(),
-                PassengerType = user.TipId,///vereovatnoi treba promeniti
-                Document = user.Document,
-                Address = user.Adresa
-            };
-            return Ok(userRetVal);
+            //UserRegistrationBindingModel userRetVal = new UserRegistrationBindingModel()
+            //{
+            //    Email = user.Email,
+            //    Password = user.Sifra,
+            //    ConfirmPassword = user.Sifra,
+            //    Name = user.Ime,
+            //    LastName = user.Prezime,
+            //    UserName = user.KorisnickoIme,
+            //    BirthdayDate = user.DatumRodjenja.ToString(),
+            //    PassengerType = user.TipId,///vereovatnoi treba promeniti
+            //    Document = user.Document,
+            //    Address = user.Adresa
+            //};
+            return Ok();
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
@@ -326,7 +326,7 @@ namespace WebApp.Controllers
         }
 
 
-       // GET: api/Korisniks
+        // GET: api/Korisniks
         public IQueryable<Korisnik> GetKorisnik()
         {
             return db.Korisnik;

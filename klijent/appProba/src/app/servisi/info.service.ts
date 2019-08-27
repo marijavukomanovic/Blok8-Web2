@@ -8,9 +8,9 @@ import {RegistracijaModel} from 'src/app/model/registracijaModel';
 })
 export class InfoService extends HttpService{
 
-  getInfo(user :string) : Observable<RegistracijaModel>
+  getInfo() : Observable<any>
   {
-    return this.http.get<RegistracijaModel>(this.url + "/api/Korisnik/GetInfo/" + user);
+    return this.http.get<any>(this.url + "api/UserInfo/GetInfo/");
   }
 
   postChangedInfo(user : RegistracijaModel) : Observable<any>{
