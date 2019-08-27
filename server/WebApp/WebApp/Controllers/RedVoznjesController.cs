@@ -13,7 +13,8 @@ using WebApp.Persistence;
 using WebApp.Persistence.Repository;
 
 namespace WebApp.Controllers
-{[RoutePrefix("api/RedVoznje")]
+{
+    [RoutePrefix("api/RedVoznje")]
     public class RedVoznjesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,7 +22,7 @@ namespace WebApp.Controllers
         private ILinijaRepository linijaRepository;
         private ITipLinijeRepository tipLinijeRepository;
         private ITipDanaRepository tipDanaRepository;
-        public RedVoznjesController(ILinijaRepository linijaRepository, ITipLinijeRepository tipLinijeRepository,ITipDanaRepository tipDanaRepository, IRedVoznjeRepository redVoznjeRepository)
+        public RedVoznjesController(ILinijaRepository linijaRepository, ITipLinijeRepository tipLinijeRepository, ITipDanaRepository tipDanaRepository, IRedVoznjeRepository redVoznjeRepository)
         {
             this.redVoznjeRepository = redVoznjeRepository;
             this.tipDanaRepository = tipDanaRepository;
@@ -29,18 +30,21 @@ namespace WebApp.Controllers
             this.tipLinijeRepository = tipLinijeRepository;
         }
         [ResponseType(typeof(List<string>))]
-        [Route("GetLinije/{type}")]
+        [Route("GetLinije/{type}")]//vrati linije za odredjeni tip lnija
         public IHttpActionResult GetLines1(int type)
         {
             List<string> retVal = new List<string>();
             string s = " ";
-
+            bool tipPostoji = false;
+            if (linijaRepository.GetAll().Count() == 0)
+            { return BadRequest("Nema nijedne linije"); }
             foreach (var i in linijaRepository.GetAll())
             {
                 if (i.Aktivna == true)
                 {
                     if (i.TipId == type)
                     {
+                        tipPostoji = true;
 
                         s += i.RedBroj.ToString();
                         // s += i.Stanice; ne odajemo u liniji koje ima stanice za sad
@@ -49,16 +53,24 @@ namespace WebApp.Controllers
                     }
                 }
             }
+            if (tipPostoji == false)
+            {
+                return BadRequest("Za trazeni tip ne postoji nijedna linija");//ili mozda jos bolje da vratim u retval poruku ? Marina ? 
+            }
             return Ok(retVal);
         }
+        [AllowAnonymous]//valjda moze i admin i user
         [ResponseType(typeof(string))]
-        [Route("GetRedVoznje/{tipDana}/{linija}")]
-        public IHttpActionResult GetSchedule( int tipDana, string linija)
+        [Route("GetRedVoznje/{tipDana}/{linija}")]//u odnosu na to koja je linija i koji je dan vrati se red voznje
+        public IHttpActionResult GetSchedule(int tipDana, string linija)
         {
             string redVoznje = "";
             int lineId = -1;
-            
 
+            //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
+            //{
+            //    return BadRequest("Ne postoji nijedna linija");
+            //}
             foreach (var l in linijaRepository.GetAll())
             {
                 if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')))
@@ -66,23 +78,40 @@ namespace WebApp.Controllers
                     lineId = l.Id;
                 }
             }
+            if (redVoznjeRepository.GetAll().Count() == 0)
+            {
+                return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
+            }
             foreach (var s in redVoznjeRepository.GetAll())
             {
-                if (s.LinijaId == lineId && s.TipDanaId == tipDana )//proverava da li je trazena linija, da li je odgovaradjuci dan
+                if (s.LinijaId == lineId && s.TipDanaId == tipDana)//proverava da li je trazena linija, da li je odgovaradjuci dan
                 {
                     redVoznje += s.RasporedVoznje;
                 }
             }
+            if (redVoznje.Trim(' ').Equals(""))
+            {
+                return BadRequest("Za odabranu liniju i tip ne postoji red voznje");
+            }
 
             return Ok(redVoznje);
         }
-
+        [Authorize(Roles ="Admin")]
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
         public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
         {
             RedVoznje redVoznje = new RedVoznje();
             bool proveraDaliPostojiZaDatiDan = false;
             bool proveraDaliPostojiZaDatuLiniju = false;
+            if (redVoznjeRepository.GetAll().Count() == 0)
+            {
+                return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
+            }
+            //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
+            //{
+            //    return BadRequest("Ne postoji nijedna linija");
+            //}
+
             foreach (var redV in redVoznjeRepository.GetAll())
             {
                 if (redV.Linija.RedBroj.Equals(linija))

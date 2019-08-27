@@ -33,7 +33,7 @@ namespace WebApp.Controllers
 
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles ="AppUser")]
         [Route("Registracija")]
         public async Task<IHttpActionResult> Registracija(UserRegistrationBindingModel model)
         {
@@ -46,7 +46,7 @@ namespace WebApp.Controllers
             {
                 return BadRequest("Vec ste registrovani sa datim meilom");
             }
-            if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName).Count() != 0)
+            if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName).Count() != 0)//nama je mil i korisnicko ime isto
             {
                 return BadRequest("Korisnicko ime se vec koristi");
             }
@@ -108,10 +108,10 @@ namespace WebApp.Controllers
 
         }
         // GET: api/User/GetInfo
-        //[Authorize(Roles = "AppUser")] nek bude zakomentarisano da nam ne bi pravilo problem
+        [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
         [Route("GetInfo")]
         [ResponseType(typeof(UserRegistrationBindingModel))]
-        public IHttpActionResult GetUserInfo(string username)
+        public IHttpActionResult GetUserInfo(string username)//saljes mi localStorage.username
         {
             Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == username).ToList().First();
             if (user == null)
@@ -156,7 +156,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "AppUser")]
         [ResponseType(typeof(UserRegistrationBindingModel))]
         [Route("ChangeInfo")]
-        public IHttpActionResult Edit(UserRegistrationBindingModel model)
+        public IHttpActionResult Edit(UserRegistrationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
         {
             // validacija
             if (!ModelState.IsValid)
@@ -192,58 +192,58 @@ namespace WebApp.Controllers
 
             // parsiranje datuma
             DateTime birthday = DateTime.Parse(model.BirthdayDate);
-
+            //posto nam slika jos ne radi ovo nam jos  ne treba !!!!!!!!!!!!!!!!
             // ako se promenila vrednost ageGroup-e
-            if (user.TipId != model.PassengerType)
-            {
-                // i ta nova vrednost nije Regular => treba vratiti status na pending, i obrisati sliku (ako nije promenjena)
-                if (model.PassengerType != 1)
-                {
-                   // user.VerificationStatus = VerificationStatus.Pending;
-                }
-                // i ta nova vrednost je Regular => treba postaviti status na succecssfull, i obrisati sliku (ako nije promenjena)
-                else
-                {
-                    //user.VerificationStatus = VerificationStatus.Successful;
-                }
+            //if (user.TipId != model.PassengerType)
+            //{
+            //    // i ta nova vrednost nije Regular => treba vratiti status na pending, i obrisati sliku (ako nije promenjena)
+            //    if (model.PassengerType != 1)
+            //    {
+            //       // user.VerificationStatus = VerificationStatus.Pending;
+            //    }
+            //    // i ta nova vrednost je Regular => treba postaviti status na succecssfull, i obrisati sliku (ako nije promenjena)
+            //    else
+            //    {
+            //        //user.VerificationStatus = VerificationStatus.Successful;
+            //    }
 
-                // brisanje slike, ako nije promenjena (i ako je uopste pre toga imao sliku)
-                // ako je promenio grupu, a nije promenio sliku, treba obrisati njegovu sliku (obrisati i ne postaviti opet istu sliku)
-                if (user.Document != null)
-                {
-                    if (user.Document.SequenceEqual(model.Document))
-                    {
-                        user.Document = null;
-                    }
-                    else
-                    {
-                        // promenio je starosnu grupu, i postavio novi dokument => novi dokument se smesta u bazu i ceka se kontroler da potvrdi/odbije
-                        user.Document = model.Document;
-                    }
-                }
-                else
-                {
-                    user.Document = model.Document;
-                   // user.VerificationStatus = VerificationStatus.Pending;
-                }
-            }
-            // ako nije promenio grupu, a promenio je sliku, treba sacuvati novu sliku i promeniti status na Pending
-            else
-            {
-                if (user.Document != null)
-                {
-                    if (!user.Document.SequenceEqual(model.Document))
-                    {
-                        user.Document = model.Document;
-                       // user.VerificationStatus = VerificationStatus.Pending;
-                    }
-                }
-                else
-                {
-                    user.Document = model.Document;
-                   // user.VerificationStatus = VerificationStatus.Pending;
-                }
-            }
+            //    // brisanje slike, ako nije promenjena (i ako je uopste pre toga imao sliku)
+            //    // ako je promenio grupu, a nije promenio sliku, treba obrisati njegovu sliku (obrisati i ne postaviti opet istu sliku)
+            //    if (user.Document != null)
+            //    {
+            //        if (user.Document.SequenceEqual(model.Document))
+            //        {
+            //            user.Document = null;
+            //        }
+            //        else
+            //        {
+            //            // promenio je starosnu grupu, i postavio novi dokument => novi dokument se smesta u bazu i ceka se kontroler da potvrdi/odbije
+            //            user.Document = model.Document;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        user.Document = model.Document;
+            //       // user.VerificationStatus = VerificationStatus.Pending;
+            //    }
+            //}
+            //// ako nije promenio grupu, a promenio je sliku, treba sacuvati novu sliku i promeniti status na Pending
+            //else
+            //{
+            //    if (user.Document != null)
+            //    {
+            //        if (!user.Document.SequenceEqual(model.Document))
+            //        {
+            //            user.Document = model.Document;
+            //           // user.VerificationStatus = VerificationStatus.Pending;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        user.Document = model.Document;
+            //       // user.VerificationStatus = VerificationStatus.Pending;
+            //    }
+            //}kad slika bude radila ovo nam treba!!!!!!!!!!!!!!!!!!!!
 
             // izmena zeljenih propertija
             user.Ime = model.Name;
@@ -251,7 +251,10 @@ namespace WebApp.Controllers
             user.Adresa = model.Address;
             user.TipId = model.PassengerType;
             user.DatumRodjenja = birthday;
+            if (!model.Password.Equals(model.ConfirmPassword))//za slucaj da se sifre ne poklapaju
+            { return BadRequest("Sifre se moraju poklapati"); }
             user.Sifra = model.Password;
+            
 
             // izmena u bazi
         //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
@@ -319,103 +322,103 @@ namespace WebApp.Controllers
         }
 
 
-        // GET: api/Korisniks
-        //public IQueryable<Korisnik> GetKorisnik()
-        //{
-        //    return db.Korisnik;
-        //}
+       // GET: api/Korisniks
+        public IQueryable<Korisnik> GetKorisnik()
+        {
+            return db.Korisnik;
+        }
 
-        //// GET: api/Korisniks/5
-        //[ResponseType(typeof(Korisnik))]
-        //public IHttpActionResult GetKorisnik(int id)
-        //{
-        //    Korisnik korisnik = db.Korisnik.Find(id);
-        //    if (korisnik == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: api/Korisniks/5
+        [ResponseType(typeof(Korisnik))]
+        public IHttpActionResult GetKorisnik(int id)
+        {
+            Korisnik korisnik = db.Korisnik.Find(id);
+            if (korisnik == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(korisnik);
-        //}
+            return Ok(korisnik);
+        }
 
-        //// PUT: api/Korisniks/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutKorisnik(int id, Korisnik korisnik)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // PUT: api/Korisniks/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutKorisnik(int id, Korisnik korisnik)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    if (id != korisnik.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (id != korisnik.Id)
+            {
+                return BadRequest();
+            }
 
-        //    db.Entry(korisnik).State = EntityState.Modified;
+            db.Entry(korisnik).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!KorisnikExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!KorisnikExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
-        //// POST: api/Korisniks
-        //[ResponseType(typeof(Korisnik))]
-        //public IHttpActionResult PostKorisnik(Korisnik korisnik)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // POST: api/Korisniks
+        [ResponseType(typeof(Korisnik))]
+        public IHttpActionResult PostKorisnik(Korisnik korisnik)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    db.Korisnik.Add(korisnik);
-        //    db.SaveChanges();
+            db.Korisnik.Add(korisnik);
+            db.SaveChanges();
 
-        //    return CreatedAtRoute("DefaultApi", new { id = korisnik.Id }, korisnik);
-        //}
+            return CreatedAtRoute("DefaultApi", new { id = korisnik.Id }, korisnik);
+        }
 
-        //// DELETE: api/Korisniks/5
-        //[ResponseType(typeof(Korisnik))]
-        //public IHttpActionResult DeleteKorisnik(int id)
-        //{
-        //    Korisnik korisnik = db.Korisnik.Find(id);
-        //    if (korisnik == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Korisniks/5
+        [ResponseType(typeof(Korisnik))]
+        public IHttpActionResult DeleteKorisnik(int id)
+        {
+            Korisnik korisnik = db.Korisnik.Find(id);
+            if (korisnik == null)
+            {
+                return NotFound();
+            }
 
-        //    db.Korisnik.Remove(korisnik);
-        //    db.SaveChanges();
+            db.Korisnik.Remove(korisnik);
+            db.SaveChanges();
 
-        //    return Ok(korisnik);
-        //}
+            return Ok(korisnik);
+        }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-        //private bool KorisnikExists(int id)
-        //{
-        //    return db.Korisnik.Count(e => e.Id == id) > 0;
-        //}
+        private bool KorisnikExists(int id)
+        {
+            return db.Korisnik.Count(e => e.Id == id) > 0;
+        }
     }
 }

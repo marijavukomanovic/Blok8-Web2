@@ -13,7 +13,8 @@ using WebApp.Persistence;
 using WebApp.Persistence.Repository;
 
 namespace WebApp.Controllers
-{[RoutePrefix("api/Linije")]
+{
+    [RoutePrefix("api/Linije")]
     public class LinijasController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -32,24 +33,30 @@ namespace WebApp.Controllers
         [System.Web.Http.HttpGet]
         [Route("GetLines/{type}")]
         [ResponseType(typeof(List<string>))]
-        public IHttpActionResult GetLines(int type)
+        public IHttpActionResult GetLines(int type)//vrati koje su linije za odredjeni tip (gradski,prigratski)
         {
             List<string> retVal = new List<string>();
             string s = " ";
-
+            bool tipPostoji = false;
+            if (lineRepo.GetAll().Count() == 0)
+            { return BadRequest("Nema nijedne linije"); }
             foreach (var i in lineRepo.GetAll())
             {
                 if (i.Aktivna == true)
                 {
                     if (i.TipId == type)
                     {
-
+                        tipPostoji = true;
                         s += i.RedBroj.ToString();
                         // s += i.Stanice; ne odajemo u liniji koje ima stanice za sad
                         retVal.Add(s);
                         s = "";
                     }
                 }
+            }
+            if (tipPostoji == false)
+            {
+                return BadRequest("Za trazeni tip ne postoji nijedna linija");//ili mozda jos bolje da vratim u retval poruku ? Marina ? 
             }
             return Ok(retVal);
         }
