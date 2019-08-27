@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class RegistracijaServis extends HttpService{
 
   specificUrl = this.url + "/api/Korisnik/Registracija";
-  
+ 
     register(data: RegistracijaModel) : Observable<any>{
 
       let data1 = new FormData()
@@ -23,5 +23,6 @@ export class RegistracijaServis extends HttpService{
       }
       return this.http.post<any>(this.specificUrl, data, httpOptions);
     }
+
 
 }

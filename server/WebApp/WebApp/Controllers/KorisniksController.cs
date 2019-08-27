@@ -107,10 +107,12 @@ namespace WebApp.Controllers
             return Ok();
 
         }
-        // GET: api/User/GetInfo
-        [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
-        [Route("GetInfo")]
-        [ResponseType(typeof(UserRegistrationBindingModel))]
+        // GET: api/Korisnik/GetInfo
+       // [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
+       [AllowAnonymous]
+        [Route("GetInfo/{username}")]
+        [System.Web.Http.HttpGet]
+        [ResponseType(typeof(RegisterBindingModel))]
         public IHttpActionResult GetUserInfo(string username)//saljes mi localStorage.username
         {
             Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == username).ToList().First();
@@ -152,10 +154,12 @@ namespace WebApp.Controllers
 
             return Ok(userRetval);
         }
-        // POST api/User/ChangeInfo
-        [Authorize(Roles = "AppUser")]
-        [ResponseType(typeof(UserRegistrationBindingModel))]
+        // POST api/Korisnik/ChangeInfo
+      //  [Authorize(Roles = "AppUser")]
+        
+        [System.Web.Http.HttpPost]
         [Route("ChangeInfo")]
+        [ResponseType(typeof(UserRegistrationBindingModel))]
         public IHttpActionResult Edit(UserRegistrationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
         {
             // validacija

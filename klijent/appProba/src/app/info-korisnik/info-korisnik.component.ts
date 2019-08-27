@@ -11,7 +11,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
   styleUrls: ['./info-korisnik.component.css']
 })
 export class InfoKorisnikComponent implements OnInit {
-
+data:RegistracijaModel;
   @Input() user : RegistracijaModel = {
   Name : '',
   LastName : '',
@@ -26,36 +26,26 @@ export class InfoKorisnikComponent implements OnInit {
 };
 
 registerForm = this.fb.group({
-    Name : [this.user.Name],
-    LastName : [this.user.LastName],
-    UserName : [this.user.UserName, Validators.required],
-    Email : [this.user.Email, Validators.required],
-    Address : [this.user.Address],
-    BirthdayDate : [this.user.BirthdayDate],
-    PassengerType : [this.user.PassengerType],
-    Password : [this.user.Password, Validators.required],
-    ConfirmPassword : [this.user.ConfirmPassword, Validators.required],
-    Document : [this.user.Document],
+    Name : [''],
+    LastName : [''],
+    UserName : ['', Validators.required],
+    Email : ['', Validators.required],
+    Address : [''],
+    BirthdayDate : [''],
+    PassengerType : [''],
+    Password : ['', Validators.required],
+    ConfirmPassword : ['', Validators.required],
+    Document : [],
   });
   constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router) { }
 
-  ngOnInit() {
-    this.registracijaServis.getInfo(localStorage.getItem('username')).subscribe(user => { this.user = user
-    
-
-   /*this.registerForm.patchValue = ({
-      Name : user.Name,
-      LastName : '',
-      UserName : '',
-      Email : '',
-      Address : '',
-      BirthdayDate : '',
-      PassengerType : 1,
-      Password : '',
-      ConfirmPassword : '',
-      Document : '',});*/
-
-  });
+  ngOnInit() {  
+    this.registracijaServis.getInfo(localStorage.getItem('username')).subscribe(data => {
+      console.log(data);
+      this.user = data;
+      this.registerForm.patchValue(data);
+    });
+ 
   }
   onchange()
   {
@@ -63,11 +53,11 @@ registerForm = this.fb.group({
   }
   onSubmit()
   {
-   /* console.log(this.registerForm.value);
-    this.registracijaServis.register(this.registerForm.value).subscribe(data => {
-      console.log('Registration successfully done.');
-      this.router.navigate(['/']);
-    })*/;
+    this.user = this.registerForm.value;
+    console.log(this.user);
+    this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
+      console.log('Uspesno izmenje informacije o korisniku!');
+    });
   }
 
   onFileChange(event)

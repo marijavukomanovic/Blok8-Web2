@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <!--<meta name="viewport" content="width=device-width, initial-scale=1">!-->
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">!-->
-  <!--<link rel="stylesheet" href="theme.css" type="text/css">!-->
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container"> 
       <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
         <span class="navbar-toggler-icon"></span>
@@ -68,12 +57,7 @@
                     
                     
             <p class="label-txt"> Tip putnika: </p>
-            <!--<select formContorlName="PassengerType" (change)="onchange()">
-              <option  value="Regularan">Regularan</option>
-              <option  value="Student">Student</option>
-              <option  value="Penzioner">Penzioner</option>
-          </select>  -->
-          <select *ngIf="ownerLevels" [value]="selectedOwnerLevel" (change)="onChangeOwnerLevel($event.target.value)" formControlName="PassengerType" id="ddOwnerLevel">
+            <select *ngIf="ownerLevels" [value]="selectedOwnerLevel" (change)="onChangeOwnerLevel($event.target.value)" formControlName="PassengerType" id="ddOwnerLevel">
             <option [value]="0" disabled>Select Owner Level</option>
             <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id">{{ownerLevel.name}}</option>
          </select>
@@ -86,9 +70,4 @@
       </form>
     </div>
   </div>
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" >
-        <i class="fa d-inline fa-lg fa-bus"></i>
-        <b contenteditable="true"></b>
-      </a> </div>
-  </nav>
+

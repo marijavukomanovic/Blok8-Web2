@@ -10,6 +10,18 @@ export class InfoService extends HttpService{
 
   getInfo(user :string) : Observable<RegistracijaModel>
   {
-    return this.http.get<RegistracijaModel>(this.url + "api/Korisnik/GetInfo/" + user);
+    return this.http.get<RegistracijaModel>(this.url + "/api/Korisnik/GetInfo/" + user);
   }
+
+  postChangedInfo(user : RegistracijaModel) : Observable<any>{
+  
+    let data1 = new FormData()
+
+      let httpOptions = {
+        headers:{
+          "Content-type":"application/json"
+        }
+      }
+      return this.http.post<any>(this.url + "/api/Korisnik/ChangeInfo/" + user,user,httpOptions);//gadja kont,podatak,opcije
+    }
 }
