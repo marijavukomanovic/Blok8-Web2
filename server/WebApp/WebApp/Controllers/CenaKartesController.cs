@@ -144,14 +144,17 @@ namespace WebApp.Controllers
             int idCenovnika = -1;
             int idCenaKarte = -1;
             bool provera = false;
+            DateTime t1 =   DateTime.Parse(model.OD);
+            DateTime t2 = DateTime.Parse(model.DO);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             foreach (var tCenovnik in cenovnikRepository.GetAll())
             {
-                if (DateTime.Compare(tCenovnik.VazenjeOd, DateTime.Parse(model.OD)) < 0 &&
-                       DateTime.Compare(tCenovnik.VazenjeDo, DateTime.Parse(model.DO)) > 0)
+                if (DateTime.Compare(tCenovnik.VazenjeOd, t1) == 0 &&
+                       DateTime.Compare(tCenovnik.VazenjeDo, t2) == 0)
                 {
                     idCenovnika = tCenovnik.Id;
                 }
