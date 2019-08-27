@@ -49,7 +49,7 @@ cenovnikForma = this.fb.group(
       console.log(this.cenovnik);
       console.log(this.cenovnikForma.value);
       this.adminServis.ShowCenovnik(this.cenovnik).subscribe(data => {
-        console.log('Registration successfully done.');
+        console.log('Uspesno dodat cenovnik!');
         
       });
     }

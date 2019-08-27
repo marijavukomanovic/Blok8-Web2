@@ -128,8 +128,8 @@ namespace WebApp.Controllers
             {
                 OD = t1.ToShortDateString(),
                 DO = t2.ToShortDateString(),
-                cenaDnevna = cene[0],
-                cenaVremenska = cene[1],
+                cenaDnevna = cene[1],
+                cenaVremenska = cene[0],
                 cenaMesecna = cene[2],
                 cenaGodisnja = cene[3],
             };

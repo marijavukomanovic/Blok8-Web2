@@ -23,9 +23,20 @@ export class AdminService extends HttpService{
       }
       return this.http.post<any>(this.url + "/api/CenaKarte/Cenovnik/" + cenovnik,cenovnik,httpOptions);
     }
-
-    getCenovnik()
-    {
-      
+    ///api/CenaKarte/IzmenaCenovnika
+    getCenovnik(): Observable<CenovnikModel>{
+      return this.http.get<CenovnikModel>(this.url + "/api/CenaKarte/IzmenaCenovnika");
     }
+    ///api/CenaKarte/IzmenaCenovnika2 + model
+    postCenovnik(cenovnik : CenovnikModel) : Observable<any>{
+  
+      let data1 = new FormData()
+  
+        let httpOptions = {
+          headers:{
+            "Content-type":"application/json"
+          }
+        }
+        return this.http.post<any>(this.url + "/api/CenaKarte/IzmenaCenovnika2/" + cenovnik,cenovnik,httpOptions);
+      }
   }
