@@ -19,27 +19,58 @@ namespace WebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ILinijaRepository lineRepo;
-        private IStanicaRepository stanionRepository;
+        private IStanicaRepository stationRepository;
+        private ILinijeStaniceRepository linijeStaniceRepository;
 
         private static readonly Object lockObject = new Object();
-        public LinijasController(ILinijaRepository il, IStanicaRepository stanicaRepository)
+        public LinijasController(ILinijaRepository il, IStanicaRepository stanicaRepository,ILinijeStaniceRepository st)
         {
             this.lineRepo = il;
-            this.stanionRepository = stanicaRepository;
+            this.stationRepository = stanicaRepository;
+            this.linijeStaniceRepository = st;
         }
 
         // GET: api/StationLine/GetLines
         [AllowAnonymous]
         [System.Web.Http.HttpGet]
-        [Route("GetLines/{type}")]
-        [ResponseType(typeof(List<string>))]
-        public IHttpActionResult GetLines(int type)//vrati koje su linije za odredjeni tip (gradski,prigratski)
+        [Route("GetLines")]
+        [ResponseType(typeof(StationBindingModel))]
+        public IHttpActionResult GetLines()//vrati koje su linije za odredjeni tip (gradski,prigratski)
         {
-            List<string> retVal = new List<string>();
-            string s = " ";
+            StationBindingModel st = new StationBindingModel();
+            foreach (var st1 in stationRepository.GetAll())
+            {
+                st.Address = st1.Adresa;
+                st.Name = st1.Naziv;
+                st.XCoordinate = st1.GeografskeKoordinataX;
+                st.YCoordinate = st1.GeografskeKoordinataY;
+            }
+
+            return Ok(st);
+
+            // LineStBindingModel
+            // StationBindingModel
+
+            /*List<LineStBindingModel> retVal = new List<LineStBindingModel>();
+            
             bool tipPostoji = false;
+            List<int> idLinija = new List<int>();
+            string tip ="";
+            if (type == 1)
+            {
+                tip = "Gradski";
+            }
+            else if(type == 2)
+            {
+                tip = "Prigradski";
+            }
+            
             if (lineRepo.GetAll().Count() == 0)
-            { return BadRequest("Nema nijedne linije"); }
+            {
+                return BadRequest("Nema nijedne linije");
+            }
+
+            //id-evi svih linija koje su zadatog tipa
             foreach (var i in lineRepo.GetAll())
             {
                 if (i.Aktivna == true)
@@ -47,18 +78,52 @@ namespace WebApp.Controllers
                     if (i.TipId == type)
                     {
                         tipPostoji = true;
-                        s += i.RedBroj.ToString();
-                        // s += i.Stanice; ne odajemo u liniji koje ima stanice za sad
-                        retVal.Add(s);
-                        s = "";
+                        idLinija.Add(i.Id);
+                        LineStBindingModel ret = new LineStBindingModel();
+                        ret.LineId = i.Id.ToString();
+                        ret.LineType = tip;
+                        ret.Color = i.Boja;
+                        ret.Description = i.Opis;
+                        ret.Stations = new List<StationBindingModel>();
+                        retVal.Add(ret);
                     }
                 }
+            }
+            for (int i=0;i<idLinija.Count;i++)
+            {
+                foreach(var lin in linijeStaniceRepository.GetAll())
+                {
+                    if(lin.LinijeId == idLinija[i])
+                    {
+                        int idSt = lin.StaniceId;
+                        foreach(var sta in stationRepository.GetAll())
+                        {
+                            if (idSt == sta.Id)
+                            {
+                                foreach(var p in retVal)
+                                {
+                                    if (Equals(p.LineId,idSt.ToString()))
+                                    {
+                                        StationBindingModel stbm = new StationBindingModel();
+                                            stbm.Address = sta.Adresa;
+                                        stbm.Name = sta.Naziv;
+                                        stbm.IsStation = "";
+                                        stbm.XCoordinate = sta.GeografskeKoordinataX;
+                                        stbm.YCoordinate = sta.GeografskeKoordinataY;
+                                        p.Stations.Add(stbm);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
             if (tipPostoji == false)
             {
                 return BadRequest("Za trazeni tip ne postoji nijedna linija");//ili mozda jos bolje da vratim u retval poruku ? Marina ? 
             }
-            return Ok(retVal);
+            return Ok(retVal);*/
         }
         // GET: api/Linijas
         public IQueryable<Linija> GetLinije()

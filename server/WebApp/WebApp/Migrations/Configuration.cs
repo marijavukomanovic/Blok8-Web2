@@ -168,34 +168,65 @@ namespace WebApp.Migrations
 
             if (!context.Stanice.Any(t => t.Naziv == "1A"))
             {
-                //Models.Entiteti.Stanica tl2 = new Models.Entiteti.Stanica();
                 Stanica s1 = new Stanica();
-                
-                s1.Naziv = "1A";
+                s1.Id = 1;
+                s1.Naziv = "1A-1";
                 s1.Adresa = "Selj buna 55";
-                s1.GeografskeKoordinataX = 1.0;
-                s1.GeografskeKoordinataY = 2.0;
+                s1.GeografskeKoordinataX = 45.242664693102796;
+                s1.GeografskeKoordinataY = 19.841715892302318;
                 s1.Aktivna = true;
                 context.Stanice.Add(s1);
                 context.SaveChanges();
 
+                Stanica s2 = new Stanica();
+                s2.Id = 2;
+                s2.Naziv = "1A-2";
+                s2.Adresa = "Selj buna 90";
+                s2.GeografskeKoordinataX = 45.242154780020556 ;
+                s2.GeografskeKoordinataY = 19.842096765982433 ;
+                s2.Aktivna = true;
+                context.Stanice.Add(s2);
+                context.SaveChanges();
+
+                Stanica s3 = new Stanica();
+                s3.Id = 3;
+                s3.Naziv = "1A-3";
+                s3.Adresa = "Selj buna 189";
+                s3.GeografskeKoordinataX =45.241693;
+                s3.GeografskeKoordinataY =19.842440;
+                s3.Aktivna = true;
+                context.Stanice.Add(s3);
+                context.SaveChanges();
+
+
                 Linija l1 = new Linija();
+                l1.Id = 1;
+                l1.Opis = "Linija u adresi selj.buna";
                 l1.Aktivna = true;
                 l1.RedBroj = "12A";
                 l1.TipId = 1;
-                /* l1.Stanice.Add(s1);
-                 s1.Linije.Add(l1);*/
+                l1.Boja = "blue";
                 context.Linije.Add(l1);
                 context.SaveChanges();
-                LinijeStanice linijeStanice=new LinijeStanice();
-                linijeStanice.LinijeId = l1.Id;
-                linijeStanice.StaniceId = s1.Id;
-                context.LinijeStanices.Add(linijeStanice);
+
+
+                LinijeStanice linijeStanice1=new LinijeStanice();
+                linijeStanice1.LinijeId = l1.Id;
+                linijeStanice1.StaniceId = s1.Id;
+                context.LinijeStanices.Add(linijeStanice1);
                 context.SaveChanges();
 
+                LinijeStanice linijeStanice2 = new LinijeStanice();
+                linijeStanice2.LinijeId = l1.Id;
+                linijeStanice2.StaniceId = s2.Id;
+                context.LinijeStanices.Add(linijeStanice2);
+                context.SaveChanges();
 
-
-
+                LinijeStanice linijeStanice3 = new LinijeStanice();
+                linijeStanice3.LinijeId = l1.Id;
+                linijeStanice3.StaniceId = s3.Id;
+                context.LinijeStanices.Add(linijeStanice3);
+                context.SaveChanges();
 
             }
             if (!context.RedoviVoznje.Any(t => t.Id == 1))

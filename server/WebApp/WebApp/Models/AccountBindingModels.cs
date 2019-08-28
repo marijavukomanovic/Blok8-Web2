@@ -181,7 +181,7 @@ namespace WebApp.Models
                 public string Address { get; set; }
                 public double XCoordinate { get; set; }
                 public double YCoordinate { get; set; }
-                public string IsStation { get; set; }
+                
             }
     public class LineStBindingModel
     {
