@@ -3,14 +3,14 @@ import { MarkerInfo } from 'src/app/model/marker-info.model';
 import { GeoLocation } from 'src/app/model/geolocation';
 import { Polyline } from 'src/app/model/polyline';
 import {LinijaService} from 'src/app/servisi/linija.service';
-import { Station } from '../model/linijaModel';
+import { Station, LineStation } from '../model/linijaModel';
 import { Marker } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-linije',
   templateUrl: './linije.component.html',
   styleUrls: ['./linije.component.css'],
-  styles: ['agm-map {height: 500px; width: 1000px;}'] //postavljamo sirinu i visinu mape
+  styles: ['agm-map {height: 500px; width: 620px;}'] //postavljamo sirinu i visinu mape
 })
 export class LinijeComponent implements OnInit {
 
@@ -19,6 +19,8 @@ export class LinijeComponent implements OnInit {
   public zoom: number;
   public stanica1: Array<Station>;
   public sta : Station;
+  lines : string[];
+  lineStation : LineStation;
 
   ngOnInit() {
     this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), 
@@ -28,7 +30,7 @@ export class LinijeComponent implements OnInit {
       this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
 
       
-      this.servisLinija.getLines().subscribe(data =>{
+      /*this.servisLinija.getLines().subscribe(data =>{
         console.log(data);
 
         for (let index = 0; index < data.length; index++) {
@@ -43,7 +45,7 @@ export class LinijeComponent implements OnInit {
        
         }
         
-      });
+      });*/
       
   }
 
@@ -54,6 +56,22 @@ export class LinijeComponent implements OnInit {
     this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng))
     console.log($event.coords.lat, $event.coords.lng);
     console.log(this.polyline)
+  }
+
+  getListuLinija(routeType : number)
+  {
+    this.servisLinija.getListuLinija(routeType).subscribe(data => {
+      console.log(data);
+      this.lines = data;
+    });
+  }
+
+  getLines(lineName : string)
+  {
+    this.servisLinija.getLines(lineName).subscribe(data => {
+      console.log(data);
+      this.lineStation = data;
+    });
   }
 
 }

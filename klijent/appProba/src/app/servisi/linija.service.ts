@@ -10,38 +10,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LinijaService extends HttpService{
 
   private TicketsUrl = 'http://localhost:52295/api/Linije';
-  /*getLines(routeType : number) : Observable<any>{
-    return this.http.get<any>(this.url + "/api/Linije/GetLines/" + routeType);
-  }*/
  
   /*getLines() : Observable<Station>{
     return this.http.get<Station>(this.url + "/api/Linije/GetLines");
   }*/
 
-  getLines(): Observable<Array<Station>> {
-    const url = `${this.TicketsUrl}/Getlines`;
-    return this.http.get<Array<Station>>(url).pipe(
-      
-    );
+
+  getListuLinija(routeType : number): Observable<string[]>{
+    return this.http.get<string[]>(this.url + "/api/Linije/GetLineName/" + routeType);
   }
 
-  errorHandler(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred: ', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}` + `body was: ${error.error.error_description}`
-      );
-    }
-
-    return throwError('Something bad happend, please try again later...');
+  getLines(lineName : string): Observable<LineStation>{
+      return this.http.get<LineStation>(this.url + "/api/Linije/GetLines/" + lineName);
   }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
-    };
-  }
-  }
+}
 
 
