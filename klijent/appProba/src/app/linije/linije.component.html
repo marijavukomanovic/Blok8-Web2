@@ -22,16 +22,15 @@
   <h2 style="text-align:center">Autobuske linije</h2>
     <label>
       <div class="row">
-        <div class="col">          
-          <select #routeType>
+        <div class="col">
+          <div>Posle odabira tipa linije,prikazace vam se sve trenutne za izabrani tip.</div>       
+          <select #routeType (change)="getListuLinija(routeType.value)">
                 <option value="0" disabled>Odaberite tip linije</option>
                 <option value="1">Gradske linije</option>
                 <option value="2">Prigradske linije</option>              
           </select>
                     
-        <div>
-          <button type="submit" (click)="getListuLinija(routeType.value)">Prikazi</button>
-        </div>
+    
           </div>
       <div class="col">
           
