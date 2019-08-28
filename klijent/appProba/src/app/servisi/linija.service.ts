@@ -18,9 +18,9 @@ export class LinijaService extends HttpService{
     return this.http.get<Station>(this.url + "/api/Linije/GetLines");
   }*/
 
-  getLines(): Observable<Station> {
+  getLines(): Observable<Array<Station>> {
     const url = `${this.TicketsUrl}/Getlines`;
-    return this.http.get<Station>(url).pipe(
+    return this.http.get<Array<Station>>(url).pipe(
       
     );
   }

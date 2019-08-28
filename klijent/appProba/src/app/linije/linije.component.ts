@@ -4,6 +4,7 @@ import { GeoLocation } from 'src/app/model/geolocation';
 import { Polyline } from 'src/app/model/polyline';
 import {LinijaService} from 'src/app/servisi/linija.service';
 import { Station } from '../model/linijaModel';
+import { Marker } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-linije',
@@ -16,7 +17,8 @@ export class LinijeComponent implements OnInit {
   markerInfo: MarkerInfo;
   public polyline: Polyline;
   public zoom: number;
-  public stanica:Station;
+  public stanica1: Array<Station>;
+  public sta : Station;
 
   ngOnInit() {
     this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), 
@@ -25,14 +27,24 @@ export class LinijeComponent implements OnInit {
 
       this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
 
+      
       this.servisLinija.getLines().subscribe(data =>{
         console.log(data);
-        this.stanica = data;
+
+        for (let index = 0; index < data.length; index++) {
+          this.sta = data[index];
+        this.polyline.addLocation(new GeoLocation(this.sta.XCoordinate, this.sta.YCoordinate));
+        
+        
+            
+            this.markerInfo =  new MarkerInfo(new GeoLocation(this.sta.XCoordinate, this.sta.YCoordinate), 
+            "assets/ftn.png",
+            this.sta.Address);
+       
+        }
+        
       });
-      //this.polyline.addLocation(new GeoLocation(this.stanica.XCoordinate, this.stanica.YCoordinate));
-      //this.markerInfo = new MarkerInfo(new GeoLocation(this.stanica.XCoordinate, this.stanica.YCoordinate), 
-      //"assets/busicon.png",
-      //this.stanica.Address);
+      
   }
 
   constructor(private ngZone: NgZone,private servisLinija : LinijaService){

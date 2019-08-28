@@ -34,19 +34,21 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("GetLines")]
-        [ResponseType(typeof(StationBindingModel))]
+        [ResponseType(typeof(List<StationBindingModel>))]
         public IHttpActionResult GetLines()//vrati koje su linije za odredjeni tip (gradski,prigratski)
         {
-            StationBindingModel st = new StationBindingModel();
+            List<StationBindingModel> retval = new List<StationBindingModel>();
             foreach (var st1 in stationRepository.GetAll())
             {
+                StationBindingModel st = new StationBindingModel();
                 st.Address = st1.Adresa;
                 st.Name = st1.Naziv;
                 st.XCoordinate = st1.GeografskeKoordinataX;
                 st.YCoordinate = st1.GeografskeKoordinataY;
+                retval.Add(st);
             }
 
-            return Ok(st);
+            return Ok(retval);
 
             // LineStBindingModel
             // StationBindingModel
