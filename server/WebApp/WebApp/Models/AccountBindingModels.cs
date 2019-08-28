@@ -192,11 +192,11 @@ namespace WebApp.Models
 
         public List<StationBindingModel> Stations { get; set; }
     }
-    public class LineBindingModel
-    {
-        public string Lineid { get; set; }
-        public string Description { get; set; }
-    }
+    //public class LineBindingModel
+    //{
+    //    public string Lineid { get; set; }
+    //    public string Description { get; set; }
+    //}
 
     
 
