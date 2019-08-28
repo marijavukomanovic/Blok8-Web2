@@ -1431,3 +1431,4 @@ C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebAp
 C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje1.resources
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje.resources
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje1.resources
+C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache

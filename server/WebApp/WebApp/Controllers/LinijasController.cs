@@ -131,11 +131,12 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("GetLines/{linijaIme}")]
-        [ResponseType(typeof(List<LineStBindingModel>))]
+        [ResponseType(typeof(LineStBindingModel))]
         public IHttpActionResult GetLines(string linijaIme)//vrati koje su linije za odredjeni tip (gradski,prigratski)
         {
-            List<LineStBindingModel> retval = new List<LineStBindingModel>();
+            LineStBindingModel retval = new LineStBindingModel();
             LineStBindingModel lineStBindingModel = new LineStBindingModel();
+            List<StationBindingModel> stations = new List<StationBindingModel>();
             int linijeId = -1;
             foreach (var linija in lineRepo.GetAll())
             {
@@ -156,17 +157,32 @@ namespace WebApp.Controllers
                 if (st1.LinijeId == linijeId)
                 {
                     StationBindingModel s = new StationBindingModel();
-                    s.Name = stationRepository.Get(st1.StaniceId.ToString()).Naziv;
-                    s.Address = stationRepository.Get(st1.StaniceId.ToString()).Adresa;
-                    s.XCoordinate = stationRepository.Get(st1.StaniceId.ToString()).GeografskeKoordinataX;
-                    s.YCoordinate = stationRepository.Get(st1.StaniceId.ToString()).GeografskeKoordinataY;
-                    lineStBindingModel.Stations.Add(s);
+                    foreach (var s1 in stationRepository.GetAll())
+                    {if (st1.StaniceId == s1.Id)
+                        {
+                            s.Name = s1.Naziv;
+                            s.Address = s1.Adresa;
+                            s.XCoordinate = s1.GeografskeKoordinataX;
+                            s.YCoordinate = s1.GeografskeKoordinataY;
+                            stations.Add(s);
+                            break;
+                        }
+
+                    }
+
+                    //s.Name = stationRepository.Get(st1.StaniceId.ToString()).Naziv;
+                    //s.Address = stationRepository.Get(st1.StaniceId.ToString()).Adresa;
+                    //s.XCoordinate = stationRepository.Get(st1.StaniceId.ToString()).GeografskeKoordinataX;
+                    //s.YCoordinate = stationRepository.Get(st1.StaniceId.ToString()).GeografskeKoordinataY;
+                    //lineStBindingModel.Stations.Add(s);
                 }
             }
             lineStBindingModel.LineId = linijaIme;
             lineStBindingModel.Description = lineRepo.Get(linijeId).Opis;//"Linija " + linijaIme + "ima" + lineStBindingModel.Stations.Count() + "stanica";
             lineStBindingModel.Color = lineRepo.Get(linijeId).Boja;
-            lineStBindingModel.LineType = lineRepo.Get(linijeId).Tip.Naziv;
+            lineStBindingModel.LineType = tipLinijeRepository.Get(linijeId).Naziv;
+            lineStBindingModel.Stations=stations;
+            retval=lineStBindingModel;
 
             return Ok(retval);
 
