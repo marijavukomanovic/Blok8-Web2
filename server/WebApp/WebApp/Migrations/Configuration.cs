@@ -209,6 +209,35 @@ namespace WebApp.Migrations
                 context.Linije.Add(l1);
                 context.SaveChanges();
 
+                Linija l2 = new Linija();
+                l1.Id = 2;
+                l1.Opis = "Linija u adresi Bulevar osloboljenja";
+                l1.Aktivna = true;
+                l1.RedBroj = "7A";
+                l1.TipId = 1;
+                l1.Boja = "red";
+                context.Linije.Add(l2);
+                context.SaveChanges();
+                Linija l3 = new Linija();
+                l1.Id = 3;
+                l1.Opis = "Linija u adresi maksima gorkog";
+                l1.Aktivna = true;
+                l1.RedBroj = "13A";
+                l1.TipId = 2;
+                l1.Boja = "orange";
+                context.Linije.Add(l3);
+                context.SaveChanges();
+                Linija l4 = new Linija();
+                l1.Id = 4;
+                l1.Opis = "Linija u adresi dunavska";
+                l1.Aktivna = true;
+                l1.RedBroj = "18";
+                l1.TipId = 2;
+                l1.Boja = "green";
+                context.Linije.Add(l4);
+                context.SaveChanges();
+
+
 
                 LinijeStanice linijeStanice1=new LinijeStanice();
                 linijeStanice1.LinijeId = l1.Id;
