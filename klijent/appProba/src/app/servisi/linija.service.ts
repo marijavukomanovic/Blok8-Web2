@@ -10,10 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LinijaService extends HttpService{
 
   private TicketsUrl = 'http://localhost:52295/api/Linije';
- 
-  /*getLines() : Observable<Station>{
-    return this.http.get<Station>(this.url + "/api/Linije/GetLines");
-  }*/
 
 
   getListuLinija(routeType : number): Observable<string[]>{
@@ -23,6 +19,7 @@ export class LinijaService extends HttpService{
   getLines(lineName : string): Observable<LineStation>{
       return this.http.get<LineStation>(this.url + "/api/Linije/GetLines/" + lineName);
   }
+
 }
 
 

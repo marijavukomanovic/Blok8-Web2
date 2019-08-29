@@ -26,7 +26,7 @@ export class LinijeComponent implements OnInit {
   ngOnInit() {
     this.pritisnuto = false;
     this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), 
-      "assets/ftn.png",
+      "",
       "Jugodrvo" );
 
       this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
@@ -74,6 +74,11 @@ export class LinijeComponent implements OnInit {
       console.log(data);
       this.lineStation = data;
       this.pritisnuto = true;
+      this.polyline = new Polyline([], this.lineStation.Color, { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
+      for (let index = 0; index < this.lineStation.Stations.length; index++) {
+        const element = this.lineStation.Stations[index];
+        this.polyline.addLocation(new GeoLocation(element.XCoordinate, element.YCoordinate));
+      }
     });
   }
 
