@@ -105,7 +105,8 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [System.Web.Http.HttpGet]
         [ResponseType(typeof(CenovnikBindingModel))]
         [Route("IzmenaCenovnika")]
@@ -120,11 +121,11 @@ namespace WebApp.Controllers
             int idCenovnika = -1;
             if (cenovnikRepository.GetAll().Count() == 0)//
             {
-                return BadRequest("Ne postoji ni jedn cenovnik");
+                return BadRequest("Ne postoji ni jedan cenovnik");
             }
             if (CenaKarteRepository.GetAll().Count() == 0)//nikada ne bi trebalo da se dogodi
             {
-                return BadRequest("Ne postoje cene,josuvek nisu zadate");
+                return BadRequest("Ne postoje cene,jos uvek nisu zadate");
             }
             foreach (var tCenovnik in cenovnikRepository.GetAll())
             {
@@ -161,7 +162,9 @@ namespace WebApp.Controllers
 
             return Ok(retVal);
         }
-        [Authorize(Roles = "Admin")]
+
+        [AllowAnonymous]
+        //[Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         [Route("IzmenaCenovnika2/{model}")]
         public async Task<IHttpActionResult> IzmenaCenovnika2(CenovnikBindingModel model)
@@ -285,9 +288,9 @@ namespace WebApp.Controllers
 
         [AllowAnonymous]
          [System.Web.Http.HttpPost]
-        [Route("IzlizstajMojeKarte/{username}")]
+        [Route("IzlistajMojeKarte/{username}")]
         [ResponseType(typeof(List<UserTicketBindingModel>))]
-        public async Task<IHttpActionResult> IzlizstajMojeKarte(string username)
+        public async Task<IHttpActionResult> IzlistajMojeKarte(string username)
         {
             List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
             UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel();
@@ -357,7 +360,7 @@ namespace WebApp.Controllers
         [System.Web.Http.HttpGet]
         [Route("GetCena/{type}/{username}")]//Marina treba mi jos i username iz localStorage
         [ResponseType(typeof(double))]//dodat koeficient
-        public IHttpActionResult GetLines(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
+        public IHttpActionResult GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
             double retCena = -1;
             double koeficient = 0;
