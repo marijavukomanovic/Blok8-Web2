@@ -495,8 +495,6 @@ C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\Syste
 C:\Users\Marija\Documents\web2\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojResolveAssemblyReference.cache
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
-C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.NewMigration.resources
-C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.DodatnaPoljaUApplicationUseru3.resources
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csproj.GenerateResource.cache
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csproj.CoreCompileInputs.cache
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.dll
@@ -679,7 +677,6 @@ C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\ru\System.Spatial.reso
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
-C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.New.resources
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.dll.config
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.dll
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.pdb
@@ -868,8 +865,6 @@ C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.cspro
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\Marija\Documents\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaDokumentomKorisnik.resources
-C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.SaDokumentomKorisnik.resources
-C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.saTipLinij.resources
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.dll.config
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.dll
 C:\Users\Marija\Documents\blok2teorija\Blok8-Web2\server\WebApp\WebApp\bin\WebApp.pdb
@@ -1432,3 +1427,6 @@ C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebAp
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje.resources
 C:\Users\Maki\Desktop\blokNew\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje1.resources
 C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Sveee.resources
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje.resources
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje1.resources

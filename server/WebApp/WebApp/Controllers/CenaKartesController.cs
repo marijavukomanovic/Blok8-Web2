@@ -360,8 +360,9 @@ namespace WebApp.Controllers
         [System.Web.Http.HttpGet]
         [Route("GetCena/{type}/{username}")]//Marina treba mi jos i username iz localStorage
         [ResponseType(typeof(double))]//dodat koeficient
-        public IHttpActionResult GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
+        public async Task<IHttpActionResult> GetCena(int type,string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
+            //string username = "";
             double retCena = -1;
             double koeficient = 0;
             int tipKorisnika = -1;
