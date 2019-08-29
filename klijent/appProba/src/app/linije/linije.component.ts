@@ -21,8 +21,10 @@ export class LinijeComponent implements OnInit {
   public sta : Station;
   lines : string[];
   lineStation : LineStation;
+  pritisnuto : boolean;
 
   ngOnInit() {
+    this.pritisnuto = false;
     this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), 
       "assets/ftn.png",
       "Jugodrvo" );
@@ -71,6 +73,7 @@ export class LinijeComponent implements OnInit {
     this.servisLinija.getLines(lineName).subscribe(data => {
       console.log(data);
       this.lineStation = data;
+      this.pritisnuto = true;
     });
   }
 

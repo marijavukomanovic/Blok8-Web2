@@ -48,10 +48,11 @@
 </div>
 </label>
 
-      <p>
+      <p  >
         <!-- Kreiramo mapu -->
-        <agm-map [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="18" (mapClick)="placeMarker($event)">  
-      
+        <agm-map [latitude]="45.242268" [longitude]="19.842954" [zoom]="14" >  
+      <div   *ngIf="pritisnuto" >
+       
           <agm-marker [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [title]="markerInfo.title"
           [label]="markerInfo.label" [iconUrl]="markerInfo.iconUrl">
       
@@ -75,7 +76,7 @@
       
           <agm-marker *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude" [iconUrl]="polyline.icon">
           </agm-marker>
-      
+      </div>
         </agm-map>
       </p>
  
