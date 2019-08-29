@@ -21,10 +21,16 @@ namespace WebApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ICenaKarteRepository CenaKarteRepository;
         private ICenovnikRepository cenovnikRepository;
+        private IKartaRepository kartaRepository;
+        private IKorisnikRepository korisnikRepository;
+        private ITipPutnikaRepository tipPutnikaRepository;
 
-        public CenaKartesController(ICenaKarteRepository CenaKarteRepository, ICenovnikRepository cenovnikRepository)
+        public CenaKartesController(ICenaKarteRepository CenaKarteRepository, ICenovnikRepository cenovnikRepository, IKartaRepository kartaRepository, IKorisnikRepository korisnikRepository, ITipPutnikaRepository TipPutnikaRepository)
         // GET: api/CenaKartes
         {
+            this.tipPutnikaRepository = TipPutnikaRepository;
+            this.kartaRepository = kartaRepository;
+            this.korisnikRepository = korisnikRepository;
             this.cenovnikRepository = cenovnikRepository;
             this.CenaKarteRepository = CenaKarteRepository;
         }
@@ -53,7 +59,8 @@ namespace WebApp.Controllers
         }
 
         //kontroler za pravljenje novog cenovnika iz angulara mi saljes sve podatke
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("Cenovnik/{model}")]
         public async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)
@@ -239,14 +246,122 @@ namespace WebApp.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
+        // [System.Web.Http.HttpGet]
+        [Route("KupiKartu/{tipKarte}/{username}")]
+        public async Task<IHttpActionResult> KupiKartu(int tipKarte, string username)
+        {
+            int idKorisnika = -1;
+            int tipKorisnika = -1;
+            int idKarte = kartaRepository.GetAll().Count();
+
+            foreach (var korisnici in korisnikRepository.GetAll())
+            {
+                if (korisnici.KorisnickoIme.Equals(username))
+                {
+                    idKorisnika = korisnici.Id;
+                    tipKorisnika = korisnici.TipId;
+                }
+            }
+            Karta novaKarta = new Karta();
+            novaKarta.Id = ++idKarte;
+            novaKarta.ApplicationUserId = idKorisnika.ToString();
+            foreach (var c in CenaKarteRepository.GetAll())
+            {
+                if (c.TipKarteId == tipKarte)
+                {
+                    novaKarta.CenaKarteId = c.Id;
+                    break;
+                }
+            }
+            novaKarta.VremeKupovine = DateTime.Now;
+            db.Karte.Add(novaKarta);
+            db.SaveChanges();
+
+
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+         [System.Web.Http.HttpPost]
+        [Route("IzlizstajMojeKarte/{username}")]
+        [ResponseType(typeof(List<UserTicketBindingModel>))]
+        public async Task<IHttpActionResult> IzlizstajMojeKarte(string username)
+        {
+            List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
+            UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel();
+            DateTime vremeIzdavanje=new DateTime();
+            DateTime vremeTrajanja=new DateTime();
+            int idKarte = -1;
+            int idCeneKarte = -1;
+            string tipKarte = "";
+            int tiiipKarte = -1;
+            int idKorisnika = -1;
+            foreach (var korisnik in korisnikRepository.GetAll())
+            {if (korisnik.Email == username)
+                {
+                    idKorisnika = korisnik.Id;
+                    break;
+
+                }
+            }
+            foreach (var karta in kartaRepository.GetAll())//ako je korisnik kupio kartu
+            {
+                if (karta.ApplicationUserId.Equals(idKorisnika.ToString()))
+                {
+                    idKarte = karta.Id;
+                    idCeneKarte = karta.CenaKarteId;//odavce cu uzeti koji je tip
+                    vremeIzdavanje = karta.VremeKupovine;
+                }
+
+
+                foreach (var ck in CenaKarteRepository.GetAll())//pronajdi kog je tipa ona bila
+                {
+                    if (ck.Id == idCeneKarte)
+                    {
+                        tipKarte = ck.TipKarte.Naziv;
+                        tiiipKarte = ck.TipKarteId;
+                    }
+
+                }
+                switch (tipKarte)
+                {
+                    case "Vremenska":
+                        vremeTrajanja = vremeIzdavanje.AddHours(1);
+                        break;
+                    case "Dnevna":
+                        vremeTrajanja = vremeIzdavanje.AddDays(1);
+                        break;
+                    case "Mesecna":
+                        vremeTrajanja = vremeIzdavanje.AddMonths(1);
+                        break;
+                    case "Godisnja":
+                        vremeTrajanja = new DateTime(vremeIzdavanje.Year, 12, 31); //oni su na vrezama rekli da traje do kraja godine nebitno kada se izda
+                        break;
+                }
+
+                ticketBindingModel.TicketId = idKarte.ToString();
+                ticketBindingModel.TicketType = tipKarte;
+                ticketBindingModel.IssuingTime = vremeIzdavanje.ToShortDateString();
+                ticketBindingModel.ExpirationTime = vremeTrajanja.ToShortDateString();
+                userTicketBindingModels.Add(ticketBindingModel);
+            }
+
+
+            return Ok(userTicketBindingModels);
+        }
+
         // GET: api/CenaKarte/GetCena
         [AllowAnonymous]//[Authorize(Roles ="AppUser")]//valjda
         [System.Web.Http.HttpGet]
-        [Route("GetCena/{type}")]
-        [ResponseType(typeof(double))]//Marina treba mi jos i username iz localStorage
-        public IHttpActionResult GetLines(int type)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
+        [Route("GetCena/{type}/{username}")]//Marina treba mi jos i username iz localStorage
+        [ResponseType(typeof(double))]//dodat koeficient
+        public IHttpActionResult GetLines(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
             double retCena = -1;
+            double koeficient = 0;
+            int tipKorisnika = -1;
             int idCenovnika = -1;//cenovnika koji jos uvek vazi
             if (cenovnikRepository.GetAll().Count() == 0)
             { return BadRequest("Ne postoji ni jedan cenovnik, molim vas napravite ga"); }
@@ -258,12 +373,27 @@ namespace WebApp.Controllers
                 }
 
             }
+            foreach (var korisnik in korisnikRepository.GetAll())
+            {
+                if (korisnik.KorisnickoIme.Equals(username))
+                    tipKorisnika = korisnik.TipId;
+            }
+
             if (CenaKarteRepository.GetAll().Count() == 0)
             { return BadRequest("Ne postoji cene karte, molim vas napravite ih"); }
+
+            foreach (var tipp in tipPutnikaRepository.GetAll())
+            {
+                if (tipp.Id == tipKorisnika)
+                {
+                    koeficient = tipp.Koeficijent;
+                    break;
+                }
+            }
             foreach (var ck in CenaKarteRepository.GetAll())
             {
                 if (ck.CenovnikId == idCenovnika && ck.TipKarteId == type)
-                    retCena = ck.Cena;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
+                    retCena = ck.Cena*koeficient;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
 
             }
 

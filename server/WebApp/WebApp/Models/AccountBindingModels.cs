@@ -192,13 +192,16 @@ namespace WebApp.Models
 
         public List<StationBindingModel> Stations { get; set; }
     }
-    //public class LineBindingModel
-    //{
-    //    public string Lineid { get; set; }
-    //    public string Description { get; set; }
-    //}
+    public class UserTicketBindingModel
+    {
+        public string TicketId { get; set; }
+        public string IssuingTime { get; set; }
+        public string ExpirationTime { get; set; }
+        public string TicketType { get; set; }
+        //public string Price { get; set; }
+    }
 
-    
+
 
 
 }
