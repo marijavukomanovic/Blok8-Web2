@@ -25,33 +25,33 @@
     
         <div class="row">
             <div class="col-md-6">
-              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <p>
               <input type="text" placeholder="Ime" formControlName="Name"required>
               </p>
     
-              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <p>
               <input type="text" placeholder="Prezime" formControlName="LastName" required>
               </p>
-              <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <p>
                   <input type="text" placeholder="Korisnicko ime" formControlName="UserName" required>
               </p>
-              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <p >
                   <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"required>
                   </p>
               
-              <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <p>
                   <input type="text" placeholder="Adresa" formControlName="Address"required>
               </p>
           </div>
         <div class="col-md-6">
-            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+            <p>
                 <input type="email" placeholder="email" formControlName="Email"required>
             </p>
     
-            <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+            <p>
                 <input type="password" placeholder="Sifra" formControlName="Password"required>
                 </p>
-                <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <p>
                     <input type="password" placeholder="Potvrdite sifru" formControlName="ConfirmPassword"required>
                     </p>
                     
@@ -70,14 +70,8 @@
           </div>
         </div>
         <p>
-          <input type="submit" value="Uloguj se">
+          <input type="submit" value="Registuj se">
         </p>
       </form>
     </div>
   </div>
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" >
-        <i class="fa d-inline fa-lg fa-bus"></i>
-        <b contenteditable="true"></b>
-      </a> </div>
-  </nav>

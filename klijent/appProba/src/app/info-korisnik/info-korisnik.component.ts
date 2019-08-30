@@ -13,7 +13,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
 export class InfoKorisnikComponent implements OnInit {
   username : string;
 data:RegistracijaModel;
-  @Input() user : RegistracijaModel = {
+  user : RegistracijaModel = {
   Name : '',
   LastName : '',
   UserName : '',
@@ -26,7 +26,7 @@ data:RegistracijaModel;
   Document : '',
 };
 
-registerForm = this.fb.group({
+infoForm = this.fb.group({
     Name : [''],
     LastName : [''],
     UserName : ['', Validators.required],
@@ -45,7 +45,7 @@ registerForm = this.fb.group({
     this.registracijaServis.getInfo(this.username).subscribe(data => {
       console.log(data);
       this.user = data;
-      this.registerForm.patchValue(data);
+      this.infoForm.patchValue(data);
     });
  
   }
