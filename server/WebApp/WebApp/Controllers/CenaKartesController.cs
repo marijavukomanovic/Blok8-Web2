@@ -40,7 +40,8 @@ namespace WebApp.Controllers
         }
         //kontroler za slanje poslednjeg datuma
         // GET: api/StationLine/GetLines
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "Admin")]
         [System.Web.Http.HttpGet]
         [Route("GetPoslednjiDatum")]
         [ResponseType(typeof(string))]
