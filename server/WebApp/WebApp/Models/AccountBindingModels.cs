@@ -198,8 +198,11 @@ namespace WebApp.Models
         public string IssuingTime { get; set; }
         public string ExpirationTime { get; set; }
         public string TicketType { get; set; }
+        public double Cena { get; set; }
         //public string Price { get; set; }
     }
+
+    
 
 
 

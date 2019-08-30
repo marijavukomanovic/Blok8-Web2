@@ -11,6 +11,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
   styleUrls: ['./info-korisnik.component.css']
 })
 export class InfoKorisnikComponent implements OnInit {
+  username : string;
 data:RegistracijaModel;
   @Input() user : RegistracijaModel = {
   Name : '',
@@ -39,12 +40,13 @@ registerForm = this.fb.group({
   });
   constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router) { }
 
-  ngOnInit() {  
-    /*this.registracijaServis.getInfo(localStorage.getItem('username')).subscribe(data => {
+  ngOnInit() {
+    this.username = localStorage.getItem('username');
+    this.registracijaServis.getInfo(this.username).subscribe(data => {
       console.log(data);
       this.user = data;
       this.registerForm.patchValue(data);
-    });*/
+    });
  
   }
   onchange()
@@ -52,13 +54,14 @@ registerForm = this.fb.group({
   
   }
   onSubmit()
-  {this.registracijaServis.getInfo().subscribe(data => {
-    /*console.log(data);
+  {
+    /*this.registracijaServis.getInfo(this.username).subscribe(data => {
+    console.log(data);
     this.user = data;
     this.registerForm.patchValue(data);
  
-    this.user = this.registerForm.value;*/
-  });
+    this.user = this.registerForm.value;
+  });*/
     /*console.log(this.user);
     this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
       console.log('Uspesno izmenje informacije o korisniku!');

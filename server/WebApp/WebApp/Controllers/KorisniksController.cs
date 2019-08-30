@@ -111,7 +111,7 @@ namespace WebApp.Controllers
         // [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
         [AllowAnonymous]
         [System.Web.Http.HttpGet]
-        [Route("GetInf{username}")]
+        [Route("GetInfo/{username}")]
         [ResponseType(typeof(UserRegistrationBindingModel))]
         public IHttpActionResult GetInfo(string username)//saljes mi localStorage.username
         {

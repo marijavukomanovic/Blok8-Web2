@@ -7,8 +7,8 @@ import { HttpService } from 'src/app/servisi/http.servis';
 })
 export class CenovnikService extends HttpService{
 
-  getCenovnik(vrstaKarte : number,user :string) : Observable<any>{
-    return this.http.get<any>(this.url + "/api/CenaKarte/GetCena/" + vrstaKarte +"/"+user);
+  getCenovnik(vrstaKarte:number,user : string) : Observable<any>{
+    return this.http.get<any>(this.url + "/api/CenaKarte/GetCena/" + vrstaKarte + "/"+user);
   }
 
   //KupiKartu/{tipKarte}/{username}

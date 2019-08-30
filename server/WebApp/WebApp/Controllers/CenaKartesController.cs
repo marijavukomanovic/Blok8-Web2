@@ -250,7 +250,7 @@ namespace WebApp.Controllers
         }
 
         [AllowAnonymous]
-        // [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpGet]
         [Route("KupiKartu/{tipKarte}/{username}")]
         public async Task<IHttpActionResult> KupiKartu(int tipKarte, string username)
         {
@@ -287,7 +287,7 @@ namespace WebApp.Controllers
         }
 
         [AllowAnonymous]
-         [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpGet]
         [Route("IzlistajMojeKarte/{username}")]
         [ResponseType(typeof(List<UserTicketBindingModel>))]
         public async Task<IHttpActionResult> IzlistajMojeKarte(string username)
@@ -301,8 +301,9 @@ namespace WebApp.Controllers
             string tipKarte = "";
             int tiiipKarte = -1;
             int idKorisnika = -1;
+            double cenaKarte = 0;
             foreach (var korisnik in korisnikRepository.GetAll())
-            {if (korisnik.Email == username)
+            {if (korisnik.Email == username) // NE MOZE EMAIL NEGO USERNAME
                 {
                     idKorisnika = korisnik.Id;
                     break;
@@ -323,7 +324,7 @@ namespace WebApp.Controllers
                 {
                     if (ck.Id == idCeneKarte)
                     {
-                        tipKarte = ck.TipKarte.Naziv;
+                        tipKarte = ck.TipKarte.Naziv; // OVDE PUKNE 
                         tiiipKarte = ck.TipKarteId;
                     }
 
@@ -348,6 +349,7 @@ namespace WebApp.Controllers
                 ticketBindingModel.TicketType = tipKarte;
                 ticketBindingModel.IssuingTime = vremeIzdavanje.ToShortDateString();
                 ticketBindingModel.ExpirationTime = vremeTrajanja.ToShortDateString();
+                ticketBindingModel.Cena = cenaKarte;
                 userTicketBindingModels.Add(ticketBindingModel);
             }
 
@@ -362,13 +364,15 @@ namespace WebApp.Controllers
         [ResponseType(typeof(double))]//dodat koeficient
         public async Task<IHttpActionResult> GetCena(int type,string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
-            //string username = "";
+            
+            //int type = type1.Tip;
+            //string username = type1.User;
             double retCena = -1;
             double koeficient = 0;
             int tipKorisnika = -1;
             int idCenovnika = -1;//cenovnika koji jos uvek vazi
             if (cenovnikRepository.GetAll().Count() == 0)
-            { return BadRequest("Ne postoji ni jedan cenovnik, molim vas napravite ga"); }
+            { return BadRequest("Ne postoji ni jedan cenovnik, admin ga mora napraviti"); }
             foreach (var c in cenovnikRepository.GetAll())
             {
                 if (DateTime.Compare(c.VazenjeDo, DateTime.Now) > 0)

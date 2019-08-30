@@ -274,8 +274,8 @@ namespace WebApp.Migrations
             {
                 Cenovnik cenovnik = new Cenovnik();
                 cenovnik.Id = 1;
-                cenovnik.VazenjeDo = new DateTime(2019, 8, 26);
-                cenovnik.VazenjeOd = new DateTime(2019, 8, 20);
+                cenovnik.VazenjeDo = new DateTime(2019, 8, 31);
+                cenovnik.VazenjeOd = new DateTime(2019, 8, 27);
                 context.Cenovnici.Add(cenovnik);
                 context.SaveChanges();
             }
@@ -320,16 +320,16 @@ namespace WebApp.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            if (!context.Users.Any(u => u.UserName == "admin@yahoo.com"))
+            if (!context.Users.Any(u => u.UserName == "admin"))
             {
-                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo.com", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1*/,/*KorisnikId=1*/ };
+                var user = new ApplicationUser() { Id = "admin", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1*/,/*KorisnikId=1*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
 
-            if (!context.Users.Any(u => u.UserName == "appu@yahoo.com"))
+            if (!context.Users.Any(u => u.UserName == "appu"))
             { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo.com", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1*/,/*KorisnikId=2*/ };
+                var user = new ApplicationUser() { Id = "appu", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1*/,/*KorisnikId=2*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }

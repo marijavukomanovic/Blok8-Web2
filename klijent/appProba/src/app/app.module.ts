@@ -6,8 +6,6 @@ import {FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +21,7 @@ import { InfoKorisnikComponent } from './info-korisnik/info-korisnik.component';
 import { DodavanjeCenovnikaComponent } from './dodavanje-cenovnika/dodavanje-cenovnika.component';
 import { LokacijaComponent } from './lokacija/lokacija.component';
 import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.component';
+import { KarteComponent } from './karte/karte.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -46,6 +45,7 @@ import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.co
     DodavanjeCenovnikaComponent,
     LokacijaComponent,
     IzmenaCenovnikaComponent,
+    KarteComponent,
  
     
     //RegistracijaServis,

@@ -19,6 +19,7 @@ export class CenovnikComponent implements OnInit {
 this.username=localStorage.getItem('username');
 this.role=localStorage.getItem('role');
 this.pritisnuto=false;
+//this.cenovnikMo = new CenovnikMo(0,this.username);
   }
 
   ShowCena(vrstaKarte : number){
