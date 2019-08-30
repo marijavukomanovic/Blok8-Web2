@@ -47,7 +47,7 @@ namespace WebApp.Controllers
                         tipPostoji = true;
 
                         s += i.RedBroj.ToString();
-                        // s += i.Stanice; ne odajemo u liniji koje ima stanice za sad
+                       
                         retVal.Add(s);
                         s = "";
                     }

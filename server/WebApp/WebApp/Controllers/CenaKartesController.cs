@@ -47,13 +47,13 @@ namespace WebApp.Controllers
         public IHttpActionResult GetPoslednjiDatum()
         {
             string retVal = "";
-            DateTime date;
+            DateTime date = new DateTime();
             int id = cenovnikRepository.GetAll().Count();
             if (id == 0)//ako je baza prazna ne postoji nijedan cenovnik, onda nam je pocetni datum trenutni
             { date = DateTime.Now; }
             date = cenovnikRepository.Get(id).VazenjeDo;//za sledeci cenovnik pocetni datum je krajnji datum prethodnog vazeceg
-            date = date.AddDays(1);//date=date.AddHours(12); ako ima idalje onog probelma o cemu smo pricale
-            retVal = date.ToShortDateString().ToString();
+            date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second+1);
+            retVal = date.ToLongDateString() + " " + date.ToLongTimeString();
 
             return Ok(retVal);
         }
@@ -63,7 +63,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("Cenovnik/{model}")]
-        public async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)
+        public async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)//pravi novi cenovnik
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace WebApp.Controllers
             //provera da li je vazenje vece od pocetaka vazenja cenovnika
             if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
             { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
-            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, };
+            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc,Aktivan=true, };
             db.Cenovnici.Add(noviCenovnik);
             db.SaveChanges();
             int idck = CenaKarteRepository.GetAll().Count();
@@ -96,7 +96,7 @@ namespace WebApp.Controllers
             //  idck++;
             for (int i = 1; i <= 4; i++)
             {
-                CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i };
+                CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i,Aktivan=true, };
                 db.CenaKarata.Add(cenaKarte);
                 db.SaveChanges();
             }
@@ -130,7 +130,7 @@ namespace WebApp.Controllers
             foreach (var tCenovnik in cenovnikRepository.GetAll())
             {
                 if (DateTime.Compare(tCenovnik.VazenjeOd, DateTime.Now) < 0 &&
-                       DateTime.Compare(tCenovnik.VazenjeDo, DateTime.Now) > 0)
+                       DateTime.Compare(tCenovnik.VazenjeDo, DateTime.Now) > 0 &&tCenovnik.Aktivan==true)
                 {
                     t1 = tCenovnik.VazenjeOd;
                     t2 = tCenovnik.VazenjeDo;
@@ -152,8 +152,8 @@ namespace WebApp.Controllers
             }
             CenovnikBindingModel retVal = new CenovnikBindingModel()
             {
-                OD = t1.ToShortDateString(),
-                DO = t2.ToShortDateString(),
+                OD = (new DateTime(t1.Year, t1.Month, t1.Day, t1.Hour, t1.Minute, t1.Second)).ToString(),
+                DO = (new DateTime(t2.Year, t2.Month, t2.Day, 23, 59, 59)).ToString(),
                 cenaDnevna = cene[1],
                 cenaVremenska = cene[0],
                 cenaMesecna = cene[2],
@@ -167,11 +167,10 @@ namespace WebApp.Controllers
         //[Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         [Route("IzmenaCenovnika2/{model}")]
-        public async Task<IHttpActionResult> IzmenaCenovnika2(CenovnikBindingModel model)
+        public async Task<IHttpActionResult> IzmenaCenovnika2(CenovnikBindingModel model)//cuvanje u bazi izmenu cenovnika
         {
             int idCenovnika = -1;
             int idCenaKarte = -1;
-            bool provera = false;
             DateTime t1 = DateTime.Parse(model.OD);
             DateTime t2 = DateTime.Parse(model.DO);
 
@@ -189,6 +188,8 @@ namespace WebApp.Controllers
                        DateTime.Compare(tCenovnik.VazenjeDo, t2) == 0)
                 {
                     idCenovnika = tCenovnik.Id;
+                    tCenovnik.Aktivan = false;
+
                 }
 
             }
@@ -197,56 +198,118 @@ namespace WebApp.Controllers
                 if (ck.CenovnikId == idCenovnika)
                 {
                     idCenaKarte = ck.Id;
-                    if (ck.TipKarteId == 1)
-                    {
-                        if (model.cenaDnevna <= 0)//provera validane vrednosti cene karte
-                        { return BadRequest("Losa cena dnevne karte"); }
-                        else
-                        {
-                            ck.Cena = model.cenaVremenska; provera = true;
-                        }
-                    }
-                    else if (ck.TipKarteId == 2)
-                    {
-                        if (model.cenaVremenska <= 0)//provera validane vrednosti cene karte
-                        {
-                            return BadRequest("Losa cena vremenske karte");
-                        }
-                        else
-                        { ck.Cena = model.cenaDnevna; provera = true; }
-                    }
-                    else if (ck.TipKarteId == 3)
-                    {
-                        if (model.cenaMesecna <= 0)//provera validane vrednosti cene karte
-                        {
-                            return BadRequest("Losa cena mesecne karte");
-                        }
-                        else
-                        { ck.Cena = model.cenaMesecna; provera = true; }
-                    }
-                    else if (ck.TipKarteId == 4)
-                    {
-                        if (model.cenaGodisnja <= 0)//provera validane vrednosti cene karte
-                        {
-                            return BadRequest("Losa cena godisnje karte");
-                        }
-                        else
-                        { ck.Cena = model.cenaGodisnja; provera = true; }
-                    }
+                    ck.Aktivan = false;
+                    break;
+                }
+            }
 
+            int idc = cenovnikRepository.GetAll().Count();
+
+
+            double[] cene = new double[] { model.cenaVremenska, model.cenaDnevna, model.cenaMesecna, model.cenaGodisnja };
+
+            for (int i = 0; i < 4; i++)//provera dali je cena ispravni tj veca od 0
+            {
+                if (cene[i] < 0)
+                    cene[i] = 0;
+
+            }
+            //provera da li je vazenje vece od pocetaka vazenja cenovnika
+            if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
+            { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
+            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, Aktivan = true, };
+            db.Cenovnici.Add(noviCenovnik);
+            db.SaveChanges();
+            int idck = CenaKarteRepository.GetAll().Count();
+
+            //  idck++;
+
+            for (int i = 1; i <= 4; i++)
+            {
+                CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i, Aktivan = true, };
+                db.CenaKarata.Add(cenaKarte);
+                db.SaveChanges();
+            }
+            CenovnikBindingModel izmenjeniCenovnik = new CenovnikBindingModel()
+            {
+                OD = noviCenovnik.VazenjeOd.ToLongDateString() + " " + noviCenovnik.VazenjeOd.ToLongTimeString(),
+                DO = noviCenovnik.VazenjeDo.ToLongDateString() + " " + noviCenovnik.VazenjeDo.ToLongTimeString(),
+
+
+            };
+
+            foreach (var ck in CenaKarteRepository.GetAll())
+            {if (idCenaKarte == ck.Id)
+                {
+                    if (ck.TipKarteId == 1)
+                    { izmenjeniCenovnik.cenaVremenska = ck.Cena; }
+                    if (ck.TipKarteId == 2)
+                    { izmenjeniCenovnik.cenaDnevna = ck.Cena; }
+                    if (ck.TipKarteId == 3)
+                    { izmenjeniCenovnik.cenaMesecna = ck.Cena; }
+                    if (ck.TipKarteId == 4)
+                    { izmenjeniCenovnik.cenaGodisnja = ck.Cena; }
                 }
 
-                if (provera)
+            }
+            
+
+            
+
+            return Ok();
+        }
+
+
+        // GET: api/CenaKarte/GetCena
+        [AllowAnonymous]//[Authorize(Roles ="AppUser")]//valjda
+        [System.Web.Http.HttpGet]
+        [Route("GetCena/{type}/{username}")]
+        [ResponseType(typeof(double))]
+        public async Task<IHttpActionResult> GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
+        {
+
+            double retCena = -1;
+            double koeficient = 0;
+            int tipKorisnika = -1;
+            int idCenovnika = -1;//cenovnika koji jos uvek vazi
+            if (cenovnikRepository.GetAll().Count() == 0)
+            { return BadRequest("Ne postoji ni jedan cenovnik, molim vas napravite ga"); }
+            foreach (var c in cenovnikRepository.GetAll())
+            {
+                if (DateTime.Compare(c.VazenjeDo, DateTime.Now) > 0)
                 {
-                    db.Entry(ck).State = EntityState.Modified;
-                    db.SaveChanges();
-                    provera = false;
+                    idCenovnika = c.Id;
+                    break;
                 }
 
             }
 
 
-            return Ok();
+            foreach (var korisnik in korisnikRepository.GetAll())
+            {
+                if (korisnik.KorisnickoIme.Equals(username))
+                {
+                    tipKorisnika = korisnik.TipId;
+                    break;
+                }
+            }
+
+            if (CenaKarteRepository.GetAll().Count() == 0)
+            { return BadRequest("Ne postoji cene karte, molim vas napravite ih"); }
+
+
+            koeficient = tipPutnikaRepository.Get(tipKorisnika).Koeficijent;
+            foreach (var ck in CenaKarteRepository.GetAll())
+            {
+                if (ck.CenovnikId == idCenovnika && ck.TipKarteId == type)
+                {
+                    retCena = ck.Cena * koeficient;//*koeficient;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
+                    break;
+                }
+            }
+
+
+            return Ok(retCena);
         }
 
         [AllowAnonymous]
@@ -294,7 +357,7 @@ namespace WebApp.Controllers
         public async Task<IHttpActionResult> IzlistajMojeKarte(string username)
         {
             List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
-            
+
             DateTime vremeIzdavanje = new DateTime();
             DateTime vremeTrajanja = new DateTime();
             int idKarte = -1;
@@ -315,37 +378,22 @@ namespace WebApp.Controllers
 
                 }
             }
-            foreach (var tipP in tipPutnikaRepository.GetAll())
-            {
-                if (tipP.Id == tipPutnika)
-                {
-                    koef = tipP.Koeficijent;
-                    break;
-                }
+            koef = tipPutnikaRepository.Get(tipPutnika).Koeficijent;
 
-            }
+
             foreach (var karta in kartaRepository.GetAll())//ako je korisnik kupio kartu
             {
                 if (karta.ApplicationUserId.Equals(idKorisnika.ToString()))
                 {
                     idKarte = karta.Id;
-                    idCeneKarte = karta.CenaKarteId;//odavce cu uzeti koji je tip OVDE PUCA?
+                    idCeneKarte = karta.CenaKarteId;
                     vremeIzdavanje = karta.VremeKupovine;
 
 
                 }
 
-                foreach (var ck in CenaKarteRepository.GetAll())
-                {
-                    if (ck.Id == idCeneKarte)
-                    {
-                        tiiipKarte = ck.TipKarteId;
-                        //tipKarte = ck.TipKarte.Naziv.ToString();
-                        cena = ck.Cena;
-                        break;
-                    }
-
-                }
+                tiiipKarte = CenaKarteRepository.Get(idCeneKarte).TipKarteId;
+                cena = CenaKarteRepository.Get(idCeneKarte).Cena;
 
                 switch (tiiipKarte)
                 {
@@ -354,7 +402,7 @@ namespace WebApp.Controllers
                         tipKarte = "Vremenska";
                         break;
                     case 2:
-                        if (vremeIzdavanje.Month % 2 == 0 && vremeIzdavanje.Month != 2 && vremeIzdavanje.Month!=8)
+                        if (vremeIzdavanje.Month % 2 == 0 && vremeIzdavanje.Month != 2 && vremeIzdavanje.Month != 8)
                             vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, 30, 23, 59, 59);
                         if (vremeIzdavanje.Month == 2)
                         {
@@ -375,74 +423,16 @@ namespace WebApp.Controllers
                         break;
                 }
                 UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel(idKarte.ToString(), tipKarte, vremeIzdavanje.ToLongDateString() + " " + vremeIzdavanje.ToLongTimeString(), vremeTrajanja.ToLongDateString() + " " + vremeTrajanja.ToLongTimeString(), cena * koef);
-                //ticketBindingModel.TicketId = idKarte.ToString();
-                //ticketBindingModel.TicketType = tipKarte;
-                //ticketBindingModel.IssuingTime = vremeIzdavanje.ToLongDateString()+" " + vremeIzdavanje.ToLongTimeString();
-                //ticketBindingModel.ExpirationTime = vremeTrajanja.ToLongDateString()+" " + vremeTrajanja.ToLongTimeString();
-                //ticketBindingModel.Cena = cena * koef;
+
 
                 userTicketBindingModels.Add(ticketBindingModel);
             }
-
-
             return Ok(userTicketBindingModels);
         }
 
-        // GET: api/CenaKarte/GetCena
-        [AllowAnonymous]//[Authorize(Roles ="AppUser")]//valjda
-        [System.Web.Http.HttpGet]
-        [Route("GetCena/{type}/{username}")]//Marina treba mi jos i username iz localStorage
-        [ResponseType(typeof(double))]//dodat koeficient
-        public async Task<IHttpActionResult> GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
-        {
-            
-            double retCena = -1;
-            double koeficient = 0;
-            int tipKorisnika = -1;
-            int idCenovnika = -1;//cenovnika koji jos uvek vazi
-            if (cenovnikRepository.GetAll().Count() == 0)
-            { return BadRequest("Ne postoji ni jedan cenovnik, molim vas napravite ga"); }
-            foreach (var c in cenovnikRepository.GetAll())
-            {
-                if (DateTime.Compare(c.VazenjeDo, DateTime.Now) > 0)
-                {
-                    idCenovnika = c.Id;
-                    break;
-                }
-
-            }
-            foreach (var korisnik in korisnikRepository.GetAll())
-            {
-                if (korisnik.KorisnickoIme.Equals(username))
-                {
-                    tipKorisnika = korisnik.TipId;
-                    break;
-                }
-            }
-
-            if (CenaKarteRepository.GetAll().Count() == 0)
-            { return BadRequest("Ne postoji cene karte, molim vas napravite ih"); }
-
-            foreach (var tipp in tipPutnikaRepository.GetAll())
-            {
-                if (tipp.Id == tipKorisnika)
-                {
-                    koeficient = tipp.Koeficijent;
-                    break;
-                }
-            }
-            foreach (var ck in CenaKarteRepository.GetAll())
-            {
-                if (ck.CenovnikId == idCenovnika && ck.TipKarteId == type)
-                {
-                    retCena = ck.Cena * koeficient;//*koeficient;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
-                    break;
-                }
-            }
 
 
-            return Ok(retCena);
-        }
+
 
         //ostali su izgenerisani
 

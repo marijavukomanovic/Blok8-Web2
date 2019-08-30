@@ -288,6 +288,14 @@
     <Compile Include="Migrations\201908271920587_LinijaPolje1.Designer.cs">
       <DependentUpon>201908271920587_LinijaPolje1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908301643455_AKTIvAN_CENOVNIK1.cs" />
+    <Compile Include="Migrations\201908301643455_AKTIvAN_CENOVNIK1.Designer.cs">
+      <DependentUpon>201908301643455_AKTIvAN_CENOVNIK1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.cs" />
+    <Compile Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.Designer.cs">
+      <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -452,6 +460,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908271920587_LinijaPolje1.resx">
       <DependentUpon>201908271920587_LinijaPolje1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908301643455_AKTIvAN_CENOVNIK1.resx">
+      <DependentUpon>201908301643455_AKTIvAN_CENOVNIK1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.resx">
+      <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

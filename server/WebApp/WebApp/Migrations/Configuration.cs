@@ -274,8 +274,8 @@ namespace WebApp.Migrations
             {
                 Cenovnik cenovnik = new Cenovnik();
                 cenovnik.Id = 1;
-                cenovnik.VazenjeDo = new DateTime(2019, 8, 31);
-                cenovnik.VazenjeOd = new DateTime(2019, 8, 27);
+                cenovnik.VazenjeDo = new DateTime(2019, 8, 31,12,0,0);
+                cenovnik.VazenjeOd = new DateTime(2019, 8, 27,11,59,59);
                 context.Cenovnici.Add(cenovnik);
                 context.SaveChanges();
             }
