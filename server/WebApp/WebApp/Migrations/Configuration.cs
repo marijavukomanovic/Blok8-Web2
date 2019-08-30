@@ -322,14 +322,17 @@ namespace WebApp.Migrations
 
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
-                var user = new ApplicationUser() { Id = "admin", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1*/,/*KorisnikId=1*/ };
+              /*  Korisnik AdminK = new Korisnik() {Id=1 }; */
+                 var user = new ApplicationUser() { Id = "admin", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1,KorisnikId= AdminK.Id,*/ };
+                
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
 
             if (!context.Users.Any(u => u.UserName == "appu"))
-            { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1*/,/*KorisnikId=2*/ };
+            {
+               /* Korisnik AdminK = new Korisnik() { Id = 2 }; */
+                 var user = new ApplicationUser() { Id = "appu", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1,KorisnikId= AdminK.Id, */ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }

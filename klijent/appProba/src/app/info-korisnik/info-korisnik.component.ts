@@ -47,6 +47,8 @@ infoForm = this.fb.group({
       this.user = data;
       this.infoForm.patchValue(data);
     });
+   
+     
  
   }
   onchange()
@@ -55,6 +57,11 @@ infoForm = this.fb.group({
   }
   onSubmit()
   {
+    this.user = this.infoForm.value;
+      console.log(this.user);
+      this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
+        console.log('Uspesno izmenjen cenovnik!');
+      });
     /*this.registracijaServis.getInfo(this.username).subscribe(data => {
     console.log(data);
     this.user = data;

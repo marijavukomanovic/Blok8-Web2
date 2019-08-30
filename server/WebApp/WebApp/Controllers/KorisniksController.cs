@@ -156,11 +156,11 @@ namespace WebApp.Controllers
         }
         // POST api/Korisnik/ChangeInfo
         //  [Authorize(Roles = "AppUser")]
-
+        [AllowAnonymous]
         [System.Web.Http.HttpPost]
-        [Route("ChangeInfo")]
+        [Route("ChangeInfo/{model}")]
        // [ResponseType(typeof(UserRegistrationBindingModel))]
-        public IHttpActionResult ChangeInfo(UserRegistrationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
+        public IHttpActionResult ChangeInfo(UserChangeInfoBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
         {
             // validacija
             if (!ModelState.IsValid)
