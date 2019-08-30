@@ -20,5 +20,6 @@ namespace WebApp.Models
         public TipKarte TipKarte { get; set; }
 
         public double Cena { get; set; }
+        public bool Aktivan { get; set; }
     }
 }

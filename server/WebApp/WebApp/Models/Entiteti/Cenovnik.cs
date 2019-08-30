@@ -12,5 +12,6 @@ namespace WebApp.Models
         public int Id { get; set; }
         public DateTime VazenjeOd { get; set; }
         public DateTime VazenjeDo { get; set; }
+       public bool Aktivan { get; set; }
     }
 }

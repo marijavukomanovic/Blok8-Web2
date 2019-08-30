@@ -138,6 +138,7 @@ namespace WebApp.Controllers
             LineStBindingModel lineStBindingModel = new LineStBindingModel();
             List<StationBindingModel> stations = new List<StationBindingModel>();
             int linijeId = -1;
+            
             foreach (var linija in lineRepo.GetAll())
             {
                 if (linija.RedBroj.Equals(linijaIme))

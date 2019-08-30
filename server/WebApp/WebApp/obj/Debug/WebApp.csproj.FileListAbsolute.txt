@@ -1430,7 +1430,6 @@ C:\Users\Marija\Documents\knjige\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebAp
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Sveee.resources
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje.resources
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje1.resources
-C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Sveee.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.LinijaPolje.resources
@@ -1617,3 +1616,5 @@ C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\bin\ru\System.S
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENOVNIK1.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENaKarte1.resources
