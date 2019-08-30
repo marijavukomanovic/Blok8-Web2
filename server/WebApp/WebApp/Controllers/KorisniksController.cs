@@ -92,7 +92,7 @@ namespace WebApp.Controllers
             db.SaveChanges();
             // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-            var appUser = new ApplicationUser() { Id = noviKorisnik.TipId.ToString(), UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
+            var appUser = new ApplicationUser() { Id =noviKorisnik.KorisnickoIme, UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
             appUser.Id = noviKorisnik.Id.ToString();
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
             userManager.AddToRole(appUser.Id, "AppUser");

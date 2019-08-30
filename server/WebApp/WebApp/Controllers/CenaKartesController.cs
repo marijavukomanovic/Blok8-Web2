@@ -264,6 +264,7 @@ namespace WebApp.Controllers
                 {
                     idKorisnika = korisnici.Id;
                     tipKorisnika = korisnici.TipId;
+                    break;
                 }
             }
             Karta novaKarta = new Karta();
@@ -294,62 +295,92 @@ namespace WebApp.Controllers
         {
             List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
             UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel();
-            DateTime vremeIzdavanje=new DateTime();
-            DateTime vremeTrajanja=new DateTime();
+            DateTime vremeIzdavanje = new DateTime();
+            DateTime vremeTrajanja = new DateTime();
             int idKarte = -1;
             int idCeneKarte = -1;
             string tipKarte = "";
             int tiiipKarte = -1;
             int idKorisnika = -1;
-            double cenaKarte = 0;
+            int tipPutnika = -1;
+            double koef = 0;
+            double cena = 0;
             foreach (var korisnik in korisnikRepository.GetAll())
-            {if (korisnik.Email == username) // NE MOZE EMAIL NEGO USERNAME
+            {
+                if (korisnik.KorisnickoIme.Equals(username))
                 {
                     idKorisnika = korisnik.Id;
+                    tipPutnika = korisnik.TipId;
                     break;
 
                 }
+            }
+            foreach (var tipP in tipPutnikaRepository.GetAll())
+            {
+                if (tipP.Id == tipPutnika)
+                {
+                    koef = tipP.Koeficijent;
+                    break;
+                }
+
             }
             foreach (var karta in kartaRepository.GetAll())//ako je korisnik kupio kartu
             {
                 if (karta.ApplicationUserId.Equals(idKorisnika.ToString()))
                 {
                     idKarte = karta.Id;
-                    idCeneKarte = karta.CenaKarteId;//odavce cu uzeti koji je tip
+                    idCeneKarte = karta.CenaKarteId;//odavce cu uzeti koji je tip OVDE PUCA?
                     vremeIzdavanje = karta.VremeKupovine;
+
+
                 }
 
-
-                foreach (var ck in CenaKarteRepository.GetAll())//pronajdi kog je tipa ona bila
+                foreach (var ck in CenaKarteRepository.GetAll())
                 {
                     if (ck.Id == idCeneKarte)
                     {
-                        tipKarte = ck.TipKarte.Naziv; // OVDE PUKNE 
                         tiiipKarte = ck.TipKarteId;
+                        //tipKarte = ck.TipKarte.Naziv.ToString();
+                        cena = ck.Cena;
+                        break;
                     }
 
                 }
-                switch (tipKarte)
+
+                switch (tiiipKarte)
                 {
-                    case "Vremenska":
+                    case 1:
                         vremeTrajanja = vremeIzdavanje.AddHours(1);
+                        tipKarte = "Vremenska";
                         break;
-                    case "Dnevna":
-                        vremeTrajanja = vremeIzdavanje.AddDays(1);
+                    case 2:
+                        if (vremeIzdavanje.Month % 2 == 0 && vremeIzdavanje.Month != 2 && vremeIzdavanje.Month!=8)
+                            vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, 30, 23, 59, 59);
+                        if (vremeIzdavanje.Month == 2)
+                        {
+                            if (vremeIzdavanje.Year % 4 == 0)
+                                vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, 29, 23, 59, 59);
+                            else { vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, 28, 23, 59, 59); }
+                        }
+                        else { vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, 31, 23, 59, 59); }
+                        tipKarte = "Dnevna";
                         break;
-                    case "Mesecna":
-                        vremeTrajanja = vremeIzdavanje.AddMonths(1);
+                    case 3:
+                        vremeTrajanja = new DateTime(vremeIzdavanje.Year, vremeIzdavanje.Month, vremeIzdavanje.Day, 23, 59, 59);
+                        tipKarte = "Mesecna";
                         break;
-                    case "Godisnja":
+                    case 4:
                         vremeTrajanja = new DateTime(vremeIzdavanje.Year, 12, 31); //oni su na vrezama rekli da traje do kraja godine nebitno kada se izda
+                        tipKarte = "Godisnja";
                         break;
                 }
 
                 ticketBindingModel.TicketId = idKarte.ToString();
                 ticketBindingModel.TicketType = tipKarte;
-                ticketBindingModel.IssuingTime = vremeIzdavanje.ToShortDateString();
-                ticketBindingModel.ExpirationTime = vremeTrajanja.ToShortDateString();
-                ticketBindingModel.Cena = cenaKarte;
+                ticketBindingModel.IssuingTime = vremeIzdavanje.ToLongDateString()+" " + vremeIzdavanje.ToLongTimeString();
+                ticketBindingModel.ExpirationTime = vremeTrajanja.ToLongDateString()+" " + vremeTrajanja.ToLongTimeString();
+                ticketBindingModel.Price = cena * koef;
+
                 userTicketBindingModels.Add(ticketBindingModel);
             }
 
@@ -362,29 +393,31 @@ namespace WebApp.Controllers
         [System.Web.Http.HttpGet]
         [Route("GetCena/{type}/{username}")]//Marina treba mi jos i username iz localStorage
         [ResponseType(typeof(double))]//dodat koeficient
-        public async Task<IHttpActionResult> GetCena(int type,string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
+        public async Task<IHttpActionResult> GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
-            
-            //int type = type1.Tip;
-            //string username = type1.User;
+
             double retCena = -1;
             double koeficient = 0;
             int tipKorisnika = -1;
             int idCenovnika = -1;//cenovnika koji jos uvek vazi
             if (cenovnikRepository.GetAll().Count() == 0)
-            { return BadRequest("Ne postoji ni jedan cenovnik, admin ga mora napraviti"); }
+            { return BadRequest("Ne postoji ni jedan cenovnik, molim vas napravite ga"); }
             foreach (var c in cenovnikRepository.GetAll())
             {
                 if (DateTime.Compare(c.VazenjeDo, DateTime.Now) > 0)
                 {
                     idCenovnika = c.Id;
+                    break;
                 }
 
             }
             foreach (var korisnik in korisnikRepository.GetAll())
             {
                 if (korisnik.KorisnickoIme.Equals(username))
+                {
                     tipKorisnika = korisnik.TipId;
+                    break;
+                }
             }
 
             if (CenaKarteRepository.GetAll().Count() == 0)
@@ -401,8 +434,10 @@ namespace WebApp.Controllers
             foreach (var ck in CenaKarteRepository.GetAll())
             {
                 if (ck.CenovnikId == idCenovnika && ck.TipKarteId == type)
-                    retCena = ck.Cena*koeficient;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
-
+                {
+                    retCena = ck.Cena * koeficient;//*koeficient;//treba ce se dodati i koeficijet ovde u odnosu na kog je tipa korisnik
+                    break;
+                }
             }
 
 
