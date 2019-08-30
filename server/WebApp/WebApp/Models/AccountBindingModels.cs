@@ -199,7 +199,16 @@ namespace WebApp.Models
         public string ExpirationTime { get; set; }
         public string TicketType { get; set; }
         public double Cena { get; set; }
-        public double Price { get; set; }
+
+        public UserTicketBindingModel(string t,string i,string x,string ti,double c)
+        {
+            TicketId = t;
+            IssuingTime = i;
+            ExpirationTime = x;
+            TicketType = ti;
+            Cena = c;
+        }
+        //public double Price { get; set; }
     }
 
     

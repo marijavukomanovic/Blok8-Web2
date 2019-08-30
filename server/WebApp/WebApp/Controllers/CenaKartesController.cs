@@ -294,7 +294,7 @@ namespace WebApp.Controllers
         public async Task<IHttpActionResult> IzlistajMojeKarte(string username)
         {
             List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
-            UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel();
+            
             DateTime vremeIzdavanje = new DateTime();
             DateTime vremeTrajanja = new DateTime();
             int idKarte = -1;
@@ -374,12 +374,12 @@ namespace WebApp.Controllers
                         tipKarte = "Godisnja";
                         break;
                 }
-
-                ticketBindingModel.TicketId = idKarte.ToString();
-                ticketBindingModel.TicketType = tipKarte;
-                ticketBindingModel.IssuingTime = vremeIzdavanje.ToLongDateString()+" " + vremeIzdavanje.ToLongTimeString();
-                ticketBindingModel.ExpirationTime = vremeTrajanja.ToLongDateString()+" " + vremeTrajanja.ToLongTimeString();
-                ticketBindingModel.Price = cena * koef;
+                UserTicketBindingModel ticketBindingModel = new UserTicketBindingModel(idKarte.ToString(), tipKarte, vremeIzdavanje.ToLongDateString() + " " + vremeIzdavanje.ToLongTimeString(), vremeTrajanja.ToLongDateString() + " " + vremeTrajanja.ToLongTimeString(), cena * koef);
+                //ticketBindingModel.TicketId = idKarte.ToString();
+                //ticketBindingModel.TicketType = tipKarte;
+                //ticketBindingModel.IssuingTime = vremeIzdavanje.ToLongDateString()+" " + vremeIzdavanje.ToLongTimeString();
+                //ticketBindingModel.ExpirationTime = vremeTrajanja.ToLongDateString()+" " + vremeTrajanja.ToLongTimeString();
+                //ticketBindingModel.Cena = cena * koef;
 
                 userTicketBindingModels.Add(ticketBindingModel);
             }
@@ -395,7 +395,7 @@ namespace WebApp.Controllers
         [ResponseType(typeof(double))]//dodat koeficient
         public async Task<IHttpActionResult> GetCena(int type, string username)//u ondaosu na tip dana vraca cenu, treba vratiti i username da bi nasla u bazi kog je tipa user zbog koegicienta
         {
-
+            
             double retCena = -1;
             double koeficient = 0;
             int tipKorisnika = -1;
