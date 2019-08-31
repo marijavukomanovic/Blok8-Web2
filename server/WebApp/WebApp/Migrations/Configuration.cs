@@ -166,11 +166,11 @@ namespace WebApp.Migrations
             #endregion
 
 
-            if (!context.Stanice.Any(t => t.Naziv == "1A"))
+            if (!context.Stanice.Any(t => t.Naziv == "12A-1"))
             {
                 Stanica s1 = new Stanica();
                 s1.Id = 1;
-                s1.Naziv = "1A-1";
+                s1.Naziv = "12A-1";
                 s1.Adresa = "Selj buna 55";
                 s1.GeografskeKoordinataX = 45.242664693102796;
                 s1.GeografskeKoordinataY = 19.841715892302318;
@@ -180,7 +180,7 @@ namespace WebApp.Migrations
 
                 Stanica s2 = new Stanica();
                 s2.Id = 2;
-                s2.Naziv = "1A-2";
+                s2.Naziv = "12A-2";
                 s2.Adresa = "Selj buna 90";
                 s2.GeografskeKoordinataX = 45.242154780020556 ;
                 s2.GeografskeKoordinataY = 19.842096765982433 ;
@@ -190,12 +190,32 @@ namespace WebApp.Migrations
 
                 Stanica s3 = new Stanica();
                 s3.Id = 3;
-                s3.Naziv = "1A-3";
+                s3.Naziv = "12A-3";
                 s3.Adresa = "Selj buna 189";
                 s3.GeografskeKoordinataX =45.241693;
                 s3.GeografskeKoordinataY =19.842440;
                 s3.Aktivna = true;
                 context.Stanice.Add(s3);
+                context.SaveChanges();
+
+                Stanica s4 = new Stanica();
+                s4.Id = 4;
+                s4.Naziv = "7A-1";
+                s4.Adresa = "Selj buna 189";
+                s4.GeografskeKoordinataX = 45.24200369378396;
+                s4.GeografskeKoordinataY = 19.841640790368047;
+                s4.Aktivna = true;
+                context.Stanice.Add(s4);
+                context.SaveChanges();
+
+                Stanica s5 = new Stanica();
+                s5.Id = 5;
+                s5.Naziv = "7A-3";
+                s5.Adresa = "Selj buna 189";
+                s5.GeografskeKoordinataX = 45.24266091598567;
+                s5.GeografskeKoordinataY = 19.843749006653752;
+                s5.Aktivna = true;
+                context.Stanice.Add(s5);
                 context.SaveChanges();
 
 
@@ -255,6 +275,24 @@ namespace WebApp.Migrations
                 linijeStanice3.LinijeId = l1.Id;
                 linijeStanice3.StaniceId = s3.Id;
                 context.LinijeStanices.Add(linijeStanice3);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice4 = new LinijeStanice();
+                linijeStanice4.LinijeId = l2.Id;
+                linijeStanice4.StaniceId = s4.Id;
+                context.LinijeStanices.Add(linijeStanice4);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice5 = new LinijeStanice();
+                linijeStanice5.LinijeId = l2.Id;
+                linijeStanice5.StaniceId = s2.Id;
+                context.LinijeStanices.Add(linijeStanice5);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice6 = new LinijeStanice();
+                linijeStanice6.LinijeId = l2.Id;
+                linijeStanice6.StaniceId = s5.Id;
+                context.LinijeStanices.Add(linijeStanice6);
                 context.SaveChanges();
 
             }

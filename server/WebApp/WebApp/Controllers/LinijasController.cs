@@ -195,7 +195,8 @@ namespace WebApp.Controllers
         }
 
         // brise logicki liniju po njenom nazivu
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("DeleteLine/{lineId}")]
         public IHttpActionResult DeleteLine(string lineId)
