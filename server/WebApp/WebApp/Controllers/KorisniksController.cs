@@ -23,6 +23,7 @@ namespace WebApp.Controllers
     public class KorisniksController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
         private IKorisnikRepository korisnikRepository;
         private ITipPutnikaRepository tipPutnikaRepository;
 
@@ -50,30 +51,11 @@ namespace WebApp.Controllers
             {
                 return BadRequest("Korisnicko ime se vec koristi");
             }
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
-            /*int ageGroup = 1;
-            switch (model.PassengerType.ToString())
-            {
-                
-                case "Student":
-                    ageGroup = 1;
-                    break;
-                case "Penzioner":
-                    ageGroup = 2;
-                    break;
-                case "Regularan":
-                    ageGroup = 3;
-                    break;
-                    
-                default:
-                    ageGroup = 3;
-                    break;
-            }*/
 
-            //int br = 0;
-            //Int32.TryParse(model.PassengerType,out br);
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore); // u njega se rola dodaje
+            DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
+
             Korisnik noviKorisnik = new Korisnik()
             {
                 KorisnickoIme = model.UserName,
@@ -92,7 +74,7 @@ namespace WebApp.Controllers
             db.SaveChanges();
             // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-            var appUser = new ApplicationUser() { Id =noviKorisnik.KorisnickoIme, UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
+            var appUser = new ApplicationUser() { Id = noviKorisnik.KorisnickoIme, UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
             appUser.Id = noviKorisnik.Id.ToString();
             IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
             userManager.AddToRole(appUser.Id, "AppUser");
@@ -104,6 +86,9 @@ namespace WebApp.Controllers
             {
                 return GetErrorResult(result);
             }
+
+            //IList<string > ls = userManager.GetRoles(appUser.Id);
+
             return Ok();
 
         }
@@ -155,8 +140,8 @@ namespace WebApp.Controllers
             return Ok(userRetval);
         }
         // POST api/Korisnik/ChangeInfo
-        //  [Authorize(Roles = "AppUser")]
-        [AllowAnonymous]
+        [Authorize(Roles = "AppUser")]
+        //[AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("ChangeInfo/{model}")]
        // [ResponseType(typeof(UserRegistrationBindingModel))]

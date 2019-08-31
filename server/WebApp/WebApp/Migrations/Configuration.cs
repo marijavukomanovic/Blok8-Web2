@@ -322,8 +322,22 @@ namespace WebApp.Migrations
 
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
-              /*  Korisnik AdminK = new Korisnik() {Id=1 }; */
-                 var user = new ApplicationUser() { Id = "admin", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*,TipPutnikaId = 1,KorisnikId= AdminK.Id,*/ };
+                /*  Korisnik AdminK = new Korisnik() {Id=1 }; */
+                var korisnik = new Korisnik();
+                korisnik.Id = 1;
+                korisnik.Ime = "Admin";
+                korisnik.Prezime = "Adminic";
+                korisnik.KorisnickoIme = "admin";
+                korisnik.Sifra = ApplicationUser.HashPassword("Admin123!");
+                korisnik.Adresa = "glupost 67";
+                korisnik.DatumRodjenja = new DateTime(1997,4,5);
+                korisnik.Email = "admin@yahoo.com";
+                korisnik.TipId = 1;
+                context.Korisnik.Add(korisnik);
+                context.SaveChanges();
+
+                 var user = new ApplicationUser() { Id = "1", UserName = "admin", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")};
+                user.KorisnikId = korisnik.Id;
                 
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
@@ -331,8 +345,21 @@ namespace WebApp.Migrations
 
             if (!context.Users.Any(u => u.UserName == "appu"))
             {
-               /* Korisnik AdminK = new Korisnik() { Id = 2 }; */
-                 var user = new ApplicationUser() { Id = "appu", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") /*, TipPutnikaId = 1,KorisnikId= AdminK.Id, */ };
+                var korisnik = new Korisnik();
+                korisnik.Id = 2;
+                korisnik.Ime = "Marko";
+                korisnik.Prezime = "Matic";
+                korisnik.KorisnickoIme = "appu";
+                korisnik.Sifra = ApplicationUser.HashPassword("Appu123!");
+                korisnik.Adresa = "gogoljeva 67";
+                korisnik.DatumRodjenja = new DateTime(1997, 9, 5);
+                korisnik.Email = "appu@yahoo.com";
+                korisnik.TipId = 3;
+                context.Korisnik.Add(korisnik);
+                context.SaveChanges();
+
+                var user = new ApplicationUser() { Id = "2", UserName = "appu", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!")};
+                user.KorisnikId = korisnik.Id;
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }

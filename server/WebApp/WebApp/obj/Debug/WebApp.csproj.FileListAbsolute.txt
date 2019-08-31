@@ -1619,3 +1619,5 @@ C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebAp
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENOVNIK1.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENaKarte1.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENOVNIK1.resources
+C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.AKTIvAN_CENaKarte1.resources
