@@ -14,6 +14,8 @@ import { LoginComponent } from './auth/login/login.component';
 import {DodavanjeCenovnikaComponent} from './dodavanje-cenovnika/dodavanje-cenovnika.component';
 import {LokacijaComponent} from './lokacija/lokacija.component';
 import {IzmenaCenovnikaComponent} from './izmena-cenovnika/izmena-cenovnika.component';
+import {DodavanjeLinijeComponent} from './dodavanje-linije/dodavanje-linije.component';
+import {BrisanjeLinijeComponent} from './brisanje-linije/brisanje-linije.component';
 
 const routes: Routes = [
   {path: '',component: HomeComponent},
@@ -28,6 +30,8 @@ const routes: Routes = [
   {path:'lokacija',component : LokacijaComponent},
   {path:'izmenaCenovnika',component:IzmenaCenovnikaComponent},
   {path:'karteKorisnik',component:KarteComponent},
+  {path: 'dodavanjeLinije',component:DodavanjeLinijeComponent},
+  {path:'brisanjeLinije',component:BrisanjeLinijeComponent},
 ];
 
 @NgModule({

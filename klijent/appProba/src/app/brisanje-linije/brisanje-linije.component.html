@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container"> 
+    <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar12"> 
+      <a class="navbar-brand d-none d-md-block">
+        <i class="fa d-inline fa-lg fa-bus" routerLink='/'></i>
+        <b> JGSP</b>
+      </a>
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"> <a class="nav-link" ></a> </li>
+        <li class="nav-item"> <a class="nav-link" ></a> </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/dodavanjeLinije">Dodaj liniju</a> </li>
+        <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/brisanjeLinije">Obrisi linije</a> </li>
+      <li class="nav-item">
+        <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
+    </li>
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+
+
+<form>
+<h3 style="text-align:center">Prikaz autobuskih linija i njihovo uklanjanje</h3>
+  <label>
+    <div class="row">
+      <div class="col">
+        <div>Posle odabira tipa linije,prikazace vam se sve trenutne za izabrani tip.</div>       
+        <select #routeType (change)="getListuLinija(routeType.value)">
+              <option value="0" disabled>Odaberite tip linije</option>
+              <option value="1">Gradske linije</option>
+              <option value="2">Prigradske linije</option>              
+        </select>
+                  
+  
+        </div>
+    <div class="col">
+        
+        <select #lineName>
+            <option *ngFor="let line of lines" [value]="line">{{line}}</option>
+          </select>  
+         
+            <div>
+              <button type="submit" (click)="getLinija(lineName.value)">Prikazi</button>
+            </div>     
+    </div>
+  
+<br/>
+</div>
+<br/>
+    <div *ngIf='pritisnuto'>
+      <button type="submit" (click)="obrisiLiniju(lineName.value)">Obrisi liniju</button>
+    </div>
+</label>
+
+    <p  >
+      <!-- Kreiramo mapu -->
+      <agm-map [latitude]="45.242268" [longitude]="19.842954" [zoom]="17" >  
+    <div   *ngIf="pritisnuto" >
+     
+        <agm-marker *ngFor="let st of lineStation.Stations" [latitude]="st.XCoordinate" [longitude]="st.YCoordinate" [title]="st.Address"
+        [iconUrl]="polyline.icon">
+    
+          <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
+          <agm-info-window [latitude]="st.XCoordinate" [longitude]="st.YCoordinate" >
+    
+            <!-- U info-window stavljamo html -->
+            <span style="font-size: 16px;font-family:'Times New Roman'">{{st.Name}}</span>
+            <br/>
+            
+            <span style="font-family:'Times New Roman'; color:gray;">{{st.Address}}</span>
+          
+          </agm-info-window>
+    
+        </agm-marker>
+    
+        <agm-polyline [strokeColor]="polyline.color">
+             <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude">
+             </agm-polyline-point>
+        </agm-polyline>
+
+        
+    </div>
+      </agm-map>
+    </p>
+
+</form>
+</div>

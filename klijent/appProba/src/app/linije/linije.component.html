@@ -12,6 +12,14 @@
           <li class="nav-item"> <a class="nav-link" ></a> </li>
           <li class="nav-item"> <a class="nav-link" ></a> </li>
         </ul>
+        <ul class="navbar-nav">
+          <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/dodavanjeLinije">Dodaj liniju</a> </li>
+          <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/brisanjeLinije">Obrisi linije</a> </li>
+        <li class="nav-item">
+          <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
+      </li>
+        
+        </ul>
       </div>
     </div>
   </nav>
@@ -39,7 +47,7 @@
             </select>  
            
               <div>
-                <button type="submit" (click)="getLines(lineName.value)">Prikazi</button>
+                <button type="submit" (click)="getLinija(lineName.value)">Prikazi</button>
               </div>
             
             
