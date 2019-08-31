@@ -22,6 +22,8 @@ namespace WebApp.Controllers
         private ILinijaRepository linijaRepository;
         private ITipLinijeRepository tipLinijeRepository;
         private ITipDanaRepository tipDanaRepository;
+
+        private static readonly Object lockObj = new Object();
         public RedVoznjesController(ILinijaRepository linijaRepository, ITipLinijeRepository tipLinijeRepository, ITipDanaRepository tipDanaRepository, IRedVoznjeRepository redVoznjeRepository)
         {
             this.redVoznjeRepository = redVoznjeRepository;
@@ -100,90 +102,94 @@ namespace WebApp.Controllers
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
         public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
         {
-            RedVoznje redVoznje = new RedVoznje();
-            bool proveraDaliPostojiZaDatiDan = false;
-            bool proveraDaliPostojiZaDatuLiniju = false;
-            if (redVoznjeRepository.GetAll().Count() == 0)
-            {
-                return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
-            }
-            //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
-            //{
-            //    return BadRequest("Ne postoji nijedna linija");
-            //}
+            lock (lockObj)
 
-            foreach (var redV in redVoznjeRepository.GetAll())
             {
-                if (redV.Linija.RedBroj.Equals(linija))
+                RedVoznje redVoznje = new RedVoznje();
+                bool proveraDaliPostojiZaDatiDan = false;
+                bool proveraDaliPostojiZaDatuLiniju = false;
+                if (redVoznjeRepository.GetAll().Count() == 0)
                 {
-                    if (redV.TipDanaId == tipDana)
+                    return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
+                }
+                //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
+                //{
+                //    return BadRequest("Ne postoji nijedna linija");
+                //}
+
+                foreach (var redV in redVoznjeRepository.GetAll())
+                {
+                    if (redV.Linija.RedBroj.Equals(linija))
                     {
-                        redV.RasporedVoznje = stringInfo.ToString();
-                        proveraDaliPostojiZaDatiDan = true;
-                        db.Entry(redV).State = EntityState.Modified;
+                        if (redV.TipDanaId == tipDana)
+                        {
+                            redV.RasporedVoznje = stringInfo.ToString();
+                            proveraDaliPostojiZaDatiDan = true;
+                            db.Entry(redV).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        proveraDaliPostojiZaDatuLiniju = true;
+                        // redVoznje.Linija.RedBroj = linija;
+                        redVoznje.TipDanaId = tipDana;
+                        //proveri ti da li treba prolaziti kroz forech za se nadju id ovi za ova prethodna dva
+                        int linijaId = -1;
+                        foreach (var idlinije in linijaRepository.GetAll())
+                        {
+                            if (idlinije.RedBroj.Equals(linija))
+                            {
+                                linijaId = idlinije.Id;
+                                break;
+                            }
+
+                        }
+                        string ttipDanaId = tipDanaRepository.Get(tipDana).Tip;
+                        //foreach (var idTipaDana in tipDanaRepository.GetAll())
+                        //{
+                        //    if (idTipaDana.Id == tipDana)
+                        //    {
+                        //        ttipDanaId = idTipaDana.Tip.ToString();
+                        //        break;
+                        //    }
+
+                        //}
+                        // redVoznje.Linija.Id = linijaId;
+                        redVoznje.Linija = linijaRepository.Get(linijaId);
+                        redVoznje.TipDana.Id = tipDana;
+                        redVoznje.TipDana.Tip = ttipDanaId;
+                        db.Entry(redVoznje).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                    proveraDaliPostojiZaDatuLiniju = true;
-                    // redVoznje.Linija.RedBroj = linija;
-                    redVoznje.TipDanaId = tipDana;
-                    //proveri ti da li treba prolaziti kroz forech za se nadju id ovi za ova prethodna dva
-                    int linijaId = -1;
-                    foreach (var idlinije in linijaRepository.GetAll())
+                    if (proveraDaliPostojiZaDatuLiniju == false && proveraDaliPostojiZaDatiDan == false)
                     {
-                        if (idlinije.RedBroj.Equals(linija))
+                        redVoznje.Id = redVoznjeRepository.GetAll().Count() + 1;
+                        redVoznje.Linija.RedBroj = linija;
+                        int linijaId = -1;
+                        foreach (var idlinije in linijaRepository.GetAll())
                         {
-                            linijaId = idlinije.Id;
-                            break;
+                            if (idlinije.RedBroj.Equals(linija))
+                            {
+                                linijaId = idlinije.Id;
+                                break;
+                            }
+
                         }
+                        int id = redVoznjeRepository.GetAll().Count();
+                        redVoznje.Id = ++id;
+                        redVoznje.TipDanaId = tipDana;
+                        redVoznje.TipDana = tipDanaRepository.Get(tipDana);
+                        redVoznje.LinijaId = linijaId;
+                        redVoznje.Linija = linijaRepository.Get(linijaId);
+                        db.Entry(redVoznje).State = EntityState.Modified;
+                        db.SaveChanges();
 
                     }
-                    string ttipDanaId = tipDanaRepository.Get(tipDana).Tip;
-                    //foreach (var idTipaDana in tipDanaRepository.GetAll())
-                    //{
-                    //    if (idTipaDana.Id == tipDana)
-                    //    {
-                    //        ttipDanaId = idTipaDana.Tip.ToString();
-                    //        break;
-                    //    }
 
-                    //}
-                    // redVoznje.Linija.Id = linijaId;
-                    redVoznje.Linija = linijaRepository.Get(linijaId);
-                    redVoznje.TipDana.Id = tipDana;
-                    redVoznje.TipDana.Tip = ttipDanaId;
-                    db.Entry(redVoznje).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                if (proveraDaliPostojiZaDatuLiniju == false && proveraDaliPostojiZaDatiDan == false)
-                {
-                    redVoznje.Id = redVoznjeRepository.GetAll().Count() + 1;
-                    redVoznje.Linija.RedBroj = linija;
-                    int linijaId = -1;
-                    foreach (var idlinije in linijaRepository.GetAll())
-                    {
-                        if (idlinije.RedBroj.Equals(linija))
-                        {
-                            linijaId = idlinije.Id;
-                            break;
-                        }
 
-                    }
-                    int id = redVoznjeRepository.GetAll().Count();
-                    redVoznje.Id = ++id;
-                    redVoznje.TipDanaId = tipDana;
-                    redVoznje.TipDana = tipDanaRepository.Get(tipDana);
-                    redVoznje.LinijaId = linijaId;
-                    redVoznje.Linija = linijaRepository.Get(linijaId);
-                    db.Entry(redVoznje).State = EntityState.Modified;
-                    db.SaveChanges();
 
                 }
 
-
-
+                return Ok();
             }
-
-            return Ok();
         }
 
 

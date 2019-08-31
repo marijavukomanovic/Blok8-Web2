@@ -25,6 +25,7 @@ namespace WebApp.Controllers
         private IKartaRepository kartaRepository;
         private IKorisnikRepository korisnikRepository;
         private ITipPutnikaRepository tipPutnikaRepository;
+        private static readonly Object lockObj = new Object();
 
         public CenaKartesController(ICenaKarteRepository CenaKarteRepository, ICenovnikRepository cenovnikRepository, IKartaRepository kartaRepository, IKorisnikRepository korisnikRepository, ITipPutnikaRepository TipPutnikaRepository)
         // GET: api/CenaKartes
@@ -67,44 +68,48 @@ namespace WebApp.Controllers
         [Route("Cenovnik/{model}")]
         public async Task<IHttpActionResult> Cenovnik(CenovnikBindingModel model)//pravi novi cenovnik
         {
-            if (!ModelState.IsValid)
+            lock (lockObj)
+
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            // var userStore = new UserStore<ApplicationUser>(db);
-            //var userManager = new UserManager<ApplicationUser>(userStore);
-            int idc = cenovnikRepository.GetAll().Count();
+                // var userStore = new UserStore<ApplicationUser>(db);
+                //var userManager = new UserManager<ApplicationUser>(userStore);
+                int idc = cenovnikRepository.GetAll().Count();
 
 
-            double[] cene = new double[] { model.cenaVremenska, model.cenaDnevna, model.cenaMesecna, model.cenaGodisnja };
+                double[] cene = new double[] { model.cenaVremenska, model.cenaDnevna, model.cenaMesecna, model.cenaGodisnja };
 
-            for (int i = 0; i < 4; i++)//provera dali je cena ispravni tj veca od 0
-            {
-                if (cene[i] < 0)
-                    cene[i] = 0;
-                //ili mozda da vratim gresku pa da korisnik mora ponovo da zada???//Marina ?
-                //{return BadRequest("Cena ne moze biti manja od nule ");} i u if-u da bude <=
+                for (int i = 0; i < 4; i++)//provera dali je cena ispravni tj veca od 0
+                {
+                    if (cene[i] < 0)
+                        cene[i] = 0;
+                    //ili mozda da vratim gresku pa da korisnik mora ponovo da zada???//Marina ?
+                    //{return BadRequest("Cena ne moze biti manja od nule ");} i u if-u da bude <=
 
-            }
-            //provera da li je vazenje vece od pocetaka vazenja cenovnika
-            if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
-            { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
-            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, Aktivan = true, };
-            db.Cenovnici.Add(noviCenovnik);
-            db.SaveChanges();
-            int idck = CenaKarteRepository.GetAll().Count();
-
-            //  idck++;
-            for (int i = 1; i <= 4; i++)
-            {
-                CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i, Aktivan = true, };
-                db.CenaKarata.Add(cenaKarte);
+                }
+                //provera da li je vazenje vece od pocetaka vazenja cenovnika
+                if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
+                { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
+                Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, Aktivan = true, };
+                db.Cenovnici.Add(noviCenovnik);
                 db.SaveChanges();
+                int idck = CenaKarteRepository.GetAll().Count();
+
+                //  idck++;
+                for (int i = 1; i <= 4; i++)
+                {
+                    CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i, Aktivan = true, };
+                    db.CenaKarata.Add(cenaKarte);
+                    db.SaveChanges();
+                }
+
+
+                return Ok();
             }
-
-
-            return Ok();
         }
 
         //[Authorize(Roles = "Admin")]
@@ -171,95 +176,99 @@ namespace WebApp.Controllers
         [Route("IzmenaCenovnika2/{model}")]
         public async Task<IHttpActionResult> IzmenaCenovnika2(CenovnikBindingModel model)//cuvanje u bazi izmenu cenovnika
         {
-            int idCenovnika = -1;
-            int idCenaKarte = -1;
-            DateTime t1 = DateTime.Parse(model.OD);
-            DateTime t2 = DateTime.Parse(model.DO);
+            lock (lockObj)
 
-            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-            }
-            if (!(DateTime.Compare(t1, t2) < 0))
-            { return BadRequest("Niste zadali validno trajanje cenovnika"); }
+                int idCenovnika = -1;
+                int idCenaKarte = -1;
+                DateTime t1 = DateTime.Parse(model.OD);
+                DateTime t2 = DateTime.Parse(model.DO);
 
-
-            foreach (var tCenovnik in cenovnikRepository.GetAll())
-            {
-                if (DateTime.Compare(tCenovnik.VazenjeOd, t1) == 0 &&
-                       DateTime.Compare(tCenovnik.VazenjeDo, t2) == 0)
+                if (!ModelState.IsValid)
                 {
-                    idCenovnika = tCenovnik.Id;
-                    tCenovnik.Aktivan = false;
+                    return BadRequest(ModelState);
+                }
+                if (!(DateTime.Compare(t1, t2) < 0))
+                { return BadRequest("Niste zadali validno trajanje cenovnika"); }
+
+
+                foreach (var tCenovnik in cenovnikRepository.GetAll())
+                {
+                    if (DateTime.Compare(tCenovnik.VazenjeOd, t1) == 0 &&
+                           DateTime.Compare(tCenovnik.VazenjeDo, t2) == 0)
+                    {
+                        idCenovnika = tCenovnik.Id;
+                        tCenovnik.Aktivan = false;
+
+                    }
 
                 }
-
-            }
-            foreach (var ck in CenaKarteRepository.GetAll())
-            {
-                if (ck.CenovnikId == idCenovnika)
+                foreach (var ck in CenaKarteRepository.GetAll())
                 {
-                    idCenaKarte = ck.Id;
-                    ck.Aktivan = false;
-                    break;
+                    if (ck.CenovnikId == idCenovnika)
+                    {
+                        idCenaKarte = ck.Id;
+                        ck.Aktivan = false;
+                        break;
+                    }
                 }
-            }
 
-            int idc = cenovnikRepository.GetAll().Count();
+                int idc = cenovnikRepository.GetAll().Count();
 
 
-            double[] cene = new double[] { model.cenaVremenska, model.cenaDnevna, model.cenaMesecna, model.cenaGodisnja };
+                double[] cene = new double[] { model.cenaVremenska, model.cenaDnevna, model.cenaMesecna, model.cenaGodisnja };
 
-            for (int i = 0; i < 4; i++)//provera dali je cena ispravni tj veca od 0
-            {
-                if (cene[i] < 0)
-                    cene[i] = 0;
+                for (int i = 0; i < 4; i++)//provera dali je cena ispravni tj veca od 0
+                {
+                    if (cene[i] < 0)
+                        cene[i] = 0;
 
-            }
-            //provera da li je vazenje vece od pocetaka vazenja cenovnika
-            if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
-            { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
-            Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, Aktivan = true, };
-            db.Cenovnici.Add(noviCenovnik);
-            db.SaveChanges();
-            int idck = CenaKarteRepository.GetAll().Count();
-
-            //  idck++;
-
-            for (int i = 1; i <= 4; i++)
-            {
-                CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i, Aktivan = true, };
-                db.CenaKarata.Add(cenaKarte);
+                }
+                //provera da li je vazenje vece od pocetaka vazenja cenovnika
+                if (!(DateTime.Compare(DateTime.Parse(model.OD), DateTime.Parse(model.DO)) < 0))//ako je vrenjeDo manje od vazenjaOd vrati gresku
+                { return BadRequest("Niste zadali odgovarajuci datum, datum trajanja ne mozze biti manji od datuma pocetka "); }
+                Cenovnik noviCenovnik = new Cenovnik() { VazenjeOd = DateTime.Parse(model.OD), VazenjeDo = DateTime.Parse(model.DO), Id = ++idc, Aktivan = true, };
+                db.Cenovnici.Add(noviCenovnik);
                 db.SaveChanges();
-            }
-            CenovnikBindingModel izmenjeniCenovnik = new CenovnikBindingModel()
-            {
-                OD = noviCenovnik.VazenjeOd.ToLongDateString() + " " + noviCenovnik.VazenjeOd.ToLongTimeString(),
-                DO = noviCenovnik.VazenjeDo.ToLongDateString() + " " + noviCenovnik.VazenjeDo.ToLongTimeString(),
+                int idck = CenaKarteRepository.GetAll().Count();
 
+                //  idck++;
 
-            };
-
-            foreach (var ck in CenaKarteRepository.GetAll())
-            {
-                if (idCenaKarte == ck.Id)
+                for (int i = 1; i <= 4; i++)
                 {
-                    if (ck.TipKarteId == 1)
-                    { izmenjeniCenovnik.cenaVremenska = ck.Cena; }
-                    if (ck.TipKarteId == 2)
-                    { izmenjeniCenovnik.cenaDnevna = ck.Cena; }
-                    if (ck.TipKarteId == 3)
-                    { izmenjeniCenovnik.cenaMesecna = ck.Cena; }
-                    if (ck.TipKarteId == 4)
-                    { izmenjeniCenovnik.cenaGodisnja = ck.Cena; }
+                    CenaKarte cenaKarte = new CenaKarte() { Id = ++idck, Cena = cene[i - 1], CenovnikId = idc, TipKarteId = i, Aktivan = true, };
+                    db.CenaKarata.Add(cenaKarte);
+                    db.SaveChanges();
+                }
+                CenovnikBindingModel izmenjeniCenovnik = new CenovnikBindingModel()
+                {
+                    OD = noviCenovnik.VazenjeOd.ToLongDateString() + " " + noviCenovnik.VazenjeOd.ToLongTimeString(),
+                    DO = noviCenovnik.VazenjeDo.ToLongDateString() + " " + noviCenovnik.VazenjeDo.ToLongTimeString(),
+
+
+                };
+
+                foreach (var ck in CenaKarteRepository.GetAll())
+                {
+                    if (idCenaKarte == ck.Id)
+                    {
+                        if (ck.TipKarteId == 1)
+                        { izmenjeniCenovnik.cenaVremenska = ck.Cena; }
+                        if (ck.TipKarteId == 2)
+                        { izmenjeniCenovnik.cenaDnevna = ck.Cena; }
+                        if (ck.TipKarteId == 3)
+                        { izmenjeniCenovnik.cenaMesecna = ck.Cena; }
+                        if (ck.TipKarteId == 4)
+                        { izmenjeniCenovnik.cenaGodisnja = ck.Cena; }
+                    }
+
                 }
 
+
+
+
+                return Ok();
             }
-
-
-
-
-            return Ok();
         }
 
 
@@ -296,7 +305,7 @@ namespace WebApp.Controllers
 
             foreach (var korisnik in korisnikRepository.GetAll())
             {
-               
+
                 if (korisnik.KorisnickoIme.Equals(username))
                 {
                     tipKorisnika = korisnik.TipId;
@@ -327,60 +336,64 @@ namespace WebApp.Controllers
         [Route("KupiKartu/{tipKarte}/{username}")]
         public async Task<IHttpActionResult> KupiKartu(int tipKarte, string username)
         {
-            int idKorisnika = -1;
-            int tipKorisnika = -1;
-            int idKarte = kartaRepository.GetAll().Count();
-            if (username.Equals("appu"))
+            lock (lockObj)
+
             {
-                idKorisnika = 0;
-                tipKarte = 3;
-                Karta novaKartaA = new Karta();
-                novaKartaA.Id = ++idKarte;
-                novaKartaA.ApplicationUserId = idKorisnika.ToString();
+                int idKorisnika = -1;
+                int tipKorisnika = -1;
+                int idKarte = kartaRepository.GetAll().Count();
+                if (username.Equals("appu"))
+                {
+                    idKorisnika = 0;
+                    tipKarte = 3;
+                    Karta novaKartaA = new Karta();
+                    novaKartaA.Id = ++idKarte;
+                    novaKartaA.ApplicationUserId = idKorisnika.ToString();
+                    foreach (var c in CenaKarteRepository.GetAll())
+                    {
+                        if (c.TipKarteId == tipKarte)
+                        {
+                            novaKartaA.CenaKarteId = c.Id;
+                            break;
+                        }
+                    }
+                    novaKartaA.VremeKupovine = DateTime.Now;
+                    db.Karte.Add(novaKartaA);
+                    db.SaveChanges();
+                    return Ok();
+
+                }
+
+
+
+                foreach (var korisnici in korisnikRepository.GetAll())
+                {
+                    if (korisnici.KorisnickoIme.Equals(username))
+                    {
+                        idKorisnika = korisnici.Id;
+                        tipKorisnika = korisnici.TipId;
+                        break;
+                    }
+                }
+                Karta novaKarta = new Karta();
+                novaKarta.Id = ++idKarte;
+                novaKarta.ApplicationUserId = idKorisnika.ToString();
                 foreach (var c in CenaKarteRepository.GetAll())
                 {
                     if (c.TipKarteId == tipKarte)
                     {
-                        novaKartaA.CenaKarteId = c.Id;
+                        novaKarta.CenaKarteId = c.Id;
                         break;
                     }
                 }
-                novaKartaA.VremeKupovine = DateTime.Now;
-                db.Karte.Add(novaKartaA);
+                novaKarta.VremeKupovine = DateTime.Now;
+                db.Karte.Add(novaKarta);
                 db.SaveChanges();
+
+
+
                 return Ok();
-
             }
-
-
-
-            foreach (var korisnici in korisnikRepository.GetAll())
-            {
-                if (korisnici.KorisnickoIme.Equals(username))
-                {
-                    idKorisnika = korisnici.Id;
-                    tipKorisnika = korisnici.TipId;
-                    break;
-                }
-            }
-            Karta novaKarta = new Karta();
-            novaKarta.Id = ++idKarte;
-            novaKarta.ApplicationUserId = idKorisnika.ToString();
-            foreach (var c in CenaKarteRepository.GetAll())
-            {
-                if (c.TipKarteId == tipKarte)
-                {
-                    novaKarta.CenaKarteId = c.Id;
-                    break;
-                }
-            }
-            novaKarta.VremeKupovine = DateTime.Now;
-            db.Karte.Add(novaKarta);
-            db.SaveChanges();
-
-
-
-            return Ok();
         }
 
         [AllowAnonymous]
