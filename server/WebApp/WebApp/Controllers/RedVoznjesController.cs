@@ -66,39 +66,47 @@ namespace WebApp.Controllers
         [Route("GetRedVoznje/{tipDana}/{linija}")]//u odnosu na to koja je linija i koji je dan vrati se red voznje
         public IHttpActionResult GetSchedule(int tipDana, string linija)
         {
-            string redVoznje = "";
-            int lineId = -1;
+            lock (lockObj)
 
-            //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
-            //{
-            //    return BadRequest("Ne postoji nijedna linija");
-            //}
-            foreach (var l in linijaRepository.GetAll())
             {
-                if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')))
-                {
-                    lineId = l.Id;
-                }
-            }
-            if (redVoznjeRepository.GetAll().Count() == 0)
-            {
-                return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
-            }
-            foreach (var s in redVoznjeRepository.GetAll())
-            {
-                if (s.LinijaId == lineId && s.TipDanaId == tipDana)//proverava da li je trazena linija, da li je odgovaradjuci dan
-                {
-                    redVoznje += s.RasporedVoznje;
-                }
-            }
-            if (redVoznje.Trim(' ').Equals(""))
-            {
-                return BadRequest("Za odabranu liniju i tip ne postoji red voznje");
-            }
+                string redVoznje = "";
+                int lineId = -1;
 
-            return Ok(redVoznje);
+                //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
+                //{
+                //    return BadRequest("Ne postoji nijedna linija");
+                //}
+                foreach (var l in linijaRepository.GetAll())
+                {
+                    if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')))
+                    {
+                        lineId = l.Id;
+                        break;
+                    }
+                }
+                if (redVoznjeRepository.GetAll().Count() == 0)
+                {
+                    return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
+                }
+                foreach (var s in redVoznjeRepository.GetAll())
+                {
+                    if (s.LinijaId == lineId && s.TipDanaId == tipDana)//proverava da li je trazena linija, da li je odgovaradjuci dan
+                    {
+                        redVoznje += s.RasporedVoznje;
+                        break;
+                    }
+                    
+                }
+                //if (redVoznje.Trim(' ').Equals(""))
+                //{
+                //    return BadRequest("Za odabranu liniju i tip ne postoji red voznje");
+                //}
+
+                return Ok(redVoznje);
+            }
         }
-        [Authorize(Roles ="Admin")]
+        [AllowAnonymous]
+        //[Authorize(Roles ="Admin")]
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
         public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
         {
