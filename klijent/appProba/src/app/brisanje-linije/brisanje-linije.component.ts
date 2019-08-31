@@ -9,13 +9,12 @@ import {Router} from '@angular/router';
 import {AuthService} from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-linije',
-  templateUrl: './linije.component.html',
-  styleUrls: ['./linije.component.css'],
-  styles: ['agm-map {height: 500px; width: 620px;}'] //postavljamo sirinu i visinu mape
+  selector: 'app-brisanje-linije',
+  templateUrl: './brisanje-linije.component.html',
+  styleUrls: ['./brisanje-linije.component.css'],
+  styles: ['agm-map {height: 500px; width: 850px;}'] //postavljamo sirinu i visinu mape
 })
-export class LinijeComponent implements OnInit {
-
+export class BrisanjeLinijeComponent implements OnInit {
   markerInfo: MarkerInfo;
   public polyline: Polyline;
   public zoom: number;
@@ -26,8 +25,10 @@ export class LinijeComponent implements OnInit {
   pritisnuto : boolean;
   username : string;
 role:string;
+obrisi : boolean;
 
   ngOnInit() {
+    this.obrisi = false;
     this.role = localStorage.getItem('role');
     this.username = localStorage.getItem('username');
     this.pritisnuto = false;
@@ -36,38 +37,13 @@ role:string;
       "Jugodrvo" );
 
       this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
-
-      
-      /*this.servisLinija.getLines().subscribe(data =>{
-        console.log(data);
-
-        for (let index = 0; index < data.length; index++) {
-          this.sta = data[index];
-        this.polyline.addLocation(new GeoLocation(this.sta.XCoordinate, this.sta.YCoordinate));
-        
-        
-            
-            this.markerInfo =  new MarkerInfo(new GeoLocation(this.sta.XCoordinate, this.sta.YCoordinate), 
-            "assets/ftn.png",
-            this.sta.Address);
-       
-        }
-        
-      });*/
-      
   }
 
-  constructor(private ngZone: NgZone,private servisLinija : LinijaService,private router: Router,private userService:AuthService){
-  }
-
-  placeMarker($event){
-    this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng))
-    console.log($event.coords.lat, $event.coords.lng);
-    console.log(this.polyline)
-  }
-
+  constructor(private ngZone: NgZone,private servisLinija : LinijaService,private router: Router,private userService:AuthService){ }
+  
   getListuLinija(routeType : number)
   {
+    this.obrisi = false;
     this.servisLinija.getListuLinija(routeType).subscribe(data => {
       console.log(data);
       this.lines = data;
@@ -76,6 +52,7 @@ role:string;
 
   getLinija(lineName : string)
   {
+    this.obrisi = false;
     this.servisLinija.getLinija(lineName).subscribe(data => {
       console.log(data);
       this.lineStation = data;
@@ -86,6 +63,7 @@ role:string;
         this.polyline.addLocation(new GeoLocation(element.XCoordinate, element.YCoordinate));
       }
     });
+    this.obrisi = true;
   }
 
   onClickLogout(event: Event): void {
@@ -97,4 +75,13 @@ role:string;
     this.userService.logout();
     this.router.navigate(['login']);
   }
+
+  obrisiLiniju(lineName : string )
+  {
+    this.servisLinija.obrisiLiniju(lineName).subscribe(data => {
+      console.log(data);
+    });
+    this.router.navigate(['brisanjeLinije']);
+  }
+
 }

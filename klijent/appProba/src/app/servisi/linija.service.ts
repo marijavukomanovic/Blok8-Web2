@@ -16,9 +16,13 @@ export class LinijaService extends HttpService{
     return this.http.get<string[]>(this.url + "/api/Linije/GetLineName/" + routeType);
   }
 
-  getLines(lineName : string): Observable<LineStation>{
+  getLinija(lineName : string): Observable<LineStation>{
       return this.http.get<LineStation>(this.url + "/api/Linije/GetLines/" + lineName);
   }
+
+  obrisiLiniju(lineName : string): Observable<any>{
+    return this.http.get<any>(this.url + "/api/Linije/DeleteLine/" + lineName);
+}
 
 }
 

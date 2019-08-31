@@ -22,6 +22,8 @@ import { DodavanjeCenovnikaComponent } from './dodavanje-cenovnika/dodavanje-cen
 import { LokacijaComponent } from './lokacija/lokacija.component';
 import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.component';
 import { KarteComponent } from './karte/karte.component';
+import { DodavanjeLinijeComponent } from './dodavanje-linije/dodavanje-linije.component';
+import { BrisanjeLinijeComponent } from './brisanje-linije/brisanje-linije.component';
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -46,6 +48,8 @@ import { KarteComponent } from './karte/karte.component';
     LokacijaComponent,
     IzmenaCenovnikaComponent,
     KarteComponent,
+    DodavanjeLinijeComponent,
+    BrisanjeLinijeComponent,
  
     
     //RegistracijaServis,
