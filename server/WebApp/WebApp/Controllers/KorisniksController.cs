@@ -60,19 +60,20 @@ namespace WebApp.Controllers
                 var userStore = new UserStore<ApplicationUser>(db);
                 var userManager = new UserManager<ApplicationUser>(userStore); // u njega se rola dodaje
                 DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
+            int idKorisnika = korisnikRepository.GetAll().Count();
+            Korisnik noviKorisnik = new Korisnik()
+            { Id = ++idKorisnika,
+                KorisnickoIme = model.UserName,
+                Ime = model.Name,
+                Prezime = model.LastName,
+                Sifra = model.Password,
+                Email = model.Email,
+                Adresa = model.Address,
+                DatumRodjenja = datumRodjenja,
 
-                Korisnik noviKorisnik = new Korisnik()
-                {
-                    KorisnickoIme = model.UserName,
-                    Ime = model.Name,
-                    Prezime = model.LastName,
-                    Sifra = model.Password,
-                    Email = model.Email,
-                    Adresa = model.Address,
-                    DatumRodjenja = datumRodjenja,
-
-                    TipId = Convert.ToInt32(model.PassengerType),
-                    Document = model.Document,
+                TipId = Convert.ToInt32(model.PassengerType),
+                Document = model.Document,
+                StatusId = 1,
                 };
 
                 db.Korisnik.Add(noviKorisnik);
@@ -248,6 +249,7 @@ namespace WebApp.Controllers
                 user.Adresa = model.Address;
                 user.TipId = model.PassengerType;
                 user.DatumRodjenja = birthday;
+                user.Document = model.Document;
                 if (!model.Password.Equals(model.ConfirmPassword))//za slucaj da se sifre ne poklapaju
                 { return BadRequest("Sifre se moraju poklapati"); }
                 user.Sifra = model.Password;

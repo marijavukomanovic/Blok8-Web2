@@ -11,7 +11,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
   styleUrls: ['./registracija.component.css']
 })
 export class RegistracijaComponent implements OnInit {
-
+imageUri:string;
 user : RegistracijaModel = {
   Name : '',
   LastName : '',
@@ -37,16 +37,17 @@ registerForm = this.fb.group({
     ConfirmPassword : ['', Validators.required],
     Document : [''],
   });
-
+/*
   selectedFile: File = null;
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
-  }
+  }*/
 
   constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {
     //this.user.PassengerType = PassengerType.Regularan;
+  
   }
 
   onSubmit()
@@ -57,7 +58,7 @@ registerForm = this.fb.group({
     //if (this.selectedFile != null) {
       //formData.append('Document', this.selectedFile, this.selectedFile.name);
     //}
-
+    this.user.Document=this.imageUri;
     console.log(this.user);
     this.registracijaServis.register(this.registerForm.value).subscribe(data => {
       console.log('Registration successfully done.');
@@ -107,10 +108,13 @@ registerForm = this.fb.group({
     const file = event.target.files[0];
 
     const reader = new FileReader();
-    reader.onload = e => {this.user.Document = reader.result.toString().split(',')[1]; console.log(this.user.Document); };
+    reader.onload = e => {this.user.Document = reader.result.toString().split(',')[1]; 
+    console.log(this.user.Document);this.imageUri=this.user.Document };
+  
 
     reader.readAsDataURL(file);
-    //this.user.Document = file;
+    console.log(file);
+   // this.user.Document = file;
   }
 }
  /*public imagePath;

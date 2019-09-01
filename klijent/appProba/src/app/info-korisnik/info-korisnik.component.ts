@@ -12,6 +12,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
 })
 export class InfoKorisnikComponent implements OnInit {
   username : string;
+  usriImage:string;
 data:RegistracijaModel;
   user : RegistracijaModel = {
   Name : '',
@@ -62,6 +63,7 @@ infoForm = this.fb.group({
   onSubmit()
   {
     this.user = this.infoForm.value;
+    this.user.Document=this.usriImage;
       console.log(this.user);
       this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
         console.log('Uspesno izmenjen cenovnik!');
@@ -79,9 +81,20 @@ infoForm = this.fb.group({
     });*/
   }
 
-  onFileChange(event)
-  {
+  onFileChanged(event) {
+    if (event.target.files && event.target.files[0]) {
+  
+      const file = event.target.files[0];
+  
+      const reader = new FileReader();
+      reader.onload = e => {this.user.Document = reader.result.toString().split(',')[1]; 
+      console.log(this.user.Document);this.usriImage=this.user.Document };
     
+  
+      reader.readAsDataURL(file);
+      console.log(file);
+     // this.user.Document = file;
+    }
   }
 
   ownerLevels = [
