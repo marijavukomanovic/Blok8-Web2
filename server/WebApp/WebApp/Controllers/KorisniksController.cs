@@ -99,8 +99,8 @@ namespace WebApp.Controllers
 
         }
         // GET: api/Korisnik/GetInfo
-        // [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
-        [AllowAnonymous]
+        [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
+        //[AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("GetInfo/{username}")]
         [ResponseType(typeof(UserRegistrationBindingModel))]
@@ -146,8 +146,8 @@ namespace WebApp.Controllers
             return Ok(userRetval);
         }
         // POST api/Korisnik/ChangeInfo
-        //[Authorize(Roles = "AppUser")]
-        [AllowAnonymous]
+        [Authorize(Roles = "AppUser")]
+        //[AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("ChangeInfo/{model}")]
        // [ResponseType(typeof(UserRegistrationBindingModel))]

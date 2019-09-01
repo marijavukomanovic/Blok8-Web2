@@ -24,7 +24,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
       if (localStorage.getItem('username') === null) {
         this.router.navigate(['/login']);
       } else {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       }
       return false;
     }

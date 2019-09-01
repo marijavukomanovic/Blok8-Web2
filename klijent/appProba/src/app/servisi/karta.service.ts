@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpService } from 'src/app/servisi/http.servis';
 import { KartaModel } from '../model/karteModel';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class KartaService extends HttpService{
+export class KartaService{
+
+  private url = "http://localhost:52295";
+
+  constructor(private http: HttpClient) { }
 
   //IzlistajMojeKarte/{username}
   getKarte(user : string) : Observable<Array<KartaModel>>{

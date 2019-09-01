@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpService} from './http.servis';
 import {RegistracijaModel} from 'src/app/model/registracijaModel';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class InfoService extends HttpService{
+export class InfoService{
+
+  private url = "http://localhost:52295";
+
+  constructor(private http: HttpClient) { }
 
   getInfo(user : string) : Observable<RegistracijaModel>
   {

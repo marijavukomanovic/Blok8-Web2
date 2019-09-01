@@ -17,7 +17,7 @@
 </nav>
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
   <div class="container">
-    <form name="forma">
+    <form name="forma" [formGroup] ="redVoznje" >
       <h3 style="text-align:center">Red voznje</h3>
       
       <div class="row">
@@ -59,16 +59,18 @@
 
           <label >
               <div class="form-group col-md-12">
-                  <textarea *ngIf="username && prikazi && role=='Admin'" style="text-align:center" cols="40" rows="9" >{{time}}</textarea>
-              </div>
+                  <!--<textarea  style="text-align:center" cols="40" rows="9" >{{time}}</textarea>-->
+                  <textarea *ngIf="username && prikazi && role=='Admin'" type="text" id="inputLineId" style="height: 360px" formControlName="redvoznje" class="form-control" placeholder="Timetable" >{{redVoznje.redvoznje}}</textarea>
+
+                </div>
               <div class="form-group col-md-12">
-                <textarea *ngIf="username && prikazi && role=='AppUser'" style="text-align:center" value="{{time}}" cols="40" rows="9" disabled>{{time}}</textarea>
+                <textarea *ngIf="username && prikazi && role=='AppUser'" style="text-align:center"  type="text" id="inputLineId" style="height: 360px" formControlName="redvoznje" class="form-control" placeholder="Timetable" disabled>{{redVoznje.redvoznje}}</textarea>
               </div>
           </label>
           </div>
         </div>
         
-        <button *ngIf="username && prikazi && role=='Admin'" type="submit" (click)="ChangeSchedules(dayType.value, lineName.value,time)">Sacuvaj izmene</button>
+        <button *ngIf="username && prikazi && role=='Admin'" type="submit" (click)="ChangeSchedules(dayType.value, lineName.value)">Sacuvaj izmene</button>
     </form>
 </div>
 </div>

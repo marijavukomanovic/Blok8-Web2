@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from 'src/app/auth/auth.service';
+import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 import {Router} from '@angular/router';
 import {KartaService} from 'src/app/servisi/karta.service';
 import { KartaModel } from '../model/karteModel';
@@ -14,7 +14,7 @@ export class KarteComponent implements OnInit {
   role:string;
   lista : Array<KartaModel>;
 
-  constructor(private userService: AuthService,private router:Router,private kartaServis : KartaService) { }
+  constructor(private userService: RegistracijaServis,private router:Router,private kartaServis : KartaService) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');

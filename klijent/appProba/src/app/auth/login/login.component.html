@@ -28,15 +28,15 @@
       <form [formGroup]="loginForm" class="login-container" (ngSubmit)="login()">
     
         <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
-          <input type="email" placeholder="email" formControlName="username"required>
+          <input type="text" placeholder="text" formControlName="Username"required>
         </p>
     
         <div *ngIf="isSubmitted && formControls.email.errors" class="help-block">
-          <div *ngIf="formControls.email.errors.required">Email je obavezan!</div>
+          <div *ngIf="formControls.email.errors.required">Username je obavezan!</div>
         </div>
     
         <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
-          <input type="password" placeholder="password" formControlName="password" required>
+          <input type="password" placeholder="password" formControlName="Password" required>
         </p>
     
         <div *ngIf="isSubmitted && formControls.password.errors" class="help-block">

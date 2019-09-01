@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{AuthService} from 'src/app/auth/auth.service';
+import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 import{Router} from '@angular/router';
 
 import { from } from 'rxjs';
@@ -12,7 +12,7 @@ import { from } from 'rxjs';
 export class HomeComponent implements OnInit {
   username:string;
   role:string;
-  constructor(private userService:AuthService,private router:Router ) { }
+  constructor(private userService:RegistracijaServis,private router:Router ) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');

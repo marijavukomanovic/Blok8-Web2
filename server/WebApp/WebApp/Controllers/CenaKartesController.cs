@@ -112,8 +112,8 @@ namespace WebApp.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         [System.Web.Http.HttpGet]
         [ResponseType(typeof(CenovnikBindingModel))]
         [Route("IzmenaCenovnika")]
@@ -170,8 +170,8 @@ namespace WebApp.Controllers
             return Ok(retVal);
         }
 
-        [AllowAnonymous]
-        //[Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [System.Web.Http.HttpPost]
         [Route("IzmenaCenovnika2/{model}")]
         public async Task<IHttpActionResult> IzmenaCenovnika2(CenovnikBindingModel model)//cuvanje u bazi izmenu cenovnika
@@ -331,7 +331,8 @@ namespace WebApp.Controllers
             return Ok(retCena);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles ="AppUser")]
         [System.Web.Http.HttpGet]
         [Route("KupiKartu/{tipKarte}/{username}")]
         public async Task<IHttpActionResult> KupiKartu(int tipKarte, string username)
@@ -376,7 +377,8 @@ namespace WebApp.Controllers
             }
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles ="AppUser")]
         [System.Web.Http.HttpGet]
         [Route("IzlistajMojeKarte/{username}")]
         [ResponseType(typeof(List<UserTicketBindingModel>))]

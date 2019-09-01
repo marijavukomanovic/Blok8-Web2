@@ -85,7 +85,7 @@ namespace WebApp.Models
     }
 
     //custum
-     public class UserRegistrationBindingModel
+    public class UserRegistrationBindingModel
     {
         [Required, EmailAddress]
         [Display(Name = "Email")]
@@ -112,7 +112,7 @@ namespace WebApp.Models
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
         public string UserName { get; set; }
 
-       [Required]
+        [Required]
         public string BirthdayDate { get; set; }
 
         [Required]
@@ -127,7 +127,7 @@ namespace WebApp.Models
     public class UserChangeInfoBindingModel
     {
         //[Required, EmailAddress]
-      
+
         public string Email { get; set; }
 
 
@@ -216,14 +216,14 @@ namespace WebApp.Models
         [Display(Name = "cenaGodisnja")]
         public double cenaGodisnja { get; set; }
     }
-        public class StationBindingModel
-            {
-                public string Name { get; set; }         // za stanicu
-                public string Address { get; set; }
-                public double XCoordinate { get; set; }
-                public double YCoordinate { get; set; }
-                
-            }
+    public class StationBindingModel
+    {
+        public string Name { get; set; }         // za stanicu
+        public string Address { get; set; }
+        public double XCoordinate { get; set; }
+        public double YCoordinate { get; set; }
+
+    }
     public class LineStBindingModel
     {
         public string LineId { get; set; }              // za liniju
@@ -241,7 +241,7 @@ namespace WebApp.Models
         public string TicketType { get; set; }
         public double Cena { get; set; }
 
-        public UserTicketBindingModel(string t,string i,string x,string ti,double c)
+        public UserTicketBindingModel(string t, string i, string x, string ti, double c)
         {
             TicketId = t;
             IssuingTime = i;
@@ -249,10 +249,14 @@ namespace WebApp.Models
             TicketType = ti;
             Cena = c;
         }
+
         //public double Price { get; set; }
     }
+    public class redVoznje
+    {
+        public string red { get; set; }
+    }
 
-    
 
 
 

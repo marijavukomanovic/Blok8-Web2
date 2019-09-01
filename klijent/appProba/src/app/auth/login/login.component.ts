@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
+import { LoginModel } from 'src/app/model/login-model';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,17 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   message: string;
 
+  user : LoginModel = {
+    Username: '',
+    Password: '',
+  };
+
   loginForm = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
+    Username: ['', Validators.required],
+    Password: ['', Validators.required],
   });
 
-  constructor(public authService: AuthService, public router: Router, private fb: FormBuilder) {
+  constructor(public authService: RegistracijaServis, public router: Router, private fb: FormBuilder) {
    // this.setMessage();
   }
 
@@ -26,7 +32,9 @@ export class LoginComponent {
   }*/
 
   login() {
-    this.authService.login(this.loginForm.value );
+    this.user = this.loginForm.value;
+    console.log(this.user);
+    this.authService.logIn(this.user);
     
     this.router.navigate(['/']);
     

@@ -33,7 +33,8 @@ namespace WebApp.Controllers
             this.linijeStaniceRepository = st;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles ="Admin")]
         [Route("CreateLineStations/{model}")]
         public IHttpActionResult CreateLineStations(LineStBindingModel model)//dodavanje linije sa stanicama
         {
@@ -195,8 +196,8 @@ namespace WebApp.Controllers
         }
 
         // brise logicki liniju po njenom nazivu
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("DeleteLine/{lineId}")]
         public IHttpActionResult DeleteLine(string lineId)

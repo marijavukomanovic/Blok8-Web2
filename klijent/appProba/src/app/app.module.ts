@@ -5,13 +5,12 @@ import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
 import {FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
-import { JwtInterceptor } from 'src/app/auth/jwt-interceptor';
+import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {Routes} from '@angular/router';
-import { LogInComponent } from './log-in/log-in.component';
 import { from } from 'rxjs';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -41,7 +40,6 @@ import{UserGuard } from 'src/app/guards/user.guard';
   declarations: [
     AppComponent,
     HomeComponent,
-    LogInComponent,
     RegistracijaComponent,
     LoginComponent,
     LinijeComponent,
@@ -67,7 +65,7 @@ import{UserGuard } from 'src/app/guards/user.guard';
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
 
   ],
-  providers: [AdminGuard,UserGuard,{provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+  providers: [AdminGuard,UserGuard,{provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     DodavanjeCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,IzmenaCenovnikaComponent,KarteComponent],
   bootstrap: [AppComponent]
 })

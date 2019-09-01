@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { HttpService } from 'src/app/servisi/http.servis';
 import { LinijaModel, LineStation, Station } from 'src/app/model/linijaModel';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LinijaService extends HttpService{
+export class LinijaService{
 
   private TicketsUrl = 'http://localhost:52295/api/Linije';
+
+  private url = "http://localhost:52295";
+
+  constructor(private http: HttpClient) { }
 
 
   getListuLinija(routeType : number): Observable<string[]>{

@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApp.Models;
 using WebApp.Models.Entiteti;
 using WebApp.Persistence;
 using WebApp.Persistence.Repository;
@@ -31,6 +32,7 @@ namespace WebApp.Controllers
             this.linijaRepository = linijaRepository;
             this.tipLinijeRepository = tipLinijeRepository;
         }
+
         [ResponseType(typeof(List<string>))]
         [Route("GetLinije/{type}")]//vrati linije za odredjeni tip lnija
         public IHttpActionResult GetLines1(int type)
@@ -61,6 +63,7 @@ namespace WebApp.Controllers
             }
             return Ok(retVal);
         }
+
         [AllowAnonymous]//valjda moze i admin i user
         [ResponseType(typeof(string))]
         [Route("GetRedVoznje/{tipDana}/{linija}")]//u odnosu na to koja je linija i koji je dan vrati se red voznje
@@ -101,18 +104,21 @@ namespace WebApp.Controllers
                 //{
                 //    return BadRequest("Za odabranu liniju i tip ne postoji red voznje");
                 //}
+                //redVoznje noviRed = new redVoznje() { red = redVoznje, };
 
                 return Ok(redVoznje);
             }
         }
-        [AllowAnonymous]
-        //[Authorize(Roles ="Admin")]
+
+        //[AllowAnonymous]
+        [Authorize(Roles ="Admin")]
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
         public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
         {
             lock (lockObj)
 
             {
+                //string stringInfo = v.red;
                 RedVoznje redVoznje = new RedVoznje();
                 bool proveraDaliPostojiZaDatiDan = false;
                 bool proveraDaliPostojiZaDatuLiniju = false;

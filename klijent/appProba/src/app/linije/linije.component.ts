@@ -6,7 +6,7 @@ import {LinijaService} from 'src/app/servisi/linija.service';
 import { Station, LineStation } from '../model/linijaModel';
 import { Marker } from '@agm/core/services/google-maps-types';
 import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth/auth.service';
+import {RegistracijaServis} from 'src/app/servisi/registracija.servis';
 
 @Component({
   selector: 'app-linije',
@@ -57,7 +57,7 @@ role:string;
       
   }
 
-  constructor(private ngZone: NgZone,private servisLinija : LinijaService,private router: Router,private userService:AuthService){
+  constructor(private ngZone: NgZone,private servisLinija : LinijaService,private router: Router,private userService:RegistracijaServis){
   }
 
   placeMarker($event){

@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from './http.servis';
+//import {HttpService} from './http.servis';
 import {Observable} from 'rxjs';
 import {CenovnikModel} from 'src/app/model/cenovnikModel';
+import { HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService extends HttpService{
+export class AdminService {
+
+  private url = "http://localhost:52295";
+
+  constructor(private http: HttpClient) { }
 
   ShowDatum() : Observable<any>{
     return this.http.get<any>(this.url + "/api/CenaKarte/GetPoslednjiDatum");
