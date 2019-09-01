@@ -296,6 +296,10 @@
     <Compile Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.Designer.cs">
       <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908312327296_slika.cs" />
+    <Compile Include="Migrations\201908312327296_slika.Designer.cs">
+      <DependentUpon>201908312327296_slika.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -466,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.resx">
       <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908312327296_slika.resx">
+      <DependentUpon>201908312327296_slika.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

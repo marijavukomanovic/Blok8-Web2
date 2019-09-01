@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
@@ -144,8 +146,8 @@ namespace WebApp.Controllers
             return Ok(userRetval);
         }
         // POST api/Korisnik/ChangeInfo
-        [Authorize(Roles = "AppUser")]
-        //[AllowAnonymous]
+        //[Authorize(Roles = "AppUser")]
+        [AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("ChangeInfo/{model}")]
        // [ResponseType(typeof(UserRegistrationBindingModel))]
@@ -287,7 +289,85 @@ namespace WebApp.Controllers
                 return Ok();
             }
         }
+            [AllowAnonymous]
+        [HttpPost]
+        [Route("UplaodPicture/{username}")]
+        
+        public IHttpActionResult UploadImage(string username)
+        {
+            var httpRequest = HttpContext.Current.Request;
 
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
+                    {
+
+                        //ApplicationUser ret = new ApplicationUser();
+                        Korisnik ret = new Korisnik();
+
+                        var userStore = new UserStore<ApplicationUser>(db);
+                        var userManager = new UserManager<ApplicationUser>(userStore);
+
+                        List<ApplicationUser> list = userManager.Users.ToList();
+
+
+                        foreach (Korisnik a in korisnikRepository.GetAll())
+                        {
+                            if (a.KorisnickoIme.Equals(username))
+                            {
+                                ret = a;
+                                break;
+                            }
+                        }
+
+                        if (ret == null)
+                        {
+                            return BadRequest("User does not exists.");
+                        }
+
+                        if (ret.Document != null)
+                        {
+                            File.Delete(HttpContext.Current.Server.MapPath("~/UploadFile/" + ret.Document));
+                        }
+
+                        var postedFile = httpRequest.Files[file];
+                        string fileName = username + "_" + postedFile.FileName;
+                        var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + fileName);
+
+                        ret.Document = fileName;
+
+                        db.Entry(ret).State = EntityState.Modified;
+
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (DbUpdateConcurrencyException e)
+                        {
+                            return StatusCode(HttpStatusCode.BadRequest);
+                        }
+
+                        postedFile.SaveAs(filePath);
+                    }
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+
+        }
+
+
+        #region Njihovi kontroleri
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
@@ -416,5 +496,7 @@ namespace WebApp.Controllers
         {
             return db.Korisnik.Count(e => e.Id == id) > 0;
         }
+
+        #endregion
     }
 }

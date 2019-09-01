@@ -37,6 +37,12 @@ registerForm = this.fb.group({
     ConfirmPassword : ['', Validators.required],
     Document : [''],
   });
+
+  selectedFile: File = null;
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+
   constructor(private fb : FormBuilder, private registracijaServis : RegistracijaServis, private router:Router) { }
 
   ngOnInit() {

@@ -58,7 +58,13 @@
             <option [value]="0" disabled>Select Owner Level</option>
             <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id">{{ownerLevel.name}}</option>
          </select>
-             
+         <input
+         type="text"
+         class="form-control"
+         readonly="true"
+         formControlName="Document"
+         id="Document"
+       />
           </div>
         </div>
         <p>
