@@ -51,7 +51,7 @@ namespace WebApp.Controllers
                         tipPostoji = true;
 
                         s += i.RedBroj.ToString();
-                       
+
                         retVal.Add(s);
                         s = "";
                     }
@@ -81,7 +81,7 @@ namespace WebApp.Controllers
                 //}
                 foreach (var l in linijaRepository.GetAll())
                 {
-                    if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')))
+                    if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')) && l.Aktivna)
                     {
                         lineId = l.Id;
                         break;
@@ -93,113 +93,98 @@ namespace WebApp.Controllers
                 }
                 foreach (var s in redVoznjeRepository.GetAll())
                 {
-                    if (s.LinijaId == lineId && s.TipDanaId == tipDana)//proverava da li je trazena linija, da li je odgovaradjuci dan
+                    if (s.LinijaId == lineId && s.TipDanaId == tipDana && s.Aktivan==true)//proverava da li je trazena linija, da li je odgovaradjuci dan
                     {
                         redVoznje += s.RasporedVoznje;
                         break;
                     }
-                    
+
                 }
-                //if (redVoznje.Trim(' ').Equals(""))
-                //{
-                //    return BadRequest("Za odabranu liniju i tip ne postoji red voznje");
-                //}
-                //redVoznje noviRed = new redVoznje() { red = redVoznje, };
+                if (redVoznje.Trim(' ').Equals(" "))
+                    redVoznje = "Ne postoji red voznej za odabranu liniju i dan molim vas dodaj te novi";
+
+
 
                 return Ok(redVoznje);
             }
         }
 
         //[AllowAnonymous]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
         public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
         {
             lock (lockObj)
 
             {
-                //string stringInfo = v.red;
+                
                 RedVoznje redVoznje = new RedVoznje();
-                bool proveraDaliPostojiZaDatiDan = false;
-                bool proveraDaliPostojiZaDatuLiniju = false;
                 if (redVoznjeRepository.GetAll().Count() == 0)
                 {
-                    return BadRequest("Josuvek ne postoji ni jedan red voznje za bilo koji liniju niti tip dana");
+                    return Ok("Ne postoji red voznje dodaj te ga");
                 }
-                //if (linijaRepository.GetAll().Count() == 0) nama ne popunja va lepo linije bazu pa me je strah da ne udje ovde
-                //{
-                //    return BadRequest("Ne postoji nijedna linija");
-                //}
 
+                int idLinije = -1;
+                foreach (var l in linijaRepository.GetAll())
+                {
+                    if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')) && l.Aktivna)
+                    {
+                        idLinije = l.Id;
+                        break;
+                    }
+                }
                 foreach (var redV in redVoznjeRepository.GetAll())
                 {
-                    if (redV.Linija.RedBroj.Equals(linija))
+                    if (redV.LinijaId == idLinije && redV.TipDanaId == tipDana &&redV.Aktivan==true)
                     {
-                        if (redV.TipDanaId == tipDana)
-                        {
-                            redV.RasporedVoznje = stringInfo.ToString();
-                            proveraDaliPostojiZaDatiDan = true;
-                            db.Entry(redV).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        proveraDaliPostojiZaDatuLiniju = true;
-                        // redVoznje.Linija.RedBroj = linija;
-                        redVoznje.TipDanaId = tipDana;
-                        //proveri ti da li treba prolaziti kroz forech za se nadju id ovi za ova prethodna dva
-                        int linijaId = -1;
-                        foreach (var idlinije in linijaRepository.GetAll())
-                        {
-                            if (idlinije.RedBroj.Equals(linija))
-                            {
-                                linijaId = idlinije.Id;
-                                break;
-                            }
-
-                        }
-                        string ttipDanaId = tipDanaRepository.Get(tipDana).Tip;
-                        //foreach (var idTipaDana in tipDanaRepository.GetAll())
-                        //{
-                        //    if (idTipaDana.Id == tipDana)
-                        //    {
-                        //        ttipDanaId = idTipaDana.Tip.ToString();
-                        //        break;
-                        //    }
-
-                        //}
-                        // redVoznje.Linija.Id = linijaId;
-                        redVoznje.Linija = linijaRepository.Get(linijaId);
-                        redVoznje.TipDana.Id = tipDana;
-                        redVoznje.TipDana.Tip = ttipDanaId;
-                        db.Entry(redVoznje).State = EntityState.Modified;
+                        redV.RasporedVoznje = stringInfo.ToString();
+                        db.Entry(redV).State = EntityState.Modified;
                         db.SaveChanges();
+                        break;
                     }
-                    if (proveraDaliPostojiZaDatuLiniju == false && proveraDaliPostojiZaDatiDan == false)
+                    else
                     {
-                        redVoznje.Id = redVoznjeRepository.GetAll().Count() + 1;
-                        redVoznje.Linija.RedBroj = linija;
-                        int linijaId = -1;
-                        foreach (var idlinije in linijaRepository.GetAll())
-                        {
-                            if (idlinije.RedBroj.Equals(linija))
-                            {
-                                linijaId = idlinije.Id;
-                                break;
-                            }
-
-                        }
-                        int id = redVoznjeRepository.GetAll().Count();
-                        redVoznje.Id = ++id;
+                        int id = redVoznjeRepository.GetAll().Count() + 1;
+                        redVoznje.LinijaId = idLinije;
                         redVoznje.TipDanaId = tipDana;
-                        redVoznje.TipDana = tipDanaRepository.Get(tipDana);
-                        redVoznje.LinijaId = linijaId;
-                        redVoznje.Linija = linijaRepository.Get(linijaId);
-                        db.Entry(redVoznje).State = EntityState.Modified;
-                        db.SaveChanges();
+                        redVoznje.RasporedVoznje = stringInfo;
+                        redV.Aktivan = true;
 
+                        db.RedoviVoznje.Add(redVoznje);
+                        db.SaveChanges();
+                        break;
                     }
 
 
+                }
 
+                return Ok();
+            }
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("DeleteRedVoznje/{tipDana}/{linija}/{stringInfo}")]
+        public IHttpActionResult DeleteRedVoznje(int tipDana, string linija, string stringInfo)
+        {
+            lock (lockObj)
+            {
+
+                int idLinije = -1;
+                foreach (var l in linijaRepository.GetAll())
+                {
+                    if (l.RedBroj.Trim(' ').Equals(linija.Trim(' ')) && l.Aktivna)
+                    {
+                        idLinije = l.Id;
+                        break;
+                    }
+                }
+                foreach (var redV in redVoznjeRepository.GetAll())
+                {
+                    if (redV.LinijaId == idLinije && redV.TipDanaId == tipDana && redV.Aktivan == true)
+                    {
+                        redV.Aktivan = false;
+
+                        break;
+                    }
                 }
 
                 return Ok();
@@ -208,8 +193,8 @@ namespace WebApp.Controllers
 
 
 
-        // GET: api/RedVoznjes
-        public IQueryable<RedVoznje> GetRedoviVoznje()
+            // GET: api/RedVoznjes
+            public IQueryable<RedVoznje> GetRedoviVoznje()
         {
             return db.RedoviVoznje;
         }

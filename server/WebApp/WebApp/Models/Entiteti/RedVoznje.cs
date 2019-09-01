@@ -18,6 +18,6 @@ namespace WebApp.Models.Entiteti
         [ForeignKey("TipDana")]
         public int TipDanaId { get; set; }
         public TipDana TipDana { get; set; }
-
+        public bool Aktivan { get; set; }
     }
 }

@@ -299,6 +299,10 @@
     <Compile Include="Migrations\201909010143504_Nevalja.Designer.cs">
       <DependentUpon>201909010143504_Nevalja.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909011946292_dodatakAktivnihPolja11.cs" />
+    <Compile Include="Migrations\201909011946292_dodatakAktivnihPolja11.Designer.cs">
+      <DependentUpon>201909011946292_dodatakAktivnihPolja11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -312,6 +316,7 @@
     <Compile Include="Models\Entiteti\LinijeStanice.cs" />
     <Compile Include="Models\Entiteti\RedVoznje.cs" />
     <Compile Include="Models\Entiteti\Stanica.cs" />
+    <Compile Include="Models\Entiteti\Status.cs" />
     <Compile Include="Models\Entiteti\TipDana.cs" />
     <Compile Include="Models\Entiteti\TipKarte.cs" />
     <Compile Include="Models\Entiteti\TipLinije.cs" />
@@ -330,6 +335,7 @@
     <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
+    <Compile Include="Persistence\Repository\IStatusRepository.cs" />
     <Compile Include="Persistence\Repository\ITipDanaRepository.cs" />
     <Compile Include="Persistence\Repository\ITipKlaseRepository.cs" />
     <Compile Include="Persistence\Repository\ITipLinijeRepository.cs" />
@@ -341,6 +347,7 @@
     <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\Repository\StanicaRepository.cs" />
+    <Compile Include="Persistence\Repository\StatusRepository.cs" />
     <Compile Include="Persistence\Repository\TipDanaRepository.cs" />
     <Compile Include="Persistence\Repository\TipKarteRepository.cs" />
     <Compile Include="Persistence\Repository\TipLinijeRepository.cs" />
@@ -472,6 +479,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909010143504_Nevalja.resx">
       <DependentUpon>201909010143504_Nevalja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909011946292_dodatakAktivnihPolja11.resx">
+      <DependentUpon>201909011946292_dodatakAktivnihPolja11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

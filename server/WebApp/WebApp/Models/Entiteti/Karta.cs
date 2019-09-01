@@ -21,6 +21,7 @@ namespace WebApp.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         public DateTime VremeKupovine { get; set; }
+        public bool Verifikovana { get; set; }
 
 
 

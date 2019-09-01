@@ -358,9 +358,31 @@ namespace WebApp.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+            if (!context.Statuss.Any(u => u.Naziv == "Obrada"))
+            {
+                Status noviStatus = new Status();
+                noviStatus.Id = 1;
+                noviStatus.Naziv = "Obrada";
+                context.Statuss.Add(noviStatus);
+                context.SaveChanges();
+
+                Status noviStatus1 = new Status();
+                noviStatus1.Id = 2;
+                noviStatus1.Naziv = "Verifikovan";
+                context.Statuss.Add(noviStatus1);
+                context.SaveChanges();
+
+                Status noviStatus2 = new Status();
+                noviStatus2.Id = 3;
+                noviStatus2.Naziv = "Odbijen";
+                context.Statuss.Add(noviStatus2);
+                context.SaveChanges();
+            }
+
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
                 /*  Korisnik AdminK = new Korisnik() {Id=1 }; */
+               
                 var korisnik = new Korisnik();
                 korisnik.Id = 1;
                 korisnik.Ime = "Admin";
@@ -371,6 +393,8 @@ namespace WebApp.Migrations
                 korisnik.DatumRodjenja = new DateTime(1997,4,5);
                 korisnik.Email = "admin@yahoo.com";
                 korisnik.TipId = 1;
+                korisnik.StatusId = 2;
+                
                 context.Korisnik.Add(korisnik);
                 context.SaveChanges();
 
@@ -393,6 +417,7 @@ namespace WebApp.Migrations
                 korisnik.DatumRodjenja = new DateTime(1997, 9, 5);
                 korisnik.Email = "appu@yahoo.com";
                 korisnik.TipId = 3;
+                korisnik.StatusId = 1;
                 context.Korisnik.Add(korisnik);
                 context.SaveChanges();
 

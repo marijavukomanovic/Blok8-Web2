@@ -17,10 +17,13 @@ namespace WebApp.Models.Entiteti
         public DateTime DatumRodjenja { get; set; }
         public string Adresa { get; set; }
         [ForeignKey("Tip")]
-        public int TipId { get; set; }
-        //public TipPutnika TipPutnika { get; set; }
+        public int TipId { get; set; }        
         public TipPutnika Tip { get; set; }
         public byte[] Document { get; set; }
+        [ForeignKey("Status")]
+        public int StatusId { get; set; }
+        public Status Status { get; set; }
+       
 
         public Korisnik() { }
     }

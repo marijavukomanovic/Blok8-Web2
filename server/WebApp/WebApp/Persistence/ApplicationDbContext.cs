@@ -38,6 +38,7 @@ namespace WebApp.Persistence
         public DbSet<TipLinije> TipLinija { get; set; }
 
         public DbSet<LinijeStanice> LinijeStanices { get; set; }
+        public DbSet<Status> Statuss { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
