@@ -10,15 +10,14 @@ import { LoginModel } from '../model/login-model';
   providedIn: 'root',
 })
 export class AuthService {
-  isLoggedIn = false;
-
+ 
   loginUrl: string = 'http://localhost:52295/oauth/token';
 
   constructor(private http: HttpClient,private router:Router ) { }
 
-  login(user: LoginModel, callback: any) {
+  login(user: LoginModel) {
     const data = `username=${user.username}&password=${user.password}&grant_type=password`;
-    alert(data);
+   // alert(data);
     // tslint:disable-next-line: no-shadowed-variable
       const httpOptions = {
           headers: {
@@ -42,10 +41,9 @@ export class AuthService {
           localStorage.setItem('username',  decodedJwtData.unique_name);
         }
         
-        
-        callback();
-      }, error=>
-      alert('desila se greska'));
+           
+      });
+    
   }
 
   logout(): void {

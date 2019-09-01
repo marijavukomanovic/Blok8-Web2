@@ -17,27 +17,28 @@ export class LoginComponent {
   });
 
   constructor(public authService: AuthService, public router: Router, private fb: FormBuilder) {
-    this.setMessage();
+   // this.setMessage();
   }
 
-  setMessage() {
+ /* setMessage() {
     this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  }
+    //this.router.navigate(['/']);
+  }*/
 
   login() {
-    this.authService.login(this.loginForm.value,this.fja );
+    this.authService.login(this.loginForm.value );
+    
+    this.router.navigate(['/']);
+    
    
   
   
   }
 
-  fja(){
-    alert('uspesan login');
-    this.router.navigate(['/']);
-  }
+ 
 
   logout() {
     this.authService.logout();
-    this.setMessage();
+   // this.setMessage();
   }
 }

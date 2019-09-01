@@ -16,6 +16,9 @@ import {LokacijaComponent} from './lokacija/lokacija.component';
 import {IzmenaCenovnikaComponent} from './izmena-cenovnika/izmena-cenovnika.component';
 import {DodavanjeLinijeComponent} from './dodavanje-linije/dodavanje-linije.component';
 import {BrisanjeLinijeComponent} from './brisanje-linije/brisanje-linije.component';
+import{AdminGuard } from 'src/app/guards/admin.guard';
+import{UserGuard } from 'src/app/guards/user.guard';
+
 
 const routes: Routes = [
   {path: '',component: HomeComponent},
@@ -25,13 +28,13 @@ const routes: Routes = [
   {path: 'linije',component:LinijeComponent},
   {path: 'red-voznje',component: RedVoznjeComponent},
   {path: 'cenovnik',component:CenovnikComponent},
-  {path: 'info',component: InfoKorisnikComponent},
-  {path:'dodavanjeCenovnika',component:DodavanjeCenovnikaComponent},
+  {path: 'info',component: InfoKorisnikComponent,canActivate:[UserGuard]},
+  {path:'dodavanjeCenovnika',component:DodavanjeCenovnikaComponent,canActivate:[AdminGuard]},
   {path:'lokacija',component : LokacijaComponent},
-  {path:'izmenaCenovnika',component:IzmenaCenovnikaComponent},
-  {path:'karteKorisnik',component:KarteComponent},
-  {path: 'dodavanjeLinije',component:DodavanjeLinijeComponent},
-  {path:'brisanjeLinije',component:BrisanjeLinijeComponent},
+  {path:'izmenaCenovnika',component:IzmenaCenovnikaComponent,canActivate:[AdminGuard]},
+  {path:'karteKorisnik',component:KarteComponent,canActivate:[UserGuard]},
+  {path: 'dodavanjeLinije',component:DodavanjeLinijeComponent,canActivate:[AdminGuard]},
+  {path:'brisanjeLinije',component:BrisanjeLinijeComponent,canActivate:[AdminGuard]},
 ];
 
 @NgModule({

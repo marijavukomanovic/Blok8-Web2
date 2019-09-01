@@ -342,27 +342,7 @@ namespace WebApp.Controllers
                 int idKorisnika = -1;
                 int tipKorisnika = -1;
                 int idKarte = kartaRepository.GetAll().Count();
-                if (username.Equals("appu"))
-                {
-                    idKorisnika = 0;
-                    tipKarte = 3;
-                    Karta novaKartaA = new Karta();
-                    novaKartaA.Id = ++idKarte;
-                    novaKartaA.ApplicationUserId = idKorisnika.ToString();
-                    foreach (var c in CenaKarteRepository.GetAll())
-                    {
-                        if (c.TipKarteId == tipKarte)
-                        {
-                            novaKartaA.CenaKarteId = c.Id;
-                            break;
-                        }
-                    }
-                    novaKartaA.VremeKupovine = DateTime.Now;
-                    db.Karte.Add(novaKartaA);
-                    db.SaveChanges();
-                    return Ok();
-
-                }
+                
 
 
 

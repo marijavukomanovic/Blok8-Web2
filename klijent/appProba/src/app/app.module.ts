@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 import {FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
+import { JwtInterceptor } from 'src/app/auth/jwt-interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,9 @@ import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.co
 import { KarteComponent } from './karte/karte.component';
 import { DodavanjeLinijeComponent } from './dodavanje-linije/dodavanje-linije.component';
 import { BrisanjeLinijeComponent } from './brisanje-linije/brisanje-linije.component';
+import{AdminGuard } from 'src/app/guards/admin.guard';
+import{UserGuard } from 'src/app/guards/user.guard';
+
 //import {RegistracijaServis} from './servisi/registracija.servis';
 
 
@@ -63,7 +67,8 @@ import { BrisanjeLinijeComponent } from './brisanje-linije/brisanje-linije.compo
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
 
   ],
-  providers: [],
+  providers: [AdminGuard,UserGuard,{provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    DodavanjeCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,IzmenaCenovnikaComponent,KarteComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
