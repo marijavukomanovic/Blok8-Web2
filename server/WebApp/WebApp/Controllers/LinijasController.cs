@@ -71,7 +71,7 @@ namespace WebApp.Controllers
                     Id = ++idLinije,
                     RedBroj = model.LineId,
                     TipId = tipLinije,
-                    Tip = tipLinijeRepository.Get(tipLinije),
+                   // Tip = tipLinijeRepository.Get(tipLinije),
                     Opis = model.Description,
                     Boja = model.Color,
                 };

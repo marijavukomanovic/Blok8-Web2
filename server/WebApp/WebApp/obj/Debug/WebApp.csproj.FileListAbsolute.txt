@@ -1623,3 +1623,4 @@ C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebAp
 C:\Users\Maki\Desktop\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Nevalja.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.Nevalja.resources
 C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.Migrations.dodatakAktivnihPolja11.resources
+C:\Users\Marija\Documents\GitHub\Blok8-Web2\server\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
