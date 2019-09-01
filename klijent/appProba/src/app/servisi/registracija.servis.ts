@@ -11,10 +11,10 @@ export class RegistracijaServis extends HttpService{
 
   specificUrl = this.url + "/api/Korisnik/Registracija";
  
-    /*register(data: RegistracijaModel) : Observable<any>{
+    register(data: RegistracijaModel) : Observable<any>{
 
-      let data1 = new FormData()
-      data1.append('file', data.Document)
+      //let data1 = new FormData()
+      //data1.append('file', data.Document)
       //data1.append('data', )//multiform web api
 
       let httpOptions = {
@@ -23,9 +23,9 @@ export class RegistracijaServis extends HttpService{
         }
       }
       return this.http.post<any>(this.specificUrl, data, httpOptions);
-    }*/
+    }
 
-    register(user: RegistracijaModel) : Observable<any>{
+    /*register(user: RegistracijaModel) : Observable<any>{
 
       return Observable.create((observer) => {
           let data = user;
@@ -43,11 +43,11 @@ export class RegistracijaServis extends HttpService{
               observer.next("neuspesno");
               observer.complete();
           });
-      });
+      });*/
    
   }
 
-  uploadImage(data: any, id: string) : Observable<any> {
+  /*uploadImage(data: any, id: string) : Observable<any> {
       return Observable.create((observer) => {
           let httpOptions = {
               headers: new HttpHeaders().delete('Content-Type')
@@ -62,6 +62,4 @@ export class RegistracijaServis extends HttpService{
               observer.complete();
           });
       });
-  }
-
-}
+  }*/

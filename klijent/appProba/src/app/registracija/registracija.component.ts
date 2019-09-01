@@ -51,11 +51,40 @@ registerForm = this.fb.group({
 
   onSubmit()
   {
-    console.log(this.registerForm.value);
+    this.user = this.registerForm.value;
+    //let formData: FormData = new FormData();
+
+    //if (this.selectedFile != null) {
+      //formData.append('Document', this.selectedFile, this.selectedFile.name);
+    //}
+
+    console.log(this.user);
     this.registracijaServis.register(this.registerForm.value).subscribe(data => {
       console.log('Registration successfully done.');
       this.router.navigate(['/']);
     });
+    /*this.registracijaServis.register(this.user).subscribe(temp => {
+      if(temp == "uspesno")
+      {
+        if (this.selectedFile != null) {
+          this.registracijaServis.uploadImage(formData, this.user.UserName).subscribe(ret => {
+            alert("Unseccesfull!!!");
+            this.router.navigate(["/"]);
+          },
+            err => console.log(err));
+        }
+        else {
+          alert("Succesfully registered!");
+          this.router.navigate(["/login"]);
+        }
+      }
+      else if(temp == "neuspesno")
+      {
+        console.log(temp);
+        this.router.navigate(["/login"])
+      }
+    });*/
+
   }
 
 
@@ -71,4 +100,40 @@ registerForm = this.fb.group({
     this.selectedOwnerLevel = ownerLevelId;
     this.user.PassengerType = ownerLevelId;
  }
+
+ onFileChanged(event) {
+  if (event.target.files && event.target.files[0]) {
+
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = e => {this.user.Document = reader.result.toString().split(',')[1]; console.log(this.user.Document); };
+
+    reader.readAsDataURL(file);
+    //this.user.Document = file;
+  }
+}
+ /*public imagePath;
+ imgURL: any;
+ public msg: string;
+
+ preview(files) {
+   if (files.length === 0)
+     return;
+*/
+   //var mimeType = files[0].type;
+   //if (mimeType.match(/image\/*/) == null) {
+     /*this.msg = "Only images are supported.";
+     return;
+   }
+
+   var reader = new FileReader();
+   this.imagePath = files;
+   reader.readAsDataURL(files[0]); 
+   reader.onload = (_event) => { 
+     console.log(reader);
+     this.imgURL = reader.result; 
+   }
+}*/
+
 }

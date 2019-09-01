@@ -58,13 +58,29 @@
             <option [value]="0" disabled>Select Owner Level</option>
             <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id">{{ownerLevel.name}}</option>
          </select>
-         <input
+        <!-- <input
          type="text"
          class="form-control"
          readonly="true"
          formControlName="Document"
          id="Document"
-       />
+       />-->
+       <div *ngIf= "user.PassengerType != 3">
+        <img *ngIf=!user.Document  id="blah" [src]="'http://placehold.it/180'" alt="your image" style="width: 100px;height: 100px;" />
+        <img  *ngIf=user.Document id="blah" [src]="'data:image/png;base64,'+user.Document" alt="your image" style="width: 100px;height: 100px;" />
+
+      <div class="input-group right">
+
+            <div class="custom-file " >
+              <input type="file" class=" custom-file-input"(change)="onFileChanged($event)" #fileInput>
+              <label *ngIf=!user.Document class="custom-file-label">Choose image</label>
+              <label *ngIf=user.Document class="custom-file-label">Image chosen</label>
+            </div>
+          </div>
+          <br>
+
+          <br><br>
+      </div>
           </div>
         </div>
         <p>

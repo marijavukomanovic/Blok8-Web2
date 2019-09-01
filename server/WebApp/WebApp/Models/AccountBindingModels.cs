@@ -121,7 +121,7 @@ namespace WebApp.Models
         [Required]
         public int PassengerType { get; set; }            // djak, penzioner, regularan
 
-        public string Document { get; set; }
+        public byte[] Document { get; set; }
     }
 
     public class UserChangeInfoBindingModel

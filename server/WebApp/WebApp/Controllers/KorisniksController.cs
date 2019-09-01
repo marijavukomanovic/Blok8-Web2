@@ -289,7 +289,7 @@ namespace WebApp.Controllers
                 return Ok();
             }
         }
-            [AllowAnonymous]
+       /*     [AllowAnonymous]
         [HttpPost]
         [Route("UplaodPicture/{username}")]
         
@@ -364,7 +364,7 @@ namespace WebApp.Controllers
                 return InternalServerError(e);
             }
 
-        }
+        }*/
 
 
         #region Njihovi kontroleri

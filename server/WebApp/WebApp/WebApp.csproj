@@ -296,9 +296,9 @@
     <Compile Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.Designer.cs">
       <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908312327296_slika.cs" />
-    <Compile Include="Migrations\201908312327296_slika.Designer.cs">
-      <DependentUpon>201908312327296_slika.cs</DependentUpon>
+    <Compile Include="Migrations\201909010143504_Nevalja.cs" />
+    <Compile Include="Migrations\201909010143504_Nevalja.Designer.cs">
+      <DependentUpon>201909010143504_Nevalja.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -471,8 +471,8 @@
     <EmbeddedResource Include="Migrations\201908301645216_AKTIvAN_CENaKarte1.resx">
       <DependentUpon>201908301645216_AKTIvAN_CENaKarte1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908312327296_slika.resx">
-      <DependentUpon>201908312327296_slika.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909010143504_Nevalja.resx">
+      <DependentUpon>201909010143504_Nevalja.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

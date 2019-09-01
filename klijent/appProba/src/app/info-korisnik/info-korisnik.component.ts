@@ -38,6 +38,7 @@ infoForm = this.fb.group({
     ConfirmPassword : ['', Validators.required],
     Document : [],
   });
+ 
   constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router) { }
 
   ngOnInit() {
@@ -45,6 +46,9 @@ infoForm = this.fb.group({
     this.registracijaServis.getInfo(this.username).subscribe(data => {
       console.log(data);
       this.user = data;
+      
+      //this.slika = data.Document.split
+      //this.user.Document = this.slika[2];
       this.infoForm.patchValue(data);
     });
    
