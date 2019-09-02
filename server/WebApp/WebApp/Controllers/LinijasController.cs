@@ -71,13 +71,15 @@ namespace WebApp.Controllers
                     Id = ++idLinije,
                     RedBroj = model.LineId,
                     TipId = tipLinije,
-                   // Tip = tipLinijeRepository.Get(tipLinije),
+                    // Tip = tipLinijeRepository.Get(tipLinije),
                     Opis = model.Description,
                     Boja = model.Color,
+                    Aktivna = true,
                 };
                 db.Linije.Add(novaLinija);
                 db.SaveChanges();
-
+                if (model.Stations.Count() == 0)//Ako ne postiji ni jedna stanica a hoces samo da napraivis liniju
+                { return Ok(); }
 
                 for (int i = 0; i < brojStanica; i++)
                 {
@@ -90,13 +92,15 @@ namespace WebApp.Controllers
                         Naziv = model.Stations[i].Name,
                         Adresa = model.Stations[i].Address,
                         GeografskeKoordinataX = model.Stations[i].XCoordinate,
-                        GeografskeKoordinataY = model.Stations[i].YCoordinate
+                        GeografskeKoordinataY = model.Stations[i].YCoordinate,
+                        Aktivna = true,
 
                     };
                     novaLinijaStanice.Id = ++idLinijaStanica;
                     novaLinijaStanice.LinijeId = idLinije;
                     // novaLinijaStanice.Linije = novaLinija;
                     novaLinijaStanice.StaniceId = novaStanica.Id;
+
                     // novaLinijaStanice.Stanice = novaStanica;
 
                     db.Stanice.Add(novaStanica);
@@ -107,7 +111,7 @@ namespace WebApp.Controllers
                 }
                 return Ok();
             }
-            
+
         }
 
 
@@ -245,7 +249,7 @@ namespace WebApp.Controllers
                 {
                     if (linija.RedBroj.Equals(line.LineId) && linija.TipId == line.LineType)
                     {
-                        if (!linija.Aktivna)
+                        if (!linija.Aktivna)// ne razumem zasto na neaktivku ona je obrisana ne postoji
                         {
                             linija.Aktivna = true;
                             linija.Boja = line.Color;

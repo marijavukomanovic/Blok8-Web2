@@ -277,6 +277,29 @@ namespace WebApp.Models
     }
 
 
+    public class UserVerificationBindingModel
+    {
+        [Required, EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }        
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        public string UserName { get; set; }
+        [Required]
+        public string BirthdayDate { get; set; }
+        [Required]
+        public string Address { get; set; }
+        [Required]
+        public int PassengerType { get; set; }          // djak, penzioner, regularan
+        public byte[] Document { get; set; }
+        public string StatusVerifikacije { get; set; }
+    }
+
+
 
 
 
