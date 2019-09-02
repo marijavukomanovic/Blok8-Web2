@@ -1,20 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators ,FormGroup} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { InfoModel } from '../model/registracijaModel';
+import { FormBuilder } from '@angular/forms';
+import { InfoService } from '../servisi/info.service';
 import { Router } from '@angular/router';
-import {InfoService} from 'src/app/servisi/info.service';
-import {RegistracijaModel, InfoModel} from 'src/app/model/registracijaModel';
-import {PassengerTypeEnum} from 'src/app/model/enums';
 import { RegistracijaServis } from '../servisi/registracija.servis';
+import { KontrolerService } from '../servisi/kontroler.service';
 
 @Component({
-  selector: 'app-info-korisnik',
-  templateUrl: './info-korisnik.component.html',
-  styleUrls: ['./info-korisnik.component.css']
+  selector: 'app-kontroler-korisnici',
+  templateUrl: './kontroler-korisnici.component.html',
+  styleUrls: ['./kontroler-korisnici.component.css']
 })
-export class InfoKorisnikComponent implements OnInit {
+export class KontrolerKorisniciComponent implements OnInit {
+
   username : string;
   role:string;
   usriImage:string;
+  korisnici : Array<string>;
+  statuses : Array<string>;
+
 data:InfoModel;
   user : InfoModel = {
   Name : '',
@@ -31,8 +35,8 @@ data:InfoModel;
 infoForm = this.fb.group({
     Name : [''],
     LastName : [''],
-    UserName : ['', Validators.required],
-    Email : ['', Validators.required],
+    UserName : [''],
+    Email : [''],
     Address : [''],
     BirthdayDate : [''],
     PassengerType : [''],
@@ -40,46 +44,39 @@ infoForm = this.fb.group({
     Document : [],
   });
  
-  constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router,private userService : RegistracijaServis) { }
+  constructor(private fb : FormBuilder, private kontrolerServis : KontrolerService, private router:Router,private userService : RegistracijaServis) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
     this.role = localStorage.getItem('role');
-    this.registracijaServis.getInfo(this.username).subscribe(data => {
+
+
+    this.kontrolerServis.getUseri(this.username).subscribe(data => {
       console.log(data);
-      this.user = data;
+      this.korisnici = data;
       
-      this.infoForm.patchValue(data);
     });
-   
 
   }
   
+  getKorisnik(korisnic : string){
+  this.kontrolerServis.getInfo(korisnic).subscribe(data => {
+    console.log(data);
+    this.user = data;
+    
+    this.infoForm.patchValue(data);
+    this.statuses = ["Obrada","Verifikovan","Odbijen"];
+  });
+}
+
   onSubmit()
   {
     this.user = this.infoForm.value;
     this.user.Document=this.usriImage;
-      console.log(this.user);
-      this.registracijaServis.postChangedInfo(this.user).subscribe(data => {
-        console.log('Uspesno postavljene info!');
+      this.kontrolerServis.saljiStatus(this.user.UserName,this.user.StatusVerifikacije).subscribe(data => {
+        console.log('Uspesno izvrsena verifikacija!');
       });
     
-  }
-
-  onFileChanged(event) {
-    if (event.target.files && event.target.files[0]) {
-  
-      const file = event.target.files[0];
-  
-      const reader = new FileReader();
-      reader.onload = e => {this.user.Document = reader.result.toString().split(',')[1]; 
-      console.log(this.user.Document);this.usriImage=this.user.Document };
-    
-  
-      reader.readAsDataURL(file);
-      console.log(file);
-     // this.user.Document = file;
-    }
   }
 
   ownerLevels = [
@@ -105,4 +102,3 @@ infoForm = this.fb.group({
   this.router.navigate(['login']);
 }
 }
-

@@ -27,6 +27,9 @@ import { BrisanjeLinijeComponent } from './brisanje-linije/brisanje-linije.compo
 import { AdminGuard } from 'src/app/guards/admin.guard';
 import { UserGuard } from 'src/app/guards/user.guard';
 import { DodavanjeStaniceComponent } from './dodavanje-stanice/dodavanje-stanice.component';
+import { KontrolerKorisniciComponent } from './kontroler-korisnici/kontroler-korisnici.component';
+import { KontrolerKarteComponent } from './kontroler-karte/kontroler-karte.component';
+import { ControllerGuard } from './guards/controller.guard';
 
 
 @NgModule({
@@ -46,6 +49,8 @@ import { DodavanjeStaniceComponent } from './dodavanje-stanice/dodavanje-stanice
     DodavanjeLinijeComponent,
     BrisanjeLinijeComponent,
     DodavanjeStaniceComponent,
+    KontrolerKorisniciComponent,
+    KontrolerKarteComponent,
  
   ],
   imports: [
@@ -57,8 +62,8 @@ import { DodavanjeStaniceComponent } from './dodavanje-stanice/dodavanje-stanice
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
 
   ],
-  providers: [AdminGuard,UserGuard,{provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    DodavanjeCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,IzmenaCenovnikaComponent],
+  providers: [AdminGuard,UserGuard,ControllerGuard,{provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    DodavanjeCenovnikaComponent,IzmenaCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,KarteComponent,BrisanjeLinijeComponent,DodavanjeStaniceComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

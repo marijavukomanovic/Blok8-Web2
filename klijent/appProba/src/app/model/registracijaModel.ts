@@ -12,3 +12,15 @@ export class RegistracijaModel{
     ConfirmPassword : string;
     Document : string;
 }
+
+export class InfoModel{
+    Name : string;
+    LastName : string;
+    UserName : string;
+    Email : string;
+    Address : string;
+    BirthdayDate : string;
+    PassengerType : number;
+    Document : string;
+    StatusVerifikacije: string;
+}

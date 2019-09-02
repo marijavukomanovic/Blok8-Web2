@@ -18,7 +18,9 @@
           <li *ngIf="!username" class="nav-item"> <a class="nav-link text-primary" routerLink="/registracija">Registruj se</a> </li>
           <li *ngIf="username && role=='AppUser'" class="nav-item"> <a class="nav-link text-primary" routerLink="/karteKorisnik">Kupljene karte</a> </li>
           <li *ngIf="username && role=='AppUser'" class="nav-item"> <a class="nav-link text-primary" routerLink="/info">Informacije</a> </li>
-        <li class="nav-item">
+          <li  class="nav-item"> <a class="nav-link text-primary" routerLink="/kontrolerKorisnici">Korisnici</a> </li>
+          <li  class="nav-item"> <a class="nav-link text-primary" routerLink="/kontrolerKarte">Karte</a> </li>
+          <li class="nav-item">
           <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
       </li>
         

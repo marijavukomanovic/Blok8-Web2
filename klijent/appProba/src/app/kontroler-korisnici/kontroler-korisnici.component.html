@@ -8,51 +8,56 @@
             <i class="fa d-inline fa-lg fa-bus" routerLink='/'></i>
           <b> JGSP</b>
         </a>
-        <ul class="navbar-nav">
+        
+          <ul class="navbar-nav mx-auto">
+              <li class="nav-item"> <a class="nav-link" ></a> </li>
+              <li class="nav-item"> <a class="nav-link" ></a> </li>
+            </ul>
+
+            <ul class="navbar-nav">
             <li *ngIf="username && role=='AppUser'" class="nav-item"> <a class="nav-link text-primary" routerLink="/karteKorisnik">Kupljene karte</a> </li>
-            
-          <li class="nav-item">
-            <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
-        </li>
-        </ul>
+          </ul>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a *ngIf="username" class="nav-link" href="#" (click)="onClickLogout($event)"> <sub> logout {{username}}</sub></a>
+            </li>
+            </ul>
       </div>
     </div>
   </nav>
   <div class="py-5" style=" height: 593px;	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size:90%;	background-repeat: repeat;">
 
     <div class="login">
-      <h2 class="login-header">Informacije o korisniku</h2>
+      <h2 class="login-header">Verifikacija korisnika</h2>
       <form [formGroup]="infoForm" class="login-container" (ngSubmit)="onSubmit()">
-    
+          <select #korisnici (change)="getKorisnik(korisnici.value)">
+              <option *ngFor="let korisnik of korisnici" [value]="korisnik">{{korisnik}}</option>             
+        </select> 
+
         <div class="row">
             <div class="col-md-6">
               <p>
-              <input type="text" placeholder="Ime" formControlName="Name"required>
+              <input type="text" placeholder="Ime" formControlName="Name"disabled>
               </p>
     
               <p>
-              <input type="text" placeholder="Prezime" formControlName="LastName" required>
+              <input type="text" placeholder="Prezime" formControlName="LastName" disabled>
               </p>
               <p>
                   <input type="text" placeholder="Korisnicko ime" formControlName="UserName" disabled>
               </p>
               <p>
-                  <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"required>
+                  <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"disabled>
                   </p>
               
               <p>
-                  <input type="text" placeholder="Adresa" formControlName="Address"required>
+                  <input type="text" placeholder="Adresa" formControlName="Address"disabled>
               </p>
           </div>
         <div class="col-md-6">
             <p>
-                <input type="email" placeholder="email" formControlName="Email"disabled>
+                <input type="text" placeholder="Email" formControlName="Email"disabled>
             </p>
-    
-            <p>
-                <input type="text" placeholder="Status" formControlName="StatusVerifikacije"disabled>
-                </p>
-                
                     
                     
             <p class="label-txt"> Tip putnika: </p>
@@ -71,7 +76,7 @@
         <img *ngIf=!user.Document  id="blah" [src]="'http://placehold.it/180'" alt="your image" style="width: 100px;height: 100px;" />
         <img  *ngIf=user.Document id="blah" [src]="'data:image/png;base64,'+user.Document" alt="your image" style="width: 100px;height: 100px;" />
 
-      <div class="input-group right">
+      <!--<div class="input-group right">
 
             <div class="custom-file " >
               <input type="file" class=" custom-file-input"(change)="onFileChanged($event)" #fileInput>
@@ -79,16 +84,20 @@
               <label *ngIf=user.Document class="custom-file-label">Image chosen</label>
             </div>
           </div>
-          <br>
+          <br>-->
 
           <br><br>
       </div>
+      <select formControlName="StatusVerifikacije">
+          <option *ngFor="let status of statuses" [value]="status">{{status}}</option>
+        </select> 
           </div>
         </div>
         <p>
-          <input type="submit" value="Sacuvaj promene">
+          <input type="submit" value="Zavrsi verifikaciju">
         </p>
       </form>
     </div>
   </div>
+
 

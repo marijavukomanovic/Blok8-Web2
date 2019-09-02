@@ -17,6 +17,10 @@ import { BrisanjeLinijeComponent} from './brisanje-linije/brisanje-linije.compon
 import { AdminGuard } from 'src/app/guards/admin.guard';
 import { UserGuard } from 'src/app/guards/user.guard';
 import { DodavanjeStaniceComponent} from 'src/app/dodavanje-stanice/dodavanje-stanice.component';
+import {KontrolerKorisniciComponent} from 'src/app/kontroler-korisnici/kontroler-korisnici.component';
+import {KontrolerKarteComponent} from 'src/app/kontroler-karte/kontroler-karte.component';
+import { ControllerGuard } from './guards/controller.guard';
+
 
 
 const routes: Routes = [
@@ -34,6 +38,8 @@ const routes: Routes = [
   {path: 'dodavanjeLinije',component:DodavanjeLinijeComponent,canActivate:[AdminGuard]},
   {path:'brisanjeLinije',component:BrisanjeLinijeComponent,canActivate:[AdminGuard]},
   {path: 'dodavanjeStanice',component:DodavanjeStaniceComponent,canActivate:[AdminGuard]},
+  {path:'kontrolerKorisnici',component:KontrolerKorisniciComponent,canActivate:[ControllerGuard]},
+  {path:'kontrolerKarte',component:KontrolerKarteComponent,canActivate:[ControllerGuard]}
 ];
 
 @NgModule({
