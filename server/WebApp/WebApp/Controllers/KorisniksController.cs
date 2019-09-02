@@ -25,44 +25,52 @@ namespace WebApp.Controllers
     public class KorisniksController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        
+
         private IKorisnikRepository korisnikRepository;
         private ITipPutnikaRepository tipPutnikaRepository;
+        private IKartaRepository kartaRepository;
+        private ICenaKarteRepository cenaKarteRepository;
+        private ICenovnikRepository cenovnikRepository;
+
 
         private static readonly Object lockObj = new Object();
 
-        public KorisniksController(IKorisnikRepository korisnikRepository, ITipPutnikaRepository tipPutnikaRepository)
+        public KorisniksController(IKorisnikRepository korisnikRepository, ITipPutnikaRepository tipPutnikaRepository, IKartaRepository kartaRepository, ICenaKarteRepository cenaKarteRepository, ICenovnikRepository cenovnikRepository)
         {
+            this.cenovnikRepository = cenovnikRepository;
+            this.cenaKarteRepository = cenaKarteRepository;
+            this.kartaRepository = kartaRepository;
             this.korisnikRepository = korisnikRepository;
             this.tipPutnikaRepository = tipPutnikaRepository;
 
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "AppUser")]
         [Route("Registracija")]
         public async Task<IHttpActionResult> Registracija(UserRegistrationBindingModel model)
         {
-           
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
 
-                if (korisnikRepository.Find(x => x.Email == model.Email).Count() != 0)
-                {
-                    return BadRequest("Vec ste registrovani sa datim meilom");
-                }
-                if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName).Count() != 0)//nama je mil i korisnicko ime isto
-                {
-                    return BadRequest("Korisnicko ime se vec koristi");
-                }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-                var userStore = new UserStore<ApplicationUser>(db);
-                var userManager = new UserManager<ApplicationUser>(userStore); // u njega se rola dodaje
-                DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
+            if (korisnikRepository.Find(x => x.Email == model.Email).Count() != 0)
+            {
+                return BadRequest("Vec ste registrovani sa datim meilom");
+            }
+            if (korisnikRepository.Find(x => x.KorisnickoIme == model.UserName).Count() != 0)//nama je mil i korisnicko ime isto
+            {
+                return BadRequest("Korisnicko ime se vec koristi");
+            }
+
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore); // u njega se rola dodaje
+            DateTime datumRodjenja = DateTime.Parse(model.BirthdayDate);
             int idKorisnika = korisnikRepository.GetAll().Count();
             Korisnik noviKorisnik = new Korisnik()
-            { Id = ++idKorisnika,
+            {
+                Id = ++idKorisnika,
                 KorisnickoIme = model.UserName,
                 Ime = model.Name,
                 Prezime = model.LastName,
@@ -74,29 +82,29 @@ namespace WebApp.Controllers
                 TipId = Convert.ToInt32(model.PassengerType),
                 Document = model.Document,
                 StatusId = 1,
-                };
+            };
 
-                db.Korisnik.Add(noviKorisnik);
-                db.SaveChanges();
-                // noviKorisnik.Id = noviKorisnik.Id + 2;
+            db.Korisnik.Add(noviKorisnik);
+            db.SaveChanges();
+            // noviKorisnik.Id = noviKorisnik.Id + 2;
 
-                var appUser = new ApplicationUser() { Id = noviKorisnik.KorisnickoIme, UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
-                appUser.Id = noviKorisnik.Id.ToString();
-                IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
-                userManager.AddToRole(appUser.Id, "AppUser");
-                noviKorisnik.Sifra = appUser.PasswordHash;
-                db.Entry(noviKorisnik).State = EntityState.Modified;
-                db.SaveChanges();
+            var appUser = new ApplicationUser() { Id = noviKorisnik.KorisnickoIme, UserName = noviKorisnik.KorisnickoIme, Email = noviKorisnik.Email, PasswordHash = ApplicationUser.HashPassword(noviKorisnik.Sifra), KorisnikId = noviKorisnik.Id };
+            appUser.Id = noviKorisnik.Id.ToString();
+            IdentityResult result = await userManager.CreateAsync(appUser, noviKorisnik.Sifra);
+            userManager.AddToRole(appUser.Id, "AppUser");
+            noviKorisnik.Sifra = appUser.PasswordHash;
+            db.Entry(noviKorisnik).State = EntityState.Modified;
+            db.SaveChanges();
 
-                if (!result.Succeeded)
-                {
-                    return GetErrorResult(result);
-                }
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
 
-                //IList<string > ls = userManager.GetRoles(appUser.Id);
+            //IList<string > ls = userManager.GetRoles(appUser.Id);
 
-                return Ok();
-            
+            return Ok();
+
 
         }
         // GET: api/Korisnik/GetInfo
@@ -104,7 +112,7 @@ namespace WebApp.Controllers
         //[AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("GetInfo/{username}")]
-        [ResponseType(typeof(UserRegistrationBindingModel))]
+        [ResponseType(typeof(UserVerificationBindingModel))]
         public IHttpActionResult GetInfo(string username)//saljes mi localStorage.username
         {
             Korisnik user = (Korisnik)korisnikRepository.GetAll().Where(x => x.KorisnickoIme == username).ToList().First();
@@ -112,37 +120,32 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-
-            //string ageGroup="";
-            //switch (user.TipId)
-            //{
-            //    case 1:
-            //        ageGroup = "Student";
-            //        break;
-            //    case 2:
-            //        ageGroup = "Penzioner";
-            //        break;
-            //    case 3:
-            //        ageGroup = "Regularan";
-            //        break;
-            //    default:
-            //        ageGroup = "None";
-            //        break;
-            //}
-
-            UserRegistrationBindingModel userRetval = new UserRegistrationBindingModel()
+            UserVerificationBindingModel userRetval = new UserVerificationBindingModel()
             {
                 Email = user.Email,
-                Password = user.Sifra,
-                ConfirmPassword = user.Sifra,
                 Name = user.Ime,
                 LastName = user.Prezime,
                 UserName = user.KorisnickoIme,
                 BirthdayDate = user.DatumRodjenja.ToString(),
-                PassengerType = user.TipId,//ovo cemo verovatno morati da prepravimo
+                PassengerType = user.TipId,
                 Document = user.Document,
-                Address = user.Adresa
+                Address = user.Adresa,
             };
+            switch (user.StatusId)
+            {
+                case 1:
+                    userRetval.StatusVerifikacije = "Obrada";
+                    break;
+                case 2:
+                    userRetval.StatusVerifikacije = "Verifikovan";
+                    break;
+                case 3:
+                    userRetval.StatusVerifikacije = "Odbijen";
+                    break;
+            }
+
+
+
 
             return Ok(userRetval);
         }
@@ -151,8 +154,8 @@ namespace WebApp.Controllers
         //[AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("ChangeInfo/{model}")]
-       // [ResponseType(typeof(UserRegistrationBindingModel))]
-        public IHttpActionResult ChangeInfo(UserChangeInfoBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
+        // [ResponseType(typeof(UserRegistrationBindingModel))]
+        public IHttpActionResult ChangeInfo(UserVerificationBindingModel model)//saljes mi ceo model,mozes diseblovati  polja za meil i korisnicko imeposto ona ne smeju da se menjaju
         {
             lock (lockObj)
 
@@ -170,78 +173,64 @@ namespace WebApp.Controllers
                     return NotFound();
                 }
 
-                // parsiranje ageGroup-a
-                //int ageGroup = 1;
-                //switch (model.PassengerType)
-                //{
-                //    case "Regular":
-                //        ageGroup = 1;
-                //        break;
-                //    case "Student":
-                //        ageGroup = 2;
-                //        break;
-                //    case "Pensioner":
-                //        ageGroup = 3;
-                //        break;
-                //    default:
-                //        ageGroup = 1;
-                //        break;
-                //}
-
                 // parsiranje datuma
                 DateTime birthday = DateTime.Parse(model.BirthdayDate);
-                //posto nam slika jos ne radi ovo nam jos  ne treba !!!!!!!!!!!!!!!!
-                // ako se promenila vrednost ageGroup-e
-                //if (user.TipId != model.PassengerType)
-                //{
-                //    // i ta nova vrednost nije Regular => treba vratiti status na pending, i obrisati sliku (ako nije promenjena)
-                //    if (model.PassengerType != 1)
-                //    {
-                //       // user.VerificationStatus = VerificationStatus.Pending;
-                //    }
-                //    // i ta nova vrednost je Regular => treba postaviti status na succecssfull, i obrisati sliku (ako nije promenjena)
-                //    else
-                //    {
-                //        //user.VerificationStatus = VerificationStatus.Successful;
-                //    }
 
-                //    // brisanje slike, ako nije promenjena (i ako je uopste pre toga imao sliku)
-                //    // ako je promenio grupu, a nije promenio sliku, treba obrisati njegovu sliku (obrisati i ne postaviti opet istu sliku)
-                //    if (user.Document != null)
-                //    {
-                //        if (user.Document.SequenceEqual(model.Document))
-                //        {
-                //            user.Document = null;
-                //        }
-                //        else
-                //        {
-                //            // promenio je starosnu grupu, i postavio novi dokument => novi dokument se smesta u bazu i ceka se kontroler da potvrdi/odbije
-                //            user.Document = model.Document;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        user.Document = model.Document;
-                //       // user.VerificationStatus = VerificationStatus.Pending;
-                //    }
-                //}
-                //// ako nije promenio grupu, a promenio je sliku, treba sacuvati novu sliku i promeniti status na Pending
-                //else
-                //{
-                //    if (user.Document != null)
-                //    {
-                //        if (!user.Document.SequenceEqual(model.Document))
-                //        {
-                //            user.Document = model.Document;
-                //           // user.VerificationStatus = VerificationStatus.Pending;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        user.Document = model.Document;
-                //       // user.VerificationStatus = VerificationStatus.Pending;
-                //    }
-                //}kad slika bude radila ovo nam treba!!!!!!!!!!!!!!!!!!!!
+                // ako se promenila vrednost PassengerType-a
+                if (user.TipId != model.PassengerType)
+                {
+                    //i ta nova vrednost nije Regular => treba vratiti status na pending, i obrisati sliku(ako nije promenjena)
+                    if (model.PassengerType != 1)
+                    {
+                        user.StatusId = 1;
+                    }
+                    // i ta nova vrednost je Regular => treba postaviti status na succecssfull, i obrisati sliku (ako nije promenjena)
+                    else
+                    {
+                        user.StatusId = 2;
+                    }
+
+                    // brisanje slike, ako nije promenjena (i ako je uopste pre toga imao sliku)
+                    // ako je promenio grupu, a nije promenio sliku, treba obrisati njegovu sliku (obrisati i ne postaviti opet istu sliku)
+                    if (user.Document != null)
+                    {
+                        if (user.Document.SequenceEqual(model.Document))
+                        {
+                            user.Document = null;
+                            // user.StatusId = 3;
+                        }
+                        else
+                        {
+                            // promenio je starosnu grupu, i postavio novi dokument => novi dokument se smesta u bazu i ceka se kontroler da potvrdi/odbije
+                            user.Document = model.Document;
+                            user.StatusId = 1;
+
+                        }
+                    }
+                    else
+                    {
+                        user.Document = model.Document;
+                        user.StatusId = 1;
+                    }
+                }
+                // ako nije promenio grupu, a promenio je sliku, treba sacuvati novu sliku i promeniti status na Pending
+                else
+                {
+                    if (user.Document != null)
+                    {
+                        if (!user.Document.SequenceEqual(model.Document))
+                        {
+                            user.Document = model.Document;
+                            user.StatusId = 1;
+                        }
+                    }
+                    else
+                    {
+                        user.Document = model.Document;
+                        user.StatusId = 1;
+                    }
+                }
+
 
                 // izmena zeljenih propertija
                 user.Ime = model.Name;
@@ -250,123 +239,241 @@ namespace WebApp.Controllers
                 user.TipId = model.PassengerType;
                 user.DatumRodjenja = birthday;
                 user.Document = model.Document;
-                if (!model.Password.Equals(model.ConfirmPassword))//za slucaj da se sifre ne poklapaju
-                { return BadRequest("Sifre se moraju poklapati"); }
-                user.Sifra = model.Password;
 
 
                 // izmena u bazi
                 //    korisnikRepository.Update(user);                      // ne radi kad koristim Repository metodu...
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                //string ageGroupString;
-                //switch (user.TipId)
-                //{
-                //    case 1:
-                //        ageGroupString = "Regular";
-                //        break;
-                //    case 2:
-                //        ageGroupString = "Student";
-                //        break;
-                //    case 3:
-                //        ageGroupString = "Pensioner";
-                //        break;
-                //    default:
-                //        ageGroupString = "None";
-                //        break;
-                //}
-                //UserRegistrationBindingModel userRetVal = new UserRegistrationBindingModel()
-                //{
-                //    Email = user.Email,
-                //    Password = user.Sifra,
-                //    ConfirmPassword = user.Sifra,
-                //    Name = user.Ime,
-                //    LastName = user.Prezime,
-                //    UserName = user.KorisnickoIme,
-                //    BirthdayDate = user.DatumRodjenja.ToString(),
-                //    PassengerType = user.TipId,///vereovatnoi treba promeniti
-                //    Document = user.Document,
-                //    Address = user.Adresa
-                //};
+
                 return Ok();
             }
         }
-       /*     [AllowAnonymous]
-        [HttpPost]
-        [Route("UplaodPicture/{username}")]
-        
-        public IHttpActionResult UploadImage(string username)
+        [Authorize(Roles = "Controller")]
+        //[AllowAnonymous]
+        [System.Web.Http.HttpPost]
+        [Route("IzlistajKlijente/{username}")]
+        [ResponseType(typeof(UserVerificationBindingModel))]
+        public IHttpActionResult IzlistajKlijente(string username)//saljes mi user name ja ti saljem listu sa svim korinicima koja i maju sve podatke u sebi
         {
-            var httpRequest = HttpContext.Current.Request;
-
-            try
+            List<UserVerificationBindingModel> retVal = new List<UserVerificationBindingModel>();
+            foreach (var korisnik in korisnikRepository.GetAll())
             {
-                if (httpRequest.Files.Count > 0)
+                if (!(korisnik.KorisnickoIme.Equals(username) || korisnik.KorisnickoIme.Equals("admin")))
                 {
-                    foreach (string file in httpRequest.Files)
+                    UserVerificationBindingModel dodajKorisni = new UserVerificationBindingModel()
                     {
+                        Name = korisnik.Ime,
+                        LastName = korisnik.Prezime,
+                        UserName = korisnik.KorisnickoIme,
+                        Email = korisnik.Email,
+                        Address = korisnik.Adresa,
+                        BirthdayDate = korisnik.DatumRodjenja.ToLongDateString(),
+                        Document = korisnik.Document,
+                        PassengerType = korisnik.TipId,
 
-                        //ApplicationUser ret = new ApplicationUser();
-                        Korisnik ret = new Korisnik();
-
-                        var userStore = new UserStore<ApplicationUser>(db);
-                        var userManager = new UserManager<ApplicationUser>(userStore);
-
-                        List<ApplicationUser> list = userManager.Users.ToList();
-
-
-                        foreach (Korisnik a in korisnikRepository.GetAll())
-                        {
-                            if (a.KorisnickoIme.Equals(username))
-                            {
-                                ret = a;
-                                break;
-                            }
-                        }
-
-                        if (ret == null)
-                        {
-                            return BadRequest("User does not exists.");
-                        }
-
-                        if (ret.Document != null)
-                        {
-                            File.Delete(HttpContext.Current.Server.MapPath("~/UploadFile/" + ret.Document));
-                        }
-
-                        var postedFile = httpRequest.Files[file];
-                        string fileName = username + "_" + postedFile.FileName;
-                        var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + fileName);
-
-                        ret.Document = fileName;
-
-                        db.Entry(ret).State = EntityState.Modified;
-
-                        try
-                        {
-                            db.SaveChanges();
-                        }
-                        catch (DbUpdateConcurrencyException e)
-                        {
-                            return StatusCode(HttpStatusCode.BadRequest);
-                        }
-
-                        postedFile.SaveAs(filePath);
+                    };
+                    switch (korisnik.StatusId)
+                    {
+                        case 1:
+                            dodajKorisni.StatusVerifikacije = "Obrada";
+                            break;
+                        case 2:
+                            dodajKorisni.StatusVerifikacije = "Verifikovan";
+                            break;
+                        case 3:
+                            dodajKorisni.StatusVerifikacije = "Odbijen";
+                            break;
                     }
-
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
+                    retVal.Add(dodajKorisni);
                 }
             }
-            catch (Exception e)
+            return Ok(retVal);
+        }
+
+        [Authorize(Roles = "Controller")]
+        //[AllowAnonymous]
+        [System.Web.Http.HttpGet]
+        [Route("VerifikacijaKlijenta/{username}/{status}")]
+        public IHttpActionResult VerifikacijaKlijenta(string username, string status)//saljes mi user name ja ti saljem listu sa svim korinicima koja i maju sve podatke u sebi
+        {
+            foreach (var korisnik in korisnikRepository.GetAll())
             {
-                return InternalServerError(e);
+                if (korisnik.KorisnickoIme.Equals(username))
+                {
+                    switch (status)
+                    {
+                        case "Obrada":
+                            korisnik.StatusId = 1;
+                            break;
+                        case "Verifikovan":
+                            korisnik.StatusId = 2;
+                            break;
+                        case "Odbijen":
+                            korisnik.StatusId = 3;
+                            break;
+                    }
+                    db.Entry(korisnik).State = EntityState.Modified;
+                    db.SaveChanges();
+                    break;
+                }
+
             }
 
-        }*/
+            return Ok();
+        }
+
+
+        [Authorize(Roles = "Controller")]
+        //[AllowAnonymous]
+        [System.Web.Http.HttpGet]
+        [Route("IzlistajKarte")]
+        [ResponseType(typeof(List<string>))]
+        public IHttpActionResult IzlistajKarte()
+        {
+            List<string> retVal = new List<string>();
+            string idKarte = "";
+            foreach (var katre in kartaRepository.GetAll())
+            {
+                idKarte = katre.Id.ToString();
+                retVal.Add(idKarte);
+                idKarte = "";
+
+            }
+
+
+
+            return Ok(retVal);
+        }
+        [Authorize(Roles = "Controller")]
+
+        [System.Web.Http.HttpGet]
+        [Route("VerifikujKartu/{idKarta}")]//saljem ti string da li je verifikovaan ili ne
+
+        [ResponseType(typeof(string))]
+        public IHttpActionResult VerifikujKartu(string idKarta)
+        {
+            DateTime VremeKupovine = new DateTime();
+            DateTime VremeVavenja = new DateTime();
+            DateTime sad = DateTime.Now;
+            int idCenaKarte = -1;
+            int idcenovnik = -1;
+            string retVal = "";
+            VremeKupovine = kartaRepository.Get(Convert.ToInt32(idKarta)).VremeKupovine;
+            idCenaKarte = kartaRepository.Get(Convert.ToInt32(idKarta)).CenaKarteId;
+            idcenovnik = cenaKarteRepository.Get(idCenaKarte).CenovnikId;
+            VremeVavenja = cenovnikRepository.Get(idcenovnik).VazenjeDo;
+            if (DateTime.Compare(sad, VremeVavenja) < 0)
+            {
+                kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = false;
+                retVal = "Odbijena";
+                foreach (var k in kartaRepository.GetAll())
+                {
+                    if (k.Id == Convert.ToInt32(idKarta))
+                    {
+                        db.Entry(k).State = EntityState.Modified;
+                        db.SaveChanges();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = true;
+                retVal = "Verifikovana";
+                foreach (var k in kartaRepository.GetAll())
+                {
+                    if (k.Id == Convert.ToInt32(idKarta))
+                    {
+                        db.Entry(k).State = EntityState.Modified;
+                        db.SaveChanges();
+                        break;
+                    }
+                }
+            }
+
+           
+
+            return Ok(retVal);
+        }
+
+
+        /*     [AllowAnonymous]
+         [HttpPost]
+         [Route("UplaodPicture/{username}")]
+
+         public IHttpActionResult UploadImage(string username)
+         {
+             var httpRequest = HttpContext.Current.Request;
+
+             try
+             {
+                 if (httpRequest.Files.Count > 0)
+                 {
+                     foreach (string file in httpRequest.Files)
+                     {
+
+                         //ApplicationUser ret = new ApplicationUser();
+                         Korisnik ret = new Korisnik();
+
+                         var userStore = new UserStore<ApplicationUser>(db);
+                         var userManager = new UserManager<ApplicationUser>(userStore);
+
+                         List<ApplicationUser> list = userManager.Users.ToList();
+
+
+                         foreach (Korisnik a in korisnikRepository.GetAll())
+                         {
+                             if (a.KorisnickoIme.Equals(username))
+                             {
+                                 ret = a;
+                                 break;
+                             }
+                         }
+
+                         if (ret == null)
+                         {
+                             return BadRequest("User does not exists.");
+                         }
+
+                         if (ret.Document != null)
+                         {
+                             File.Delete(HttpContext.Current.Server.MapPath("~/UploadFile/" + ret.Document));
+                         }
+
+                         var postedFile = httpRequest.Files[file];
+                         string fileName = username + "_" + postedFile.FileName;
+                         var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + fileName);
+
+                         ret.Document = fileName;
+
+                         db.Entry(ret).State = EntityState.Modified;
+
+                         try
+                         {
+                             db.SaveChanges();
+                         }
+                         catch (DbUpdateConcurrencyException e)
+                         {
+                             return StatusCode(HttpStatusCode.BadRequest);
+                         }
+
+                         postedFile.SaveAs(filePath);
+                     }
+
+                     return Ok();
+                 }
+                 else
+                 {
+                     return BadRequest();
+                 }
+             }
+             catch (Exception e)
+             {
+                 return InternalServerError(e);
+             }
+
+         }*/
 
 
         #region Njihovi kontroleri

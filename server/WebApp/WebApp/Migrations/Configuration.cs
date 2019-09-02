@@ -426,6 +426,28 @@ namespace WebApp.Migrations
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
+
+            if (!context.Users.Any(u => u.UserName == "controll"))
+            {
+                var korisnik = new Korisnik();
+                korisnik.Id = 3;
+                korisnik.Ime = "Marko";
+                korisnik.Prezime = "Matic";
+                korisnik.KorisnickoIme = "controll";
+                korisnik.Sifra = ApplicationUser.HashPassword("Controll123!");
+                korisnik.Adresa = "gogoljeva 67";
+                korisnik.DatumRodjenja = new DateTime(1997, 9, 5);
+                korisnik.Email = "controll@yahoo.com";
+                korisnik.TipId = 3;
+                korisnik.StatusId = 2;
+                context.Korisnik.Add(korisnik);
+                context.SaveChanges();
+
+                var user = new ApplicationUser() { Id = "3", UserName = "controll", Email = "controll@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Controll123!") };
+                user.KorisnikId = korisnik.Id;
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "Controller");
+            }
         }
     }
 }
