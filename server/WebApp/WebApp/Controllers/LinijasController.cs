@@ -219,12 +219,135 @@ namespace WebApp.Controllers
                         break;
                     }
 
-                }
-                
-               
+                }                         
                 return Ok();
+            }
+        }
 
+        
+        [Authorize(Roles = "Admin")]    //MARINA RADILA,PROVERI
+        //[AllowAnonymous]
+        [System.Web.Http.HttpGet]
+        [Route("AddLine/{line}")]
+        public IHttpActionResult AddLine(LineBindingModel line)
+        {
+            lock (lockObj)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
+                int idLinija = -1;
+                idLinija = lineRepo.GetAll().Count();
+                idLinija += 1;
+                foreach (var linija in lineRepo.GetAll())
+                {
+                    if (linija.RedBroj.Equals(line.LineId) && linija.TipId == line.LineType)
+                    {
+                        if (!linija.Aktivna)
+                        {
+                            linija.Aktivna = true;
+                            linija.Boja = line.Color;
+                            linija.Opis = line.Description;
+                            db.Entry(linija).State = EntityState.Modified;
+                            db.SaveChanges();
+                            break;
+                        }
+                        else
+                        {
+                            return BadRequest("Vec postoji linija sa ovakvim nazivom i tipom!");
+                        }
+                        
+                    }
+                    else
+                    {
+                        Linija l = new Linija();
+                        l.Aktivna = true;
+                        l.Boja = line.Color;
+                        l.Opis = line.Description;
+                        l.TipId = line.LineType;
+                        l.Id = idLinija;
+                        l.RedBroj = line.LineId;
+                        db.Linije.Add(l);
+                        db.SaveChanges();
+                        break;
+                    }
+                   
+                    
+
+                }
+                return Ok();
+            }
+        }
+
+        //[Authorize(Roles = "Admin")]    //MARINA RADILA,PROVERI
+        [AllowAnonymous]
+        [System.Web.Http.HttpGet]
+        [ResponseType(typeof(string[]))]
+        [Route("SveLinije")]
+        public IHttpActionResult SveLinije()
+        {
+            lock (lockObj)
+            {
+                
+
+                List<string> linijeSve = new List<string>();
+                foreach (var linije in lineRepo.GetAll())
+                {
+                    if (linije.Aktivna == true)
+                    {
+                        linijeSve.Add(linije.RedBroj);
+                    }
+                }
+
+                return Ok(linijeSve);
+            }
+        }
+
+        
+        [Authorize(Roles = "Admin")]  
+        //[AllowAnonymous]
+        [System.Web.Http.HttpPost]
+        [Route("DodajStanicu/{stat}")]
+        public IHttpActionResult DodajStanicu(StanicaModel stat)
+        {
+            lock (lockObj)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                int stId = stationRepository.GetAll().Count();
+                stId += 1;
+                Stanica stanica = new Stanica();
+                stanica.Id = stId;
+                stanica.Aktivna = true;
+                stanica.Adresa = stat.Address;
+                stanica.Naziv = stat.Name;
+                stanica.GeografskeKoordinataX = stat.X;
+                stanica.GeografskeKoordinataY = stat.Y;
+                db.Stanice.Add(stanica);
+                db.SaveChanges();
+
+                int idLinija = -1;
+                foreach (Linija li in lineRepo.GetAll())
+                {
+                    if (li.RedBroj.Equals(stat.Line) && li.Aktivna==true)
+                    {
+                        idLinija = li.Id;
+                    }
+                }
+                LinijeStanice ls = new LinijeStanice();
+                int lsId = linijeStaniceRepository.GetAll().Count() + 1;
+                ls.Id = lsId;
+                ls.LinijeId = idLinija;
+                ls.StaniceId = stanica.Id;
+                db.LinijeStanices.Add(ls);
+                db.SaveChanges();
+
+                return Ok();
             }
         }
 

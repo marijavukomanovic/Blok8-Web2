@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {InfoService} from 'src/app/servisi/info.service';
 import {RegistracijaModel} from 'src/app/model/registracijaModel';
 import {PassengerTypeEnum} from 'src/app/model/enums';
+import { RegistracijaServis } from '../servisi/registracija.servis';
 
 @Component({
   selector: 'app-info-korisnik',
@@ -12,6 +13,7 @@ import {PassengerTypeEnum} from 'src/app/model/enums';
 })
 export class InfoKorisnikComponent implements OnInit {
   username : string;
+  role:string;
   usriImage:string;
 data:RegistracijaModel;
   user : RegistracijaModel = {
@@ -40,10 +42,11 @@ infoForm = this.fb.group({
     Document : [],
   });
  
-  constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router) { }
+  constructor(private fb : FormBuilder, private registracijaServis : InfoService, private router:Router,private userService : RegistracijaServis) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
+    this.role = localStorage.getItem('role');
     this.registracijaServis.getInfo(this.username).subscribe(data => {
       console.log(data);
       this.user = data;
@@ -109,5 +112,15 @@ infoForm = this.fb.group({
     this.selectedOwnerLevel = ownerLevelId;
     this.user.PassengerType = ownerLevelId;
  }
+
+ onClickLogout(event: Event): void {
+  event.preventDefault(); // Prevents browser following the link
+  // Here you can call your service method to logout the user
+  // and then redirect with Router object, for example
+  this.username = '';
+  this.role = '';
+  this.userService.logout();
+  this.router.navigate(['login']);
+}
 }
 

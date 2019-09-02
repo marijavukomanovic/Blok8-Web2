@@ -8,9 +8,29 @@ export class LinijaModel{
 }
 
 export class Line{
-    Lineid:string;
-    Description:number;
+    LineId:string;
+    LineType:number;
+    Description:string;
+    Color:string;
 }
+
+export class StanicaModel
+{
+    Name :string;
+    Address :string;
+    Line: string;
+    X:number;
+    Y:number;
+}
+
+export class StanicaModelirana
+{
+    Name :string;
+    Address :string;
+    Line: string;
+}
+
+
 export class Station{
 Name:string;
 Address:string;

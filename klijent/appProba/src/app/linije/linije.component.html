@@ -13,6 +13,8 @@
           <li class="nav-item"> <a class="nav-link" ></a> </li>
         </ul>
         <ul class="navbar-nav">
+            
+            <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/dodavanjeStanice">Dodaj stanicu</a> </li>
           <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/dodavanjeLinije">Dodaj liniju</a> </li>
           <li *ngIf="username && role=='Admin'" class="nav-item"> <a class="nav-link text-primary" routerLink="/brisanjeLinije">Obrisi linije</a> </li>
         <li class="nav-item">

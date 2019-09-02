@@ -14,4 +14,8 @@ export class Polyline {
     addLocation(location: GeoLocation){
         this.path.push(location)
     }
+
+    removeLocation(){
+        this.path.pop()
+    }
 }

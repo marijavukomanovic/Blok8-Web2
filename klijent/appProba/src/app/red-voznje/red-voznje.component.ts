@@ -6,6 +6,8 @@ import { strictEqual } from 'assert';
 import { NgModel, Validators } from '@angular/forms';
 import {FormBuilder,FormGroup} from '@angular/forms';
 import { redVoznje } from '../model/redvoznje';
+import { Router } from '@angular/router';
+import { RegistracijaServis } from '../servisi/registracija.servis';
 
 @Component({
   selector: 'app-red-voznje',
@@ -34,7 +36,7 @@ red: '',
 
   //redVoznje : redVoznje;
 
-  constructor(private redVoznjService : RedVoznjeService,private fb: FormBuilder) { }
+  constructor(private redVoznjService : RedVoznjeService,private fb: FormBuilder,private router:Router,private userService:RegistracijaServis) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
@@ -90,14 +92,14 @@ for (let index = 0; index < this.separators.length; index++) {
       });
     }
 
-   /* ChangeSchedules1(day : number, lines : string,times:string)
-    {
-      
-      this.redVoznjService.ChangeSchedules(day,lines,times).subscribe(data1=>{
-        console.log(data1);
-        //this.time=data;
-        this.prikazi=true;
-      });
-    }*/
+    onClickLogout(event: Event): void {
+      event.preventDefault(); // Prevents browser following the link
+      // Here you can call your service method to logout the user
+      // and then redirect with Router object, for example
+      this.username = '';
+      this.role = '';
+      this.userService.logout();
+      this.router.navigate(['login']);
+    }
     
   }

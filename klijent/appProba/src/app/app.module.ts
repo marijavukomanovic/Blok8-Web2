@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
 
-import {FormsModule} from'@angular/forms';
+import { FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
@@ -10,7 +10,7 @@ import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import {Routes} from '@angular/router';
+import { Routes} from '@angular/router';
 import { from } from 'rxjs';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -24,17 +24,10 @@ import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.co
 import { KarteComponent } from './karte/karte.component';
 import { DodavanjeLinijeComponent } from './dodavanje-linije/dodavanje-linije.component';
 import { BrisanjeLinijeComponent } from './brisanje-linije/brisanje-linije.component';
-import{AdminGuard } from 'src/app/guards/admin.guard';
-import{UserGuard } from 'src/app/guards/user.guard';
+import { AdminGuard } from 'src/app/guards/admin.guard';
+import { UserGuard } from 'src/app/guards/user.guard';
+import { DodavanjeStaniceComponent } from './dodavanje-stanice/dodavanje-stanice.component';
 
-//import {RegistracijaServis} from './servisi/registracija.servis';
-
-
-//const routes : Routes =[
-  //{path:'',component:HomeComponent},
-  //{path: '/log-in',component:LogInComponent},
- // {path: '/registracija',component:RegistracijaComponent},
-//];
 
 @NgModule({
   declarations: [
@@ -52,9 +45,8 @@ import{UserGuard } from 'src/app/guards/user.guard';
     KarteComponent,
     DodavanjeLinijeComponent,
     BrisanjeLinijeComponent,
+    DodavanjeStaniceComponent,
  
-    
-    //RegistracijaServis,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +58,7 @@ import{UserGuard } from 'src/app/guards/user.guard';
 
   ],
   providers: [AdminGuard,UserGuard,{provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    DodavanjeCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,IzmenaCenovnikaComponent,KarteComponent],
+    DodavanjeCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,IzmenaCenovnikaComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

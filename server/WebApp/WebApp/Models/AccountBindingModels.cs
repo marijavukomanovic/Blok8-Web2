@@ -233,6 +233,25 @@ namespace WebApp.Models
 
         public List<StationBindingModel> Stations { get; set; }
     }
+
+    public class LineBindingModel
+    {
+        public int LineType { get; set; }             // za liniju
+        public string LineId { get; set; } 
+        public string Description { get; set; }
+        public string Color { get; set; }
+
+    }
+
+    public class StanicaModel
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Line { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+}
+
     public class UserTicketBindingModel
     {
         public string TicketId { get; set; }
