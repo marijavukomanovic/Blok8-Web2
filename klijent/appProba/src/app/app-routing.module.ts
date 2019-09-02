@@ -39,7 +39,7 @@ const routes: Routes = [
   {path:'brisanjeLinije',component:BrisanjeLinijeComponent,canActivate:[AdminGuard]},
   {path: 'dodavanjeStanice',component:DodavanjeStaniceComponent,canActivate:[AdminGuard]},
   {path:'kontrolerKorisnici',component:KontrolerKorisniciComponent,canActivate:[ControllerGuard]},
-  {path:'kontrolerKarte',component:KontrolerKarteComponent,canActivate:[ControllerGuard]}
+  {path:'kontrolerKarte',component:KontrolerKarteComponent,canActivate:[ControllerGuard]},
 ];
 
 @NgModule({

@@ -27,77 +27,48 @@
   </nav>
   <div class="py-5" style=" height: 593px;	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size:90%;	background-repeat: repeat;">
 
-    <div class="login">
-      <h2 class="login-header">Verifikacija korisnika</h2>
-      <form [formGroup]="infoForm" class="login-container" (ngSubmit)="onSubmit()">
-          <select #korisnici (change)="getKorisnik(korisnici.value)">
-              <option *ngFor="let korisnik of korisnici" [value]="korisnik">{{korisnik}}</option>             
-        </select> 
-
-        <div class="row">
-            <div class="col-md-6">
-              <p>
-              <input type="text" placeholder="Ime" formControlName="Name"disabled>
-              </p>
-    
-              <p>
-              <input type="text" placeholder="Prezime" formControlName="LastName" disabled>
-              </p>
-              <p>
-                  <input type="text" placeholder="Korisnicko ime" formControlName="UserName" disabled>
-              </p>
-              <p>
-                  <input type="text" placeholder="Datum rodjenja" formControlName="BirthdayDate"disabled>
-                  </p>
-              
-              <p>
-                  <input type="text" placeholder="Adresa" formControlName="Address"disabled>
-              </p>
-          </div>
-        <div class="col-md-6">
-            <p>
-                <input type="text" placeholder="Email" formControlName="Email"disabled>
-            </p>
-                    
-                    
-            <p class="label-txt"> Tip putnika: </p>
-            <select *ngIf="ownerLevels" [value]="selectedOwnerLevel" (change)="onChangeOwnerLevel($event.target.value)" formControlName="PassengerType" id="ddOwnerLevel">
-            <option [value]="0" disabled>Select Owner Level</option>
-            <option *ngFor="let ownerLevel of ownerLevels" [value]="ownerLevel.id" disabled>{{ownerLevel.name}}</option>
-         </select>
-        <!-- <input
-         type="text"
-         class="form-control"
-         readonly="true"
-         formControlName="Document"
-         id="Document"
-       />-->
-       <div *ngIf= "user.PassengerType != 3">
-        <img *ngIf=!user.Document  id="blah" [src]="'http://placehold.it/180'" alt="your image" style="width: 100px;height: 100px;" />
-        <img  *ngIf=user.Document id="blah" [src]="'data:image/png;base64,'+user.Document" alt="your image" style="width: 100px;height: 100px;" />
-
-      <!--<div class="input-group right">
-
-            <div class="custom-file " >
-              <input type="file" class=" custom-file-input"(change)="onFileChanged($event)" #fileInput>
-              <label *ngIf=!user.Document class="custom-file-label">Choose image</label>
-              <label *ngIf=user.Document class="custom-file-label">Image chosen</label>
-            </div>
-          </div>
-          <br>-->
-
-          <br><br>
+  <div class="container">
+  <form >
+    <label>
+        <h2>Verifikacija korisnika</h2>
+      
+        <select  #korisnicici>
+          <option *ngFor="let korisnik of korisnici" [value]="korisnik">{{korisnik}}</option>             
+        </select>
+        
+        <br/><br/>
+      <div>
+        <button type="submit" (click)="getKorisnik(korisnicici.value)">Prikazi</button>
       </div>
-      <select formControlName="StatusVerifikacije">
-          <option *ngFor="let status of statuses" [value]="status">{{status}}</option>
-        </select> 
-          </div>
+  
+     
+      
+        -----------------------------------------------------------------------
+        <br/>
+          {{user.Name}}  |  {{user.LastName}} | {{user.Email}}  |  {{user.Address}}  |  {{user.BirthdayDate}}  | {{info}} |
+          <br/>
+
+          -----------------------------------------------------------------------
+        <br/>
+        <div *ngIf= "user.PassengerType != 3">
+            <img *ngIf=!user.Document  id="blah" [src]="'http://placehold.it/180'" alt="your image" style="width: 100px;height: 100px;" />
+            <img  *ngIf=user.Document id="blah" [src]="'data:image/png;base64,'+user.Document" alt="your image" style="width: 100px;height: 100px;" />
         </div>
-        <p>
-          <input type="submit" value="Zavrsi verifikaciju">
-        </p>
+        <div>
+            <select #StatusVerifikacije>
+                <option *ngFor="let status of statuses" [value]="status">{{status}}</option>
+              </select> 
+              <br/><br/>
+      <div>
+        <button type="submit" (click)="zavrsi(StatusVerifikacije.value)">Zavrsi verifikaciju</button>
+      </div>
+          </div>
+            
+        </label>
+        
       </form>
-    </div>
   </div>
+  </div>
+
 
 

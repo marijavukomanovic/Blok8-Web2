@@ -18,6 +18,7 @@ export class KontrolerKorisniciComponent implements OnInit {
   usriImage:string;
   korisnici : Array<string>;
   statuses : Array<string>;
+  info :string;
 
 data:InfoModel;
   user : InfoModel = {
@@ -32,7 +33,8 @@ data:InfoModel;
   Document : '',
 };
 
-infoForm = this.fb.group({
+/*infoForm = this.fb.group({
+  Korisnici : [''],
     Name : [''],
     LastName : [''],
     UserName : [''],
@@ -42,14 +44,14 @@ infoForm = this.fb.group({
     PassengerType : [''],
     StatusVerifikacije : [''],
     Document : [],
-  });
+  });*/
  
   constructor(private fb : FormBuilder, private kontrolerServis : KontrolerService, private router:Router,private userService : RegistracijaServis) { }
 
   ngOnInit() {
     this.username = localStorage.getItem('username');
     this.role = localStorage.getItem('role');
-
+    this.info = "";
 
     this.kontrolerServis.getUseri(this.username).subscribe(data => {
       console.log(data);
@@ -59,38 +61,39 @@ infoForm = this.fb.group({
 
   }
   
-  getKorisnik(korisnic : string){
-  this.kontrolerServis.getInfo(korisnic).subscribe(data => {
-    console.log(data);
+  getKorisnik(user:string){
+    console.log(user);
+  this.kontrolerServis.getInfo(user).subscribe(data => {
+    //console.log(data);
     this.user = data;
+    if(this.user.PassengerType == 1)
+    {
+        this.info = "Student";
+    }
+    else if(this.user.PassengerType == 2)
+    {
+        this.info = "Penzioner";
+    }
+    else if(this.user.PassengerType == 3)
+    {
+      this.info = "Regularan";
+    }
+    //console.log(this.info);
     
-    this.infoForm.patchValue(data);
+    //this.infoForm.patchValue(data);
     this.statuses = ["Obrada","Verifikovan","Odbijen"];
   });
 }
 
-  onSubmit()
-  {
-    this.user = this.infoForm.value;
-    this.user.Document=this.usriImage;
-      this.kontrolerServis.saljiStatus(this.user.UserName,this.user.StatusVerifikacije).subscribe(data => {
-        console.log('Uspesno izvrsena verifikacija!');
-      });
-    
-  }
 
-  ownerLevels = [
-    { id: 1, name: 'Student' },
-    { id: 2, name: 'Penzioner' },
-    { id: 3, name: 'Regularan' }
- ];
+  zavrsi(StatusVerifikacije : string)
+  {
+    this.kontrolerServis.saljiStatus(this.user.UserName,StatusVerifikacije).subscribe(data => {
+      console.log(data);
+      console.log('Uspesno izvrsena verifikacija!');
+    });
+  }
  
- selectedOwnerLevel: number = 0;
- 
- onChangeOwnerLevel(ownerLevelId: number) {
-    this.selectedOwnerLevel = ownerLevelId;
-    this.user.PassengerType = ownerLevelId;
- }
 
  onClickLogout(event: Event): void {
   event.preventDefault(); // Prevents browser following the link

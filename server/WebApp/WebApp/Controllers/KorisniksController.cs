@@ -45,7 +45,8 @@ namespace WebApp.Controllers
 
         }
 
-        [Authorize(Roles = "AppUser")]
+        //[Authorize(Roles = "AppUser")]
+        [AllowAnonymous]
         [Route("Registracija")]
         public async Task<IHttpActionResult> Registracija(UserRegistrationBindingModel model)
         {
@@ -108,8 +109,8 @@ namespace WebApp.Controllers
 
         }
         // GET: api/Korisnik/GetInfo
-        [Authorize(Roles = "AppUser")] //nek bude zakomentarisano da nam ne bi pravilo problem
-        //[AllowAnonymous]
+        //[Authorize(Roles = "AppUser,Controller")] //nek bude zakomentarisano da nam ne bi pravilo problem
+        [AllowAnonymous]
         [System.Web.Http.HttpGet]
         [Route("GetInfo/{username}")]
         [ResponseType(typeof(UserVerificationBindingModel))]
@@ -249,43 +250,21 @@ namespace WebApp.Controllers
                 return Ok();
             }
         }
+
         [Authorize(Roles = "Controller")]
         //[AllowAnonymous]
-        [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpGet]
         [Route("IzlistajKlijente/{username}")]
-        [ResponseType(typeof(UserVerificationBindingModel))]
+        [ResponseType(typeof(string))]
         public IHttpActionResult IzlistajKlijente(string username)//saljes mi user name ja ti saljem listu sa svim korinicima koja i maju sve podatke u sebi
         {
-            List<UserVerificationBindingModel> retVal = new List<UserVerificationBindingModel>();
+            List<string> retVal = new List<string>();
             foreach (var korisnik in korisnikRepository.GetAll())
             {
                 if (!(korisnik.KorisnickoIme.Equals(username) || korisnik.KorisnickoIme.Equals("admin")))
                 {
-                    UserVerificationBindingModel dodajKorisni = new UserVerificationBindingModel()
-                    {
-                        Name = korisnik.Ime,
-                        LastName = korisnik.Prezime,
-                        UserName = korisnik.KorisnickoIme,
-                        Email = korisnik.Email,
-                        Address = korisnik.Adresa,
-                        BirthdayDate = korisnik.DatumRodjenja.ToLongDateString(),
-                        Document = korisnik.Document,
-                        PassengerType = korisnik.TipId,
-
-                    };
-                    switch (korisnik.StatusId)
-                    {
-                        case 1:
-                            dodajKorisni.StatusVerifikacije = "Obrada";
-                            break;
-                        case 2:
-                            dodajKorisni.StatusVerifikacije = "Verifikovan";
-                            break;
-                        case 3:
-                            dodajKorisni.StatusVerifikacije = "Odbijen";
-                            break;
-                    }
-                    retVal.Add(dodajKorisni);
+                    retVal.Add(korisnik.KorisnickoIme);
+                    //retVal.Add(dodajKorisni);
                 }
             }
             return Ok(retVal);

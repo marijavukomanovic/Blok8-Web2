@@ -19,11 +19,11 @@ export class KontrolerService {
 
   getInfo(user : string) : Observable<InfoModel>
   {
-    return this.http.get<InfoModel>(this.url + "/api/Korisnik/IzlistajKlijente/" + user); 
+    return this.http.get<InfoModel>(this.url + "/api/Korisnik/GetInfo/" + user); 
   }
 
   saljiStatus(user:string,status:string): Observable<any>
   {
-    return this.http.get<any>(this.url + "/api/Korisnik/VerifikacijaKlijenta/" + user+'/'+status); 
+    return this.http.get<any>(this.url + "/api/Korisnik/VerifikacijaKlijenta/" + user +'/'+status);
   }
 }
