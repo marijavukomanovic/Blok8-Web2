@@ -34,7 +34,7 @@ namespace WebApp.Controllers
         }
 
         //[AllowAnonymous]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("CreateLineStations/{model}")]
         public IHttpActionResult CreateLineStations(LineStBindingModel model)//dodavanje linije sa stanicama
         {
@@ -124,7 +124,7 @@ namespace WebApp.Controllers
             List<string> linijeSveZaTiip = new List<string>();
             foreach (var linije in lineRepo.GetAll())
             {
-                if (linije.TipId == type && linije.Aktivna==true)
+                if (linije.TipId == type && linije.Aktivna == true)
                 {
                     if (lineRepo.GetAll().Count() == 0)
                     { return BadRequest("Ne postoje linije za trazeni tip"); }
@@ -147,10 +147,10 @@ namespace WebApp.Controllers
             LineStBindingModel lineStBindingModel = new LineStBindingModel();
             List<StationBindingModel> stations = new List<StationBindingModel>();
             int linijeId = -1;
-            
+
             foreach (var linija in lineRepo.GetAll())
             {
-                if (linija.RedBroj.Equals(linijaIme) && linija.Aktivna==true)
+                if (linija.RedBroj.Equals(linijaIme) && linija.Aktivna == true)
                 {
                     linijeId = linija.Id;
                     break;
@@ -168,7 +168,8 @@ namespace WebApp.Controllers
                 {
                     StationBindingModel s = new StationBindingModel();
                     foreach (var s1 in stationRepository.GetAll())
-                    {if (st1.StaniceId == s1.Id)
+                    {
+                        if (st1.StaniceId == s1.Id)
                         {
                             s.Name = s1.Naziv;
                             s.Address = s1.Adresa;
@@ -190,9 +191,19 @@ namespace WebApp.Controllers
             lineStBindingModel.LineId = linijaIme;
             lineStBindingModel.Description = lineRepo.Get(linijeId).Opis;//"Linija " + linijaIme + "ima" + lineStBindingModel.Stations.Count() + "stanica";
             lineStBindingModel.Color = lineRepo.Get(linijeId).Boja;
-            lineStBindingModel.LineType = tipLinijeRepository.Get(linijeId).Naziv;
-            lineStBindingModel.Stations=stations;
-            retval=lineStBindingModel;
+
+            int tipL = lineRepo.Get(linijeId).TipId;
+            switch (tipL)
+            {
+                case 1:
+                    lineStBindingModel.LineType = "Gradski";
+                    break;
+                case 2:
+                    lineStBindingModel.LineType = "Prigradski";
+                    break;
+            }
+            lineStBindingModel.Stations = stations;
+            retval = lineStBindingModel;
 
             return Ok(retval);
 
@@ -208,14 +219,15 @@ namespace WebApp.Controllers
         {
             lock (lockObj)
             {
-               
+
                 if (lineRepo.GetAll().Count() == 0)
                 {
                     return BadRequest("Line doesn't exist...");
                 }
 
                 foreach (var linija in lineRepo.GetAll())
-                {if (linija.RedBroj.Equals(lineId))
+                {
+                    if (linija.RedBroj.Equals(lineId))
                     {
                         linija.Aktivna = false;
                         db.Entry(linija).State = EntityState.Modified;
@@ -223,12 +235,12 @@ namespace WebApp.Controllers
                         break;
                     }
 
-                }                         
+                }
                 return Ok();
             }
         }
 
-        
+
         [Authorize(Roles = "Admin")]    //MARINA RADILA,PROVERI
         //[AllowAnonymous]
         [System.Web.Http.HttpGet]
@@ -241,6 +253,8 @@ namespace WebApp.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+                if (line == null)
+                { return BadRequest("Neuspesno napravljena linja"); }
 
                 int idLinija = -1;
                 idLinija = lineRepo.GetAll().Count();
@@ -262,7 +276,7 @@ namespace WebApp.Controllers
                         {
                             return BadRequest("Vec postoji linija sa ovakvim nazivom i tipom!");
                         }
-                        
+
                     }
                     else
                     {
@@ -277,8 +291,8 @@ namespace WebApp.Controllers
                         db.SaveChanges();
                         break;
                     }
-                   
-                    
+
+
 
                 }
                 return Ok();
@@ -294,7 +308,7 @@ namespace WebApp.Controllers
         {
             lock (lockObj)
             {
-                
+
 
                 List<string> linijeSve = new List<string>();
                 foreach (var linije in lineRepo.GetAll())
@@ -309,8 +323,8 @@ namespace WebApp.Controllers
             }
         }
 
-        
-        [Authorize(Roles = "Admin")]  
+
+        [Authorize(Roles = "Admin")]
         //[AllowAnonymous]
         [System.Web.Http.HttpPost]
         [Route("DodajStanicu/{stat}")]
@@ -338,7 +352,7 @@ namespace WebApp.Controllers
                 int idLinija = -1;
                 foreach (Linija li in lineRepo.GetAll())
                 {
-                    if (li.RedBroj.Equals(stat.Line) && li.Aktivna==true)
+                    if (li.RedBroj.Equals(stat.Line) && li.Aktivna == true)
                     {
                         idLinija = li.Id;
                     }

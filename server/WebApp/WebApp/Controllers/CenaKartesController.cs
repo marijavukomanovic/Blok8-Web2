@@ -54,10 +54,12 @@ namespace WebApp.Controllers
             int id = cenovnikRepository.GetAll().Count();
             if (id == 0)//ako je baza prazna ne postoji nijedan cenovnik, onda nam je pocetni datum trenutni
             { date = DateTime.Now; }
-            date = cenovnikRepository.Get(id).VazenjeDo;//za sledeci cenovnik pocetni datum je krajnji datum prethodnog vazeceg
-            date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + 1);
-            retVal = date.ToLongDateString() + " " + date.ToLongTimeString();
-
+            else
+            {
+                date = cenovnikRepository.Get(id).VazenjeDo;//za sledeci cenovnik pocetni datum je krajnji datum prethodnog vazeceg
+                date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + 1);
+            }    retVal = date.ToLongDateString() + " " + date.ToLongTimeString();
+            
             return Ok(retVal);
         }
 
@@ -332,7 +334,7 @@ namespace WebApp.Controllers
         }
 
         //[AllowAnonymous]
-        [Authorize(Roles ="AppUser")]
+        [Authorize(Roles = "AppUser")]
         [System.Web.Http.HttpGet]
         [Route("KupiKartu/{tipKarte}/{username}")]
         public async Task<IHttpActionResult> KupiKartu(int tipKarte, string username)
@@ -343,19 +345,22 @@ namespace WebApp.Controllers
                 int idKorisnika = -1;
                 int tipKorisnika = -1;
                 int idKarte = kartaRepository.GetAll().Count();
-                
+
 
 
 
                 foreach (var korisnici in korisnikRepository.GetAll())
                 {
-                    if (korisnici.KorisnickoIme.Equals(username))
+                    if (korisnici.KorisnickoIme.Equals(username) && korisnici.StatusId == 2)
                     {
                         idKorisnika = korisnici.Id;
                         tipKorisnika = korisnici.TipId;
                         break;
                     }
                 }
+                if (idKorisnika == -1)
+                { return BadRequest("Ne postoji ili nije verifikovan"); }
+
                 Karta novaKarta = new Karta();
                 novaKarta.Id = ++idKarte;
                 novaKarta.ApplicationUserId = idKorisnika.ToString();
@@ -378,7 +383,7 @@ namespace WebApp.Controllers
         }
 
         //[AllowAnonymous]
-        [Authorize(Roles ="AppUser")]
+        [Authorize(Roles = "AppUser")]
         [System.Web.Http.HttpGet]
         [Route("IzlistajMojeKarte/{username}")]
         [ResponseType(typeof(List<UserTicketBindingModel>))]
@@ -387,8 +392,8 @@ namespace WebApp.Controllers
             List<UserTicketBindingModel> userTicketBindingModels = new List<UserTicketBindingModel>();
             //if (username.Equals("appu"))
             //{ Korisnik newK =new Korisnik() {Id=0, }}
-            DateTime vremeIzdavanje = new DateTime();
-            DateTime vremeTrajanja = new DateTime();
+            DateTime vremeIzdavanje = new DateTime() { };
+            DateTime vremeTrajanja = DateTime.Now;
             int idKarte = -1;
             int idCeneKarte = -1;
             string tipKarte = "";
