@@ -92,6 +92,16 @@ for (let index = 0; index < this.separators.length; index++) {
       });
     }
 
+    DeleteSchedules(dayType : number, lineName: string)
+    {
+      this.redVoznjService.IzbrisiRedVoznje(dayType,lineName).subscribe(data1=>{
+        console.log(data1);
+        //this.time=data1;
+        
+      });
+
+    }
+
     onClickLogout(event: Event): void {
       event.preventDefault(); // Prevents browser following the link
       // Here you can call your service method to logout the user

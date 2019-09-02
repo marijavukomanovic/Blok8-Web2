@@ -300,12 +300,21 @@ namespace WebApp.Migrations
             {
                 RedVoznje redVoznje = new RedVoznje();
                 redVoznje.Id = 1;
+                redVoznje.Aktivan = true;
                 redVoznje.LinijaId = 1;
                 redVoznje.RasporedVoznje = "04:30-04:50\n05:20-05:40\n06:00-06:20-06:40\n07:00-07:20-07:40\n08:00-08:20-08:40\n09:00-09:20-09:40\n10:15-10:20\n11:00-11:30\n12:00";
                 redVoznje.TipDanaId = 1;
                 context.RedoviVoznje.Add(redVoznje);
                 context.SaveChanges();
 
+                RedVoznje redVoznje1 = new RedVoznje();
+                redVoznje1.Id = 2;
+                redVoznje1.Aktivan = true;
+                redVoznje1.LinijaId = 2;
+                redVoznje1.RasporedVoznje = "04:30-04:50\n05:20-05:40\n06:00-06:20-06:40\n07:00-07:20-07:40\n08:00-08:20-08:40\n09:00-09:20-09:40\n10:15-10:20\n11:00-11:30\n12:00";
+                redVoznje1.TipDanaId = 2;
+                context.RedoviVoznje.Add(redVoznje1);
+                context.SaveChanges();
             }
 
             if (!context.Cenovnici.Any(t => t.Id == 1))

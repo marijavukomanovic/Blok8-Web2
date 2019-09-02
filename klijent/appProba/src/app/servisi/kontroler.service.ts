@@ -26,4 +26,14 @@ export class KontrolerService {
   {
     return this.http.get<any>(this.url + "/api/Korisnik/VerifikacijaKlijenta/" + user +'/'+status);
   }
+
+  getId() : Observable<Array<string>>
+  {
+    return this.http.get<Array<string>>(this.url + "/api/Korisnik/IzlistajKarte"); 
+  }
+
+  getVer(id:string) : Observable<any>
+  {
+    return this.http.get<any>(this.url + "/api/Korisnik/VerifikujKartu/" + id); 
+  }
 }

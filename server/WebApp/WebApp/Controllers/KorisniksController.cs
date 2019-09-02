@@ -332,46 +332,49 @@ namespace WebApp.Controllers
         [ResponseType(typeof(string))]
         public IHttpActionResult VerifikujKartu(string idKarta)
         {
-            DateTime VremeKupovine = new DateTime();
-            DateTime VremeVavenja = new DateTime();
-            DateTime sad = DateTime.Now;
-            int idCenaKarte = -1;
-            int idcenovnik = -1;
             string retVal = "";
-            VremeKupovine = kartaRepository.Get(Convert.ToInt32(idKarta)).VremeKupovine;
-            idCenaKarte = kartaRepository.Get(Convert.ToInt32(idKarta)).CenaKarteId;
-            idcenovnik = cenaKarteRepository.Get(idCenaKarte).CenovnikId;
-            VremeVavenja = cenovnikRepository.Get(idcenovnik).VazenjeDo;
-            if (DateTime.Compare(sad, VremeVavenja) < 0)
+            if (!idKarta.Equals("lose"))
             {
-                kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = false;
-                retVal = "Odbijena";
-                foreach (var k in kartaRepository.GetAll())
+                DateTime VremeKupovine = new DateTime();
+                DateTime VremeVavenja = new DateTime();
+                DateTime sad = DateTime.Now;
+                int idCenaKarte = -1;
+                int idcenovnik = -1;
+                
+                VremeKupovine = kartaRepository.Get(Convert.ToInt32(idKarta)).VremeKupovine;
+                idCenaKarte = kartaRepository.Get(Convert.ToInt32(idKarta)).CenaKarteId;
+                idcenovnik = cenaKarteRepository.Get(idCenaKarte).CenovnikId;
+                VremeVavenja = cenovnikRepository.Get(idcenovnik).VazenjeDo;
+                if (DateTime.Compare(sad, VremeVavenja) < 0)
                 {
-                    if (k.Id == Convert.ToInt32(idKarta))
+                    kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = false;
+                    retVal = "Odbijena";
+                    foreach (var k in kartaRepository.GetAll())
                     {
-                        db.Entry(k).State = EntityState.Modified;
-                        db.SaveChanges();
-                        break;
+                        if (k.Id == Convert.ToInt32(idKarta))
+                        {
+                            db.Entry(k).State = EntityState.Modified;
+                            db.SaveChanges();
+                            break;
+                        }
                     }
                 }
-            }
-            else
-            {
-                kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = true;
-                retVal = "Verifikovana";
-                foreach (var k in kartaRepository.GetAll())
+                else
                 {
-                    if (k.Id == Convert.ToInt32(idKarta))
+                    kartaRepository.Get(Convert.ToInt32(idKarta)).Verifikovana = true;
+                    retVal = "Verifikovana";
+                    foreach (var k in kartaRepository.GetAll())
                     {
-                        db.Entry(k).State = EntityState.Modified;
-                        db.SaveChanges();
-                        break;
+                        if (k.Id == Convert.ToInt32(idKarta))
+                        {
+                            db.Entry(k).State = EntityState.Modified;
+                            db.SaveChanges();
+                            break;
+                        }
                     }
                 }
-            }
 
-           
+            }
 
             return Ok(retVal);
         }

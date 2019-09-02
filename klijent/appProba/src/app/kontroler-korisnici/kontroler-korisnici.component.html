@@ -42,10 +42,10 @@
       </div>
   
      
-      
+      <div *ngIf='pritisnuto'>
         -----------------------------------------------------------------------
         <br/>
-          {{user.Name}}  |  {{user.LastName}} | {{user.Email}}  |  {{user.Address}}  |  {{user.BirthdayDate}}  | {{info}} |
+          {{user.Name}} | {{user.LastName}} | {{user.Email}} | {{user.Address}} | {{user.BirthdayDate}} | {{info}} |
           <br/>
 
           -----------------------------------------------------------------------
@@ -63,7 +63,7 @@
         <button type="submit" (click)="zavrsi(StatusVerifikacije.value)">Zavrsi verifikaciju</button>
       </div>
           </div>
-            
+        </div>
         </label>
         
       </form>

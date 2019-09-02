@@ -28,5 +28,10 @@ export class RedVoznjeService{
     return this.http.get<any>(this.url + "/api/RedVoznje/GetRedVoznjeNovi/"  + day + "/" + line + "/" + time);
   }
   
+  IzbrisiRedVoznje(day : number, line : string) : Observable<any>
+  {
+    return this.http.get<any>(this.url + "/api/RedVoznje/ObrisiRedVoznje/"  + day + "/" + line);
+  }
+
 }
 

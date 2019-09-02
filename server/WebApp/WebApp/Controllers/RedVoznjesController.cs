@@ -112,7 +112,7 @@ namespace WebApp.Controllers
         //[AllowAnonymous]
         [Authorize(Roles = "Admin")]
         [Route("GetRedVoznjeNovi/{tipDana}/{linija}/{stringInfo}")]
-        public IHttpActionResult GetNewSchedule(int tipDana, string linija, string stringInfo)
+        public IHttpActionResult GetNewSchedule(int tipDana, string linija,string stringInfo)
         {
             lock (lockObj)
 
@@ -161,9 +161,11 @@ namespace WebApp.Controllers
                 return Ok();
             }
         }
-        [Authorize(Roles = "Admin")]
-        [Route("DeleteRedVoznje/{tipDana}/{linija}/{stringInfo}")]
-        public IHttpActionResult DeleteRedVoznje(int tipDana, string linija, string stringInfo)
+
+        //[AllowAnonymous]
+        [Authorize(Roles ="Admin")]
+        [Route("ObrisiRedVoznje/{tipDana}/{linija}")]
+        public IHttpActionResult ObrisiRedVoznje(int tipDana, string linija)
         {
             lock (lockObj)
             {
@@ -193,8 +195,8 @@ namespace WebApp.Controllers
 
 
 
-            // GET: api/RedVoznjes
-            public IQueryable<RedVoznje> GetRedoviVoznje()
+        // GET: api/RedVoznjes
+        public IQueryable<RedVoznje> GetRedoviVoznje()
         {
             return db.RedoviVoznje;
         }

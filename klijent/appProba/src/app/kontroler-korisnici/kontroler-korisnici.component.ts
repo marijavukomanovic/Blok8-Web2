@@ -19,6 +19,7 @@ export class KontrolerKorisniciComponent implements OnInit {
   korisnici : Array<string>;
   statuses : Array<string>;
   info :string;
+  pritisnuto : boolean;
 
 data:InfoModel;
   user : InfoModel = {
@@ -49,6 +50,7 @@ data:InfoModel;
   constructor(private fb : FormBuilder, private kontrolerServis : KontrolerService, private router:Router,private userService : RegistracijaServis) { }
 
   ngOnInit() {
+    this.pritisnuto = false;
     this.username = localStorage.getItem('username');
     this.role = localStorage.getItem('role');
     this.info = "";
@@ -63,6 +65,7 @@ data:InfoModel;
   
   getKorisnik(user:string){
     console.log(user);
+    this.pritisnuto = true;
   this.kontrolerServis.getInfo(user).subscribe(data => {
     //console.log(data);
     this.user = data;
@@ -91,6 +94,7 @@ data:InfoModel;
     this.kontrolerServis.saljiStatus(this.user.UserName,StatusVerifikacije).subscribe(data => {
       console.log(data);
       console.log('Uspesno izvrsena verifikacija!');
+      this.pritisnuto = false;
     });
   }
  
