@@ -3,9 +3,9 @@ body {
 }
 form {
   width: 60%;
-  margin: 50px auto;
+  margin: 1px auto;
   background: #efefef;
-  padding: 30px 100px 60px 100px;
+  padding: 10px 10px 10px 10px;
   text-align: center;
   -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
   box-shadow: 2px 2px 3px rgba(0,0,0,0.1);

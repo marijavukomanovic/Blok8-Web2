@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApp.Hubs;
 using WebApp.Models;
 using WebApp.Models.Entiteti;
 using WebApp.Persistence;
@@ -23,14 +24,16 @@ namespace WebApp.Controllers
         private IStanicaRepository stationRepository;
         private ILinijeStaniceRepository linijeStaniceRepository;
         private ITipLinijeRepository tipLinijeRepository;
+        private LokacijaHub hub;
 
         private static readonly Object lockObj = new Object();
-        public LinijasController(ILinijaRepository il, IStanicaRepository stanicaRepository, ILinijeStaniceRepository st, ITipLinijeRepository tip)
+        public LinijasController(ILinijaRepository il, IStanicaRepository stanicaRepository, ILinijeStaniceRepository st, ITipLinijeRepository tip, LokacijaHub hubb)
         {
             tipLinijeRepository = tip;
             this.lineRepo = il;
             this.stationRepository = stanicaRepository;
             this.linijeStaniceRepository = st;
+            hub = hubb;
         }
 
         //[AllowAnonymous]
@@ -208,6 +211,119 @@ namespace WebApp.Controllers
             return Ok(retval);
 
 
+        }
+
+
+        [AllowAnonymous]      
+        [Route("GetStaniceZaLiniju/{linijaIme}")]
+        [ResponseType(typeof(LineStBindingModel))]
+        public IHttpActionResult GetStaniceZaLiniju(string linijaIme)
+        {
+            LineStBindingModel retval = new LineStBindingModel();
+            LineStBindingModel lineStBindingModel = new LineStBindingModel();
+            List<StationBindingModel> stations = new List<StationBindingModel>();
+            int linijeId = -1;
+
+            foreach (var linija in lineRepo.GetAll())
+            {
+                if (linija.RedBroj.Equals(linijaIme))
+                {
+                    linijeId = linija.Id;
+                    break;
+                }
+
+            }
+            if (linijeId == -1)//nikad ane bi trebalo da se dogodi jer mi nudimo linije
+            {
+                return BadRequest("Trazena linija ne postoji");
+            }
+
+            foreach (var st1 in linijeStaniceRepository.GetAll())
+            {
+                if (st1.LinijeId == linijeId)
+                {
+                    StationBindingModel s = new StationBindingModel();
+                    foreach (var s1 in stationRepository.GetAll())
+                    {
+                        if (st1.StaniceId == s1.Id)
+                        {
+                            s.Name = s1.Naziv;
+                            s.Address = s1.Adresa;
+                            s.XCoordinate = s1.GeografskeKoordinataX;
+                            s.YCoordinate = s1.GeografskeKoordinataY;
+                            stations.Add(s);
+                            break;
+                        }
+
+                    }
+                }
+            }
+            lineStBindingModel.LineId = linijaIme;
+            lineStBindingModel.Description = lineRepo.Get(linijeId).Opis;
+            lineStBindingModel.Color = lineRepo.Get(linijeId).Boja;
+
+            int tipL = lineRepo.Get(linijeId).TipId;
+            switch (tipL)
+            {
+                case 1:
+                    lineStBindingModel.LineType = "Gradski";
+                    break;
+                case 2:
+                    lineStBindingModel.LineType = "Prigradski";
+                    break;
+            }
+            lineStBindingModel.Stations = stations;
+            retval = lineStBindingModel;
+
+            return Ok(retval);
+        }
+
+
+        //PosaljiStaniceNaHub
+        [AllowAnonymous]
+        [System.Web.Http.HttpPost]
+        [Route("PosaljiStaniceNaHub/{list}")]
+        public IHttpActionResult PosaljiStaniceNaHub(string list)
+        {
+            List<Stanica> stanice = new List<Stanica>();
+            int linijeId = -1;
+
+            foreach (var linija in lineRepo.GetAll())
+            {
+                if (linija.RedBroj.Equals(list))
+                {
+                    linijeId = linija.Id;
+                    break;
+                }
+
+            }
+            if (linijeId == -1)//nikad ane bi trebalo da se dogodi jer mi nudimo linije
+            {
+                return BadRequest("Trazena linija ne postoji");
+            }
+
+            foreach (var st1 in linijeStaniceRepository.GetAll())
+            {
+                if (st1.LinijeId == linijeId)
+                {
+                    Stanica s = new Stanica();
+                    foreach (var s1 in stationRepository.GetAll())
+                    {
+                        if (st1.StaniceId == s1.Id)
+                        {
+                            s.Naziv = s1.Naziv;
+                            s.Adresa = s1.Adresa;
+                            s.GeografskeKoordinataX = s1.GeografskeKoordinataX;
+                            s.GeografskeKoordinataY = s1.GeografskeKoordinataY;
+                            stanice.Add(s);
+                            break;
+                        }
+
+                    }
+                }
+            }
+            hub.AddStations(stanice);
+            return Ok();
         }
 
         // brise logicki liniju po njenom nazivu

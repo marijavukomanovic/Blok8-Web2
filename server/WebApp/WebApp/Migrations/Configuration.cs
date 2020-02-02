@@ -238,6 +238,7 @@ namespace WebApp.Migrations
                 l2.Boja = "red";
                 context.Linije.Add(l2);
                 context.SaveChanges();
+
                 Linija l3 = new Linija();
                 l3.Id = 3;
                 l3.Opis = "Linija u adresi maksima gorkog";
@@ -247,6 +248,7 @@ namespace WebApp.Migrations
                 l3.Boja = "orange";
                 context.Linije.Add(l3);
                 context.SaveChanges();
+
                 Linija l4 = new Linija();
                 l4.Id = 4;
                 l4.Opis = "Linija u adresi dunavska";
@@ -295,6 +297,41 @@ namespace WebApp.Migrations
                 context.LinijeStanices.Add(linijeStanice6);
                 context.SaveChanges();
 
+                LinijeStanice linijeStanice7 = new LinijeStanice();
+                linijeStanice7.LinijeId = l3.Id;
+                linijeStanice7.StaniceId = s1.Id;
+                context.LinijeStanices.Add(linijeStanice7);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice8 = new LinijeStanice();
+                linijeStanice8.LinijeId = l3.Id;
+                linijeStanice8.StaniceId = s2.Id;
+                context.LinijeStanices.Add(linijeStanice8);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice9 = new LinijeStanice();
+                linijeStanice9.LinijeId = l1.Id;
+                linijeStanice9.StaniceId = s5.Id;
+                context.LinijeStanices.Add(linijeStanice9);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice10 = new LinijeStanice();
+                linijeStanice10.LinijeId = l4.Id;
+                linijeStanice10.StaniceId = s3.Id;
+                context.LinijeStanices.Add(linijeStanice10);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice11 = new LinijeStanice();
+                linijeStanice11.LinijeId = l4.Id;
+                linijeStanice11.StaniceId = s2.Id;
+                context.LinijeStanices.Add(linijeStanice11);
+                context.SaveChanges();
+
+                LinijeStanice linijeStanice12 = new LinijeStanice();
+                linijeStanice12.LinijeId = l4.Id;
+                linijeStanice12.StaniceId = s5.Id;
+                context.LinijeStanices.Add(linijeStanice12);
+                context.SaveChanges();
             }
             if (!context.RedoviVoznje.Any(t => t.Id == 1))
             {
@@ -321,8 +358,8 @@ namespace WebApp.Migrations
             {
                 Cenovnik cenovnik = new Cenovnik();
                 cenovnik.Id = 1;
-                cenovnik.VazenjeDo = new DateTime(2019, 8, 31,12,0,0);
-                cenovnik.VazenjeOd = new DateTime(2019, 8, 27,11,59,59);
+                cenovnik.VazenjeDo = new DateTime(2020, 2, 10,12,0,0);
+                cenovnik.VazenjeOd = new DateTime(2019, 1, 27,11,59,59);
                 context.Cenovnici.Add(cenovnik);
                 context.SaveChanges();
             }

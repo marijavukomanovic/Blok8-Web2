@@ -243,6 +243,12 @@ namespace WebApp.Models
 
     }
 
+    public class ListaStanica
+    {
+        public int Id { get; set; }
+        public List<StationBindingModel> Stations { get; set; }
+    }
+
     public class StanicaModel
     {
         public string Name { get; set; }

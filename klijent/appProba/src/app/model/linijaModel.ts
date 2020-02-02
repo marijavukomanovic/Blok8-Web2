@@ -42,8 +42,22 @@ constructor (private name:string,private address:string,private xCoordinate:numb
     this.XCoordinate=xCoordinate;
     this.YCoordinate=yCoordinate;
     
+} 
+
 }
+
+export class ListaStanica{
+
+    Id : number;
+    Stations:Array<Station>;
+
+    constructor()
+    {
+        
+        this.Stations=new Array<Station>();
+    }
 }
+
 export class LineStation{
     LineId:string;
     LineType:string;

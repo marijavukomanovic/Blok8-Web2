@@ -8,6 +8,7 @@ using System.Web.Http.Dependencies;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
+using WebApp.Hubs;
 using WebApp.Models;
 using WebApp.Persistence;
 using WebApp.Persistence.Repository;
@@ -84,6 +85,7 @@ namespace WebApp.App_Start
             container.RegisterType<ITipLinijeRepository, TipLinijeRepository>();
             container.RegisterType<ILinijeStaniceRepository, LinijeStaniceRepository>();
             container.RegisterType<IStatusRepository, StatusRepository>();
+            container.RegisterType<LokacijaHub>();
         }
 
         public void Dispose()

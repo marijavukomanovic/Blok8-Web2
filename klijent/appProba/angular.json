@@ -27,7 +27,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
-            ]
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/signalr/jquery.signalR.min.js"
+              ]
           },
           "configurations": {
             "production": {

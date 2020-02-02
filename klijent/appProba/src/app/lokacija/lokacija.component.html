@@ -12,10 +12,46 @@
     </div>
   </nav>
 <div class="py-5" style="	background-attachment: fixed;	background-image: url(../assets/bg.PNG);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
-  <br/>
-<h1 style="text-align:center">
   
-    Nije dostupna ova funkcija sistema.</h1>
+  <h2 style="text-align:center;border: black"><b>Lokacija vozila</b></h2>
+  <label>
+    <div class="row">
+      <div class="col">
+        <div><b>Izaberite liniju</b></div>
+        <div>     
+        <select #lineNumber (change)="onSelectionChangeNumber($event)" class="form-control">
+              <option value="">-</option>
+              <option value="12A">12A</option>
+              <option value="7A">7A</option>
+              <option value="13A">13A</option> 
+              <option value="18">18</option>         
+        </select>
+  </div>
+
   
-<h3 style="text-align:center">Vas JGSP.</h3>
+        </div>
+</div>
+</label>
+  
+<p  >
+  <!-- Kreiramo mapu -->
+  <agm-map [latitude]="45.242268" [longitude]="19.842954" [zoom]="15" >  
+    <div >
+      <agm-polyline [strokeColor]="polyline.color">
+        <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude">
+        </agm-polyline-point>
+   </agm-polyline>
+  </div>
+<agm-marker *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude" [iconUrl]="polyline.icon">
+</agm-marker>
+
+<!-- <agm-marker *ngFor="let m of stations" [latitude]="m.Lat" [longitude]="m.Lon" [title]="m.Name" [iconUrl]="busImgIcon" label="">
+
+</agm-marker> -->
+
+<agm-marker  [latitude]="latitude" [longitude]="longitude" [iconUrl]="autobusImgIcon" label="">
+
+</agm-marker>
+  </agm-map>
+</p>
 </div>

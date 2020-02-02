@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { LinijaModel, LineStation, Line, StanicaModel } from 'src/app/model/linijaModel';
+import { LinijaModel, LineStation, Line, StanicaModel, Station, ListaStanica } from 'src/app/model/linijaModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 
@@ -46,6 +46,22 @@ export class LinijaService{
     }
 
     return this.http.post<any>(this.url + "/api/Linije/DodajStanicu/" + stanicaModel,stanicaModel,httpOptions);
+  }
+
+  getStaniceZaLiniju(lineName : string): Observable<LineStation>{
+    return this.http.get<LineStation>(this.url + "/api/Linije/GetStaniceZaLiniju/" + lineName);
+  }
+
+  click(linija : string) : Observable<any>
+  {
+    let httpOptions = {
+      headers:{
+        "Content-type":"application/json"
+      }
+    } 
+
+    return this.http.post<any>(this.url+"/api/Linije/PosaljiStaniceNaHub/"+ linija,httpOptions);
+    //return this.http.get<any>(this.url+"/api/Linije/PosaljiStaniceNaHub/"+ stations);
   }
 
 }

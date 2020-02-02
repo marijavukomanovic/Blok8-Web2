@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { AgmDirectionModule } from 'agm-direction';
 
 import { FormsModule} from'@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +20,7 @@ import { RedVoznjeComponent } from './red-voznje/red-voznje.component';
 import { CenovnikComponent } from './cenovnik/cenovnik.component';
 import { InfoKorisnikComponent } from './info-korisnik/info-korisnik.component';
 import { DodavanjeCenovnikaComponent } from './dodavanje-cenovnika/dodavanje-cenovnika.component';
-import { LokacijaComponent } from './lokacija/lokacija.component';
+import { LokacijaComponent } from 'src/app/lokacija/lokacija.component';
 import { IzmenaCenovnikaComponent } from './izmena-cenovnika/izmena-cenovnika.component';
 import { KarteComponent } from './karte/karte.component';
 import { DodavanjeLinijeComponent } from './dodavanje-linije/dodavanje-linije.component';
@@ -30,6 +31,7 @@ import { DodavanjeStaniceComponent } from './dodavanje-stanice/dodavanje-stanice
 import { KontrolerKorisniciComponent } from './kontroler-korisnici/kontroler-korisnici.component';
 import { KontrolerKarteComponent } from './kontroler-karte/kontroler-karte.component';
 import { ControllerGuard } from './guards/controller.guard';
+import {LokacijaService} from 'src/app/servisi/lokacija.service';
 
 
 @NgModule({
@@ -59,11 +61,12 @@ import { ControllerGuard } from './guards/controller.guard';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AgmDirectionModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
 
   ],
   providers: [AdminGuard,UserGuard,ControllerGuard,{provide:HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    DodavanjeCenovnikaComponent,IzmenaCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,KarteComponent,BrisanjeLinijeComponent,DodavanjeStaniceComponent],
+    DodavanjeCenovnikaComponent,IzmenaCenovnikaComponent,DodavanjeLinijeComponent,InfoKorisnikComponent,KarteComponent,BrisanjeLinijeComponent,DodavanjeStaniceComponent,LokacijaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

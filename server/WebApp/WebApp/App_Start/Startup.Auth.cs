@@ -15,6 +15,7 @@ using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Jwt;
 using WebApp.Persistence;
+using WebApp.Hubs;
 
 namespace WebApp
 {
@@ -30,6 +31,7 @@ namespace WebApp
         {
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
+            //app.MapSignalR();
         }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
