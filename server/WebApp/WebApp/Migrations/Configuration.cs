@@ -360,6 +360,7 @@ namespace WebApp.Migrations
                 cenovnik.Id = 1;
                 cenovnik.VazenjeDo = new DateTime(2020, 2, 10,12,0,0);
                 cenovnik.VazenjeOd = new DateTime(2019, 1, 27,11,59,59);
+                cenovnik.Aktivan = true;
                 context.Cenovnici.Add(cenovnik);
                 context.SaveChanges();
             }

@@ -63,7 +63,7 @@ export class LokacijaComponent implements OnInit {
    this.listaStanica = new ListaStanica();
    this.stanica = new Station("","",0,0);
    this.linijaStanica = new LineStation("","","","");
-        this.options = ["12A","13A","7A","18"];
+        this.options = ["12A","13A","7A","18","2c"];
 
     //inicijalizacija polyline
     this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});

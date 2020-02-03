@@ -81,6 +81,8 @@
                 </div>
               <div class="form-group col-md-12">
                 <textarea *ngIf="username && prikazi && role=='AppUser'"   type="text" id="inputLineId" style="text-align:center"style="height: 360px" formControlName="redvoznje" class="form-control" placeholder="Timetable" disabled>{{redVoznje.redvoznje}}</textarea>
+                <textarea *ngIf="!username  && prikazi && role!='AppUser'"   type="text" id="inputLineId" style="text-align:center"style="height: 360px" formControlName="redvoznje" class="form-control" placeholder="Timetable" disabled>{{redVoznje.redvoznje}}</textarea>
+                <textarea *ngIf="username  && prikazi && role=='Controller'"   type="text" id="inputLineId" style="text-align:center"style="height: 360px" formControlName="redvoznje" class="form-control" placeholder="Timetable" disabled>{{redVoznje.redvoznje}}</textarea>
               </div>
           </label>
           </div>

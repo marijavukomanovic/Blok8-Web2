@@ -359,7 +359,7 @@ namespace WebApp.Controllers
 
         [Authorize(Roles = "Admin")]    //MARINA RADILA,PROVERI
         //[AllowAnonymous]
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         [Route("AddLine/{line}")]
         public IHttpActionResult AddLine(LineBindingModel line)
         {

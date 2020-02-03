@@ -96,7 +96,7 @@ this.pritisnuto=false;
   addScript: boolean = false;
   paypalLoad: boolean = true;
   
-  finalAmount: number = 1;
+  finalAmount: number = 0;
  
   paypalConfig = {
     env: 'sandbox',

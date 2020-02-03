@@ -60,7 +60,8 @@ namespace WebApp.Controllers
             else
             {
                 date = cenovnikRepository.Get(id).VazenjeDo;//za sledeci cenovnik pocetni datum je krajnji datum prethodnog vazeceg
-                date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + 1);
+                date = cenovnikRepository.Get(id).VazenjeDo.AddMinutes(1);
+                //date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + 1);
             }
             retVal = date.ToLongDateString() + " " + date.ToLongTimeString();
 

@@ -29,7 +29,14 @@ export class LinijaService{
   }
 
   napraviLiniju(line : Line) : Observable<any>{
-    return this.http.get<any>(this.url + "/api/Linije/AddLine/" + line);
+
+    let httpOptions = {
+      headers:{
+        "Content-type":"application/json"
+      }
+    }
+
+    return this.http.post<Line>(this.url + "/api/Linije/AddLine/" + line,line,httpOptions);
 
   }
 

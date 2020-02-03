@@ -147,8 +147,8 @@ namespace WebApp.Controllers
                         int id = redVoznjeRepository.GetAll().Count() + 1;
                         redVoznje.LinijaId = idLinije;
                         redVoznje.TipDanaId = tipDana;
-                        redVoznje.RasporedVoznje = stringInfo;
-                        redV.Aktivan = true;
+                        redVoznje.RasporedVoznje = stringInfo.Replace(' ',':');
+                        redVoznje.Aktivan = true;
 
                         db.RedoviVoznje.Add(redVoznje);
                         db.SaveChanges();
@@ -164,6 +164,7 @@ namespace WebApp.Controllers
 
         //[AllowAnonymous]
         [Authorize(Roles ="Admin")]
+        [HttpGet]
         [Route("ObrisiRedVoznje/{tipDana}/{linija}")]
         public IHttpActionResult ObrisiRedVoznje(int tipDana, string linija)
         {
@@ -184,7 +185,8 @@ namespace WebApp.Controllers
                     if (redV.LinijaId == idLinije && redV.TipDanaId == tipDana && redV.Aktivan == true)
                     {
                         redV.Aktivan = false;
-
+                        db.Entry(redV).State = EntityState.Modified;
+                        db.SaveChanges();
                         break;
                     }
                 }

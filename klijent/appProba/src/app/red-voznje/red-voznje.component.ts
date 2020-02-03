@@ -94,6 +94,8 @@ for (let index = 0; index < this.separators.length; index++) {
 
     DeleteSchedules(dayType : number, lineName: string)
     {
+      //lineName.replace()
+      //console.log(lineName);
       this.redVoznjService.IzbrisiRedVoznje(dayType,lineName).subscribe(data1=>{
         console.log(data1);
         //this.time=data1;
