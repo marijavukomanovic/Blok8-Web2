@@ -293,5 +293,6 @@ namespace WebApp.Controllers
         {
             return db.RedoviVoznje.Count(e => e.Id == id) > 0;
         }
+
     }
 }

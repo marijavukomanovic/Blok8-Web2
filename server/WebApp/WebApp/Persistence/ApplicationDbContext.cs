@@ -40,6 +40,8 @@ namespace WebApp.Persistence
         public DbSet<LinijeStanice> LinijeStanices { get; set; }
         public DbSet<Status> Statuss { get; set; }
 
+        public DbSet<PayPal> PayPall { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -50,5 +52,6 @@ namespace WebApp.Persistence
             return new ApplicationDbContext();
         }
 
+        
     }
 }

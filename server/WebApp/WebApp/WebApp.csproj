@@ -262,10 +262,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CenaKartesController.cs" />
+    <Compile Include="Controllers\CenaKarteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KartaController.cs" />
     <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\LinijasController.cs" />
+    <Compile Include="Controllers\PayPalsController.cs" />
     <Compile Include="Controllers\RedVoznjesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -304,6 +306,10 @@
     <Compile Include="Migrations\201909011946292_dodatakAktivnihPolja11.Designer.cs">
       <DependentUpon>201909011946292_dodatakAktivnihPolja11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002022155095_payPalMigracija.cs" />
+    <Compile Include="Migrations\202002022155095_payPalMigracija.Designer.cs">
+      <DependentUpon>202002022155095_payPalMigracija.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -315,6 +321,7 @@
     <Compile Include="Models\Entiteti\Korisnik.cs" />
     <Compile Include="Models\Entiteti\Linija.cs" />
     <Compile Include="Models\Entiteti\LinijeStanice.cs" />
+    <Compile Include="Models\Entiteti\PayPal.cs" />
     <Compile Include="Models\Entiteti\RedVoznje.cs" />
     <Compile Include="Models\Entiteti\Stanica.cs" />
     <Compile Include="Models\Entiteti\Status.cs" />
@@ -333,6 +340,7 @@
     <Compile Include="Persistence\Repository\IKorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\ILinijaRepository.cs" />
     <Compile Include="Persistence\Repository\ILinijeStaniceRepository.cs" />
+    <Compile Include="Persistence\Repository\IPayPalRepository.cs" />
     <Compile Include="Persistence\Repository\IRedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IStanicaRepository.cs" />
@@ -345,6 +353,7 @@
     <Compile Include="Persistence\Repository\KorisnikRepository.cs" />
     <Compile Include="Persistence\Repository\LinijaRepository.cs" />
     <Compile Include="Persistence\Repository\LinijeStaniceRepository.cs" />
+    <Compile Include="Persistence\Repository\PayPalRepository.cs" />
     <Compile Include="Persistence\Repository\RedVoznjeRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\Repository\StanicaRepository.cs" />
@@ -483,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909011946292_dodatakAktivnihPolja11.resx">
       <DependentUpon>201909011946292_dodatakAktivnihPolja11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002022155095_payPalMigracija.resx">
+      <DependentUpon>202002022155095_payPalMigracija.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

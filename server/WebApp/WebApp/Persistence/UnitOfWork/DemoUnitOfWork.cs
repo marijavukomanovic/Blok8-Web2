@@ -39,6 +39,9 @@ namespace WebApp.Persistence.UnitOfWork
         [Dependency]
         public IStatusRepository statusRepository { get; set; }
 
+        [Dependency]
+        public IPayPalRepository payPalRepository { get; set; }
+
 
         private readonly DbContext _context;
 

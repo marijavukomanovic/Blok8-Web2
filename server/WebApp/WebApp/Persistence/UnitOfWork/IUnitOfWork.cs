@@ -33,6 +33,8 @@ namespace WebApp.Persistence.UnitOfWork
         ILinijeStaniceRepository linijeStaniceRepository { get; set; }
         IStatusRepository statusRepository { get; set; }
 
+        IPayPalRepository payPalRepository { get; set; }
+
         int Complete();
     }
 }

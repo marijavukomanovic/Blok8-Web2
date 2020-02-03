@@ -53,7 +53,7 @@ export class RegistracijaServis {
           "Content-type":"application/json"
         }
       }
-      return this.http.post<any>(this.registracijaUrl, data, httpOptions);
+      return this.http.post<RegistracijaModel>(this.registracijaUrl + '/' + data, data, httpOptions);
     }
 
     logIn(user: LoginModel) {

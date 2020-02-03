@@ -1,3 +1,9 @@
+<html>
+  <head>
+    </head>
+
+
+<body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container"> 
     <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
@@ -52,8 +58,13 @@
   <br/>
   <div *ngIf='role=="AppUser" && pritisnuto'>
     <button type="submit" (click)="kupiKartu(vrstaKarte.value)">Kupi kartu</button>
+  <br/>
+      
   </div>
+      <h2 *ngIf="paypalLoad">Paypal button is loading</h2>
+      <div id="paypal-checkout-btn"></div>
 </form>
 </div>
 </div>
-
+</body>
+</html>

@@ -305,7 +305,18 @@ namespace WebApp.Models
         public string StatusVerifikacije { get; set; }
     }
 
+    public class PayPalBindingModel
+    {
+        
+        public string PayementId { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public string PayerEmail { get; set; }
+        public string PayerName { get; set; }
+        public string PayerSurname { get; set; }
+        public string CurrencyCode { get; set; }
+        public double Value { get; set; }
 
+    }
 
 
 

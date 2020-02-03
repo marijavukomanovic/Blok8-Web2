@@ -20,6 +20,7 @@ import { DodavanjeStaniceComponent} from 'src/app/dodavanje-stanice/dodavanje-st
 import {KontrolerKorisniciComponent} from 'src/app/kontroler-korisnici/kontroler-korisnici.component';
 import {KontrolerKarteComponent} from 'src/app/kontroler-karte/kontroler-karte.component';
 import { ControllerGuard } from './guards/controller.guard';
+import {PaypalProbaComponent} from './paypal-proba/paypal-proba.component';
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: 'dodavanjeStanice',component:DodavanjeStaniceComponent,canActivate:[AdminGuard]},
   {path:'kontrolerKorisnici',component:KontrolerKorisniciComponent,canActivate:[ControllerGuard]},
   {path:'kontrolerKarte',component:KontrolerKarteComponent,canActivate:[ControllerGuard]},
+  {path:'pay',component:PaypalProbaComponent},
 ];
 
 @NgModule({

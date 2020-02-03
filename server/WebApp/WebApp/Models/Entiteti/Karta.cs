@@ -23,7 +23,9 @@ namespace WebApp.Models
         public DateTime VremeKupovine { get; set; }
         public bool Verifikovana { get; set; }
 
-
+        [ForeignKey("PayPal")]
+        public int PayPalId { get; set; }
+        public PayPal PayPal { get; set; }
 
     }
 }

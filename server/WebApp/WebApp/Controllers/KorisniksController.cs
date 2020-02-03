@@ -47,11 +47,16 @@ namespace WebApp.Controllers
 
         //[Authorize(Roles = "AppUser")]
         [AllowAnonymous]
-        [Route("Registracija")]
+        [HttpPost]
+        [Route("Registracija/{model}")]
         public async Task<IHttpActionResult> Registracija(UserRegistrationBindingModel model)
         {
 
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }*/
+            if(model==null)
             {
                 return BadRequest(ModelState);
             }
@@ -161,7 +166,12 @@ namespace WebApp.Controllers
             lock (lockObj)
 
             {  // validacija
-                if (!ModelState.IsValid)
+                /*if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }*/
+
+                if (model==null)
                 {
                     return BadRequest(ModelState);
                 }

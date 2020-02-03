@@ -32,7 +32,8 @@ import { KontrolerKorisniciComponent } from './kontroler-korisnici/kontroler-kor
 import { KontrolerKarteComponent } from './kontroler-karte/kontroler-karte.component';
 import { ControllerGuard } from './guards/controller.guard';
 import {LokacijaService} from 'src/app/servisi/lokacija.service';
-
+import { NgxPayPalModule } from 'ngx-paypal';
+import { PaypalProbaComponent } from './paypal-proba/paypal-proba.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import {LokacijaService} from 'src/app/servisi/lokacija.service';
     DodavanjeStaniceComponent,
     KontrolerKorisniciComponent,
     KontrolerKarteComponent,
- 
+    PaypalProbaComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +62,7 @@ import {LokacijaService} from 'src/app/servisi/lokacija.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPayPalModule,
     AgmDirectionModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
 
